@@ -1,0 +1,29 @@
+.header-container {
+  height: 58px;
+  width: 100%;
+
+  .app-brand {
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    .brand-workflow {
+      color: #4B0082;
+    }
+
+    .brand-automation {
+      color: #FF7518;
+    }
+  }
+
+  .header-title {
+    color: #000000;
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .header-description {
+    color: #6C757D;
+    font-size: 14px;
+  }
+}

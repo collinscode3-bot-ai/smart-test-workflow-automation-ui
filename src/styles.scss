@@ -80,6 +80,7 @@ label, .form-label {
     top: 0;
     z-index: 1000;
     background-color: white;
+    border-bottom: 1px solid #E5E7EB;
 
     @media (min-width: 768px) {
         width: calc(100% - 340px);

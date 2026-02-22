@@ -14,10 +14,10 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
   {
     label: 'Projects',
     icon: 'bi-grid',
-    isExpanded: false,
+    isExpanded: true,
     subLinks: [
-      { label: 'Create Project', path: '/' },
-      { label: 'Project List', path: '/projects/list' }
+      { label: 'Dashboard', path: '/projects/dashboard' },
+      { label: 'New Project', path: '/' }
     ]
   },
   {

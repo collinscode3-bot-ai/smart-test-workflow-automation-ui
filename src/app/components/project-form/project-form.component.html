@@ -1,5 +1,8 @@
 <div class="card border-0 shadow-sm p-5">
-  <h2 class="fw-bold mb-4" style="color: #4B0082;">{{ mode === 'edit' ? 'Update Project' : 'Create New Project' }}</h2>
+  <h2 class="fw-bold mb-2" style="color: #4B0082;">{{ mode === 'edit' ? 'Update Project' : 'Create New Project' }}</h2>
+  <p class="mb-4" style="font-size: 14px; color: #6C757D;">
+    Create, edit, and manage your automation project configurations and metadata.
+  </p>
 
   <form (ngSubmit)="onSubmit()">
     <div class="row">

@@ -3,19 +3,19 @@
 
   <form (ngSubmit)="onSubmit()">
     <div class="row">
-      <div class="col-md-10">
+      <div class="col-md-11">
         <div class="mb-4">
-          <label for="projectName">Project Name</label>
+          <label for="projectName" class="form-label">Project Name</label>
           <input type="text" id="projectName" class="form-control" placeholder="Enter project name">
         </div>
 
         <div class="mb-4">
-          <label for="projectDetails">Project Details</label>
+          <label for="projectDetails" class="form-label">Project Details</label>
           <textarea id="projectDetails" class="form-control" rows="4" style="height: auto;" placeholder="Describe the project objective"></textarea>
         </div>
 
         <div class="mb-4">
-          <label for="category">Category</label>
+          <label for="category" class="form-label">Category</label>
           <select id="category" class="form-select">
             <option selected disabled>Select category</option>
             <option value="web">Web Development</option>
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <div class="d-flex gap-3 mt-2">
+    <div class="d-flex justify-content-end gap-3 mt-2">
       <button type="submit" [class]="mode === 'edit' ? 'btn btn-theme-purple' : 'btn btn-theme-orange'">
         {{ mode === 'edit' ? 'Update Project' : 'Add Project' }}
       </button>

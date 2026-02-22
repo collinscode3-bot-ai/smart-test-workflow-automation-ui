@@ -1,0 +1,87 @@
+@import "variables";
+@import "bootstrap/scss/bootstrap";
+
+/* High-Fidelity Inputs */
+.form-control, .form-select {
+    height: 54px;
+    font-size: 16px;
+    border-radius: 8px;
+
+    &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 0.25rem rgba(75, 0, 130, 0.25);
+    }
+}
+
+/* Global Buttons */
+.btn-theme-purple {
+    background-color: $primary-color;
+    color: white;
+    min-width: 160px;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+        color: white;
+    }
+}
+
+.btn-theme-orange {
+    background-color: $accent-color;
+    color: white;
+    min-width: 160px;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover {
+        background-color: darken($accent-color, 10%);
+        color: white;
+    }
+}
+
+/* Beautification Rules for Labels */
+label {
+    font-weight: bold;
+    display: block;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-bottom: 0.5rem;
+}
+
+/* Layout Specifics */
+.content-area {
+    min-height: calc(100vh - 58px);
+    margin-top: 58px;  /* Header height */
+
+    @media (min-width: 768px) {
+        margin-left: 340px; /* Sidebar width */
+    }
+}
+
+.sidebar {
+    width: 340px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.header {
+    height: 58px;
+    width: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+
+    @media (min-width: 768px) {
+        width: calc(100% - 340px);
+    }
+}

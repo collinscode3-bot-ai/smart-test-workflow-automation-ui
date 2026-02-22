@@ -9,21 +9,22 @@
       <div class="col-md-11">
         <div class="mb-4">
           <label for="projectName" class="form-label">Project Name</label>
-          <input type="text" id="projectName" class="form-control" placeholder="Enter project name">
+          <input type="text" id="projectName" name="projectName" class="form-control" placeholder="Enter project name" [(ngModel)]="project.name">
         </div>
 
         <div class="mb-4">
           <label for="projectDetails" class="form-label">Project Details</label>
-          <textarea id="projectDetails" class="form-control" rows="4" style="height: auto;" placeholder="Describe the project objective"></textarea>
+          <textarea id="projectDetails" name="projectDetails" class="form-control" rows="4" style="height: auto;" placeholder="Describe the project objective" [(ngModel)]="project.description"></textarea>
         </div>
 
         <div class="mb-4">
           <label for="category" class="form-label">Category</label>
-          <select id="category" class="form-select">
-            <option selected disabled>Select category</option>
+          <select id="category" name="category" class="form-select" [(ngModel)]="project.category">
+            <option value="" disabled selected>Select category</option>
             <option value="web">Web Development</option>
             <option value="mobile">Mobile App</option>
             <option value="design">UI/UX Design</option>
+            <option value="other">Other</option>
           </select>
         </div>
       </div>
@@ -33,7 +34,7 @@
       <button type="submit" [class]="mode === 'edit' ? 'btn btn-theme-purple' : 'btn btn-theme-orange'">
         {{ mode === 'edit' ? 'Update Project' : 'Add Project' }}
       </button>
-      <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;">Cancel</button>
+      <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" routerLink="/projects/dashboard">Cancel</button>
     </div>
   </form>
 </div>

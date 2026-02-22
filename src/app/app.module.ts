@@ -9,6 +9,7 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
 import { ProjectFormComponent } from './components/project-form/project-form.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ProjectsDashboardComponent } from './components/projects-dashboard/projects-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     BreadcrumbsComponent,
     ProjectFormComponent,
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProjectsDashboardComponent
   ],
   imports: [
     BrowserModule,

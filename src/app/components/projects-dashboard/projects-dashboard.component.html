@@ -1,0 +1,87 @@
+<div class="container-fluid p-0">
+    <!-- Page Header Section -->
+    <div class="mb-4">
+      <small class="text-uppercase fw-bold" style="color: #FF7518; font-size: 12px; letter-spacing: 0.5px;">Projects</small>
+      <h2 class="fw-bold mt-1" style="color: #4B0082;">Project Details</h2>
+      <p class="text-muted" style="font-size: 14px;">Manage and monitor your existing projects.</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="position-relative mb-4">
+      <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
+      <input
+        type="text"
+        class="form-control ps-5"
+        placeholder="Search existing projects..."
+        [(ngModel)]="searchTerm"
+        (input)="searchProjects()"
+        style="height: 54px; border-radius: 12px; border: 1px solid #E5E7EB;"
+      >
+    </div>
+
+    <div class="card border-0 shadow-sm p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="fw-bold mb-0" style="font-size: 18px; color: #333;">ALL PROJECTS</h5>
+        <button class="btn btn-theme-orange d-flex align-items-center justify-content-center" (click)="navigateToCreate()">
+          <i class="bi bi-plus-lg me-2"></i> Create New Project
+        </button>
+      </div>
+
+      <!-- Project List -->
+      <div *ngFor="let project of paginatedProjects">
+        <div class="card border-0 shadow-sm mb-3 p-3" style="background-color: #fcfcfc;">
+          <div class="row align-items-center">
+            <!-- Icon Placeholder -->
+            <div class="col-auto">
+              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                <i [class]="'bi ' + project.typeIcon" style="font-size: 20px; color: #4B0082;"></i>
+              </div>
+            </div>
+            <!-- Project Name and Description -->
+            <div class="col">
+              <h6 class="mb-0 fw-bold" style="color: #4B0082;">{{ project.name }}</h6>
+              <small class="text-muted d-block text-truncate-2" style="max-width: 600px;">{{ project.description }}</small>
+            </div>
+            <!-- Action Links -->
+            <div class="col-auto text-end">
+              <a (click)="MapsToEdit(project.id)" class="text-decoration-none me-3" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-pencil me-1"></i> Edit
+              </a>
+              <a (click)="deleteProject(project.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-trash me-1"></i> Delete
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav *ngIf="totalPages > 1" class="mt-4">
+        <ul class="pagination justify-content-center border-0 mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage - 1)" style="cursor: pointer;">
+              <i class="bi bi-chevron-left"></i>
+            </a>
+          </li>
+
+          <li class="page-item mx-1" *ngFor="let page of pages">
+            <a
+              class="page-link border-0 d-flex align-items-center justify-content-center"
+              (click)="setPage(page)"
+              [style.background-color]="currentPage === page ? '#4B0082' : 'transparent'"
+              [style.color]="currentPage === page ? 'white' : '#6C757D'"
+              style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;"
+            >
+              {{ page }}
+            </a>
+          </li>
+
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage + 1)" style="cursor: pointer;">
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+</div>

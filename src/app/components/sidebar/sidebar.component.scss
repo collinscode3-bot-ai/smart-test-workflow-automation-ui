@@ -1,0 +1,89 @@
+@import 'variables';
+
+.sidebar-container {
+  width: 340px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  z-index: 1000;
+  background-color: white;
+}
+
+.menu-item {
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: #333;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  i {
+    color: #6c757d;
+  }
+
+  &.expanded {
+    // Optional: style for expanded parent
+  }
+}
+
+.chevron-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.8rem;
+  color: #adb5bd;
+
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+.sub-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: #fff;
+
+  &.show {
+    max-height: 500px; /* Sufficient height for sub-links */
+  }
+}
+
+.list-group-item {
+  font-size: 14px;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  color: #495057;
+  border-left: 5px solid transparent !important;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #f8f9fa;
+  }
+
+  &.active {
+    background-color: white !important;
+    color: $primary-color !important;
+    font-weight: 600;
+    border-left: 5px solid $primary-color !important;
+  }
+}
+
+/* Custom scrollbar for the sidebar */
+.sidebar-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}

@@ -8,6 +8,7 @@ import { AppPleaseWaitComponent } from './components/app-please-wait/app-please-
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ProjectFormComponent } from './components/project-form/project-form.component';
 import { HeaderComponent } from './components/header/header.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HeaderComponent } from './components/header/header.component';
     AppPleaseWaitComponent,
     BreadcrumbsComponent,
     ProjectFormComponent,
-    HeaderComponent
+    HeaderComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

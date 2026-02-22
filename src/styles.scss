@@ -55,8 +55,8 @@ label, .form-label {
 
 /* Layout Specifics */
 .content-area {
-    min-height: calc(100vh - 58px);
-    margin-top: 58px;  /* Header height */
+    min-height: calc(100vh - 64px);
+    margin-top: 64px;  /* Header height */
 
     @media (min-width: 768px) {
         margin-left: 340px; /* Sidebar width */
@@ -72,14 +72,19 @@ label, .form-label {
     z-index: 1000;
 }
 
+.ps-5-percent {
+    padding-left: 5% !important;
+}
+
 .header {
-    height: 58px;
+    height: 64px;
     width: 100%;
     position: fixed;
     right: 0;
     top: 0;
     z-index: 1000;
     background-color: white;
+    border-bottom: 1px solid #E5E7EB;
 
     @media (min-width: 768px) {
         width: calc(100% - 340px);

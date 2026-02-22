@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HeaderService } from '../../services/header.service';
 
 @Component({
   selector: 'app-project-form',
@@ -9,7 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 export class ProjectFormComponent implements OnInit {
   @Input() mode: 'create' | 'edit' = 'create';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private headerService: HeaderService
+  ) {}
 
   ngOnInit(): void {
     // Check route data if mode is not explicitly set or to allow route-based mode
@@ -17,11 +21,20 @@ export class ProjectFormComponent implements OnInit {
       if (data['mode']) {
         this.mode = data['mode'];
       }
+      this.updateHeader();
     });
 
     if (this.mode === 'edit') {
       this.loadProject();
     }
+
+    this.updateHeader();
+  }
+
+  private updateHeader(): void {
+    const title = this.mode === 'edit' ? 'Edit Project Details' : 'Project Management';
+    const description = 'Create, edit, and manage your automation project configurations and metadata.';
+    this.headerService.setHeaderData(title, description);
   }
 
   loadProject() {

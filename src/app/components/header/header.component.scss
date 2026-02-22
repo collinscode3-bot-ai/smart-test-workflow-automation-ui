@@ -1,0 +1,18 @@
+.header-container {
+  height: 64px;
+  width: 100%;
+
+  .app-brand {
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap;
+
+    .brand-workflow {
+      color: #4B0082;
+    }
+
+    .brand-automation {
+      color: #FF7518;
+    }
+  }
+}

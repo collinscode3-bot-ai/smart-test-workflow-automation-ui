@@ -46,6 +46,9 @@ export class BreadcrumbsComponent implements OnInit {
 
       if (url.includes('/list')) {
         crumbs.push({ label: 'Test Suites', url: '', active: true });
+      } else if (url.includes('/execution')) {
+        crumbs.push({ label: 'Test Suites', url: `/test-suites/list?projectId=${projectId || ''}`, active: false });
+        crumbs.push({ label: 'Execution', url: '', active: true });
       } else {
         crumbs.push({ label: 'Test Suites', url: `/test-suites/list?projectId=${projectId || ''}`, active: false });
         crumbs.push({ label: url.includes('/create') ? 'New' : 'Edit', url: '', active: true });

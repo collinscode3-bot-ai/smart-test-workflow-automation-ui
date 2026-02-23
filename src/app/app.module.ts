@@ -12,6 +12,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProjectsDashboardComponent } from './components/projects-dashboard/projects-dashboard.component';
 import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/test-suite-dashboard.component';
 import { TestSuiteFormComponent } from './components/test-suite-form/test-suite-form.component';
+import { TestExecutionHomeComponent } from './components/test-execution-home/test-execution-home.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TestSuiteFormComponent } from './components/test-suite-form/test-suite-
     SidebarComponent,
     ProjectsDashboardComponent,
     TestSuiteDashboardComponent,
-    TestSuiteFormComponent
+    TestSuiteFormComponent,
+    TestExecutionHomeComponent
   ],
   imports: [
     BrowserModule,

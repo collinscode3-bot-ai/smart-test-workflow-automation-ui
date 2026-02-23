@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-please-wait',
@@ -7,9 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./app-please-wait.component.scss']
 })
 export class AppPleaseWaitComponent {
-  // Placeholder for isLoading$ observable
-  private isLoadingSubject = new BehaviorSubject<boolean>(false);
-  isLoading$: Observable<boolean> = this.isLoadingSubject.asObservable();
+  isLoading$ = this.loadingService.isLoading$;
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 }

@@ -94,7 +94,7 @@ export class TestSuiteDashboardComponent implements OnInit {
    */
   executeTestSuite(id: string): void {
     console.log(`Executing test suite ${id}...`);
-    // Logic for execution
+    this.router.navigate([`/test-suites/execution/${id}`], { queryParams: { projectId: this.projectId } });
   }
 
   /**

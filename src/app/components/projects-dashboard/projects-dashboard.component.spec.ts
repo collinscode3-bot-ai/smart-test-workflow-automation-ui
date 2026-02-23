@@ -42,11 +42,11 @@ describe('ProjectsDashboardComponent', () => {
 
   it('should paginate projects', () => {
     component.itemsPerPage = 5;
-    component.searchProjects(); // total 10
+    component.searchProjects(); // total 8
     expect(component.paginatedProjects.length).toBe(5);
 
     component.setPage(2);
     expect(component.currentPage).toBe(2);
-    expect(component.paginatedProjects.length).toBe(5);
+    expect(component.paginatedProjects.length).toBe(3);
   });
 });

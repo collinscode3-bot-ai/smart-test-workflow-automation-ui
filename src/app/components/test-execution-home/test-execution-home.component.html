@@ -86,3 +86,9 @@
     </div>
   </div>
 </div>
+
+<!-- Test Case Flow Modal -->
+<app-test-case-results-modal
+  *ngIf="showFlowModal"
+  (close)="closeFlowModal()">
+</app-test-case-results-modal>

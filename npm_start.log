@@ -7,48 +7,16 @@
 
 Initial Chunk Files   | Names         |  Raw Size
 vendor.js             | vendor        |   2.25 MB |
-styles.css, styles.js | styles        | 398.06 kB |
+styles.css, styles.js | styles        | 398.05 kB |
 polyfills.js          | polyfills     | 234.35 kB |
-main.js               | main          | 123.91 kB |
+main.js               | main          | 174.98 kB |
 runtime.js            | runtime       |   6.50 kB |
 
-| Initial Total |   2.99 MB
+| Initial Total |   3.04 MB
 
-Build at: 2026-02-23T16:07:57.984Z - Hash: be7d77852543b71a - Time: 8243ms
+Build at: 2026-02-23T17:16:40.924Z - Hash: 13b5e121298dcf08 - Time: 11174ms
 
 ** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
 
 
 ✔ Compiled successfully.
-✔ Browser application bundle generation complete.
-
-Initial Chunk Files | Names   | Raw Size
-runtime.js          | runtime |  6.50 kB |
-
-4 unchanged chunks
-
-Build at: 2026-02-23T16:08:25.260Z - Hash: 622ae0eede5b701d - Time: 2739ms
-
-✔ Compiled successfully.
-✔ Browser application bundle generation complete.
-
-Initial Chunk Files | Names   |  Raw Size
-main.js             | main    | 123.49 kB |
-runtime.js          | runtime |   6.50 kB |
-
-3 unchanged chunks
-
-Build at: 2026-02-23T16:08:28.215Z - Hash: b2c55b1ec381d19e - Time: 1136ms
-
-✔ Compiled successfully.
-✔ Browser application bundle generation complete.
-
-Initial Chunk Files | Names   | Raw Size
-runtime.js          | runtime |  6.50 kB |
-
-4 unchanged chunks
-
-Build at: 2026-02-23T16:12:56.990Z - Hash: f8860a36807aec32 - Time: 5668ms
-
-✔ Compiled successfully.
-Terminated

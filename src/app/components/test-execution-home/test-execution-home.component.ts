@@ -22,6 +22,8 @@ export class TestExecutionHomeComponent implements OnInit {
   suiteName: string = 'API Regression Suite';
   suiteDescription: string = 'Comprehensive validation of core authentication, user profile management, and billing endpoints for the production environment.';
   isExecuting: boolean = false;
+  showFlowModal: boolean = false;
+  selectedTestCaseId: string | null = null;
 
   testCases: TestCase[] = [
     {
@@ -91,7 +93,14 @@ export class TestExecutionHomeComponent implements OnInit {
 
   viewTestCaseFlow(testCaseId: string): void {
     console.log(`Viewing flow for test case ${testCaseId}`);
+    this.selectedTestCaseId = testCaseId;
+    this.showFlowModal = true;
     // API CALL: GET /api/test-cases/{id}/flow
+  }
+
+  closeFlowModal(): void {
+    this.showFlowModal = false;
+    this.selectedTestCaseId = null;
   }
 
   getStatusClass(status: string): string {

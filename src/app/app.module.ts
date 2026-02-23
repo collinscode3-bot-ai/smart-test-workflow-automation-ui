@@ -10,6 +10,7 @@ import { ProjectFormComponent } from './components/project-form/project-form.com
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProjectsDashboardComponent } from './components/projects-dashboard/projects-dashboard.component';
+import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/test-suite-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProjectsDashboardComponent } from './components/projects-dashboard/proj
     ProjectFormComponent,
     HeaderComponent,
     SidebarComponent,
-    ProjectsDashboardComponent
+    ProjectsDashboardComponent,
+    TestSuiteDashboardComponent
   ],
   imports: [
     BrowserModule,

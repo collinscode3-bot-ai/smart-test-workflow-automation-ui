@@ -1,0 +1,107 @@
+<div class="container-fluid p-0">
+  <div class="col-12 col-lg-10 mx-auto py-4">
+    <!-- Page Header Section -->
+    <div class="mb-4">
+      <h2 class="fw-bold mt-1" style="color: #4B0082;">Test Suite Dashboard</h2>
+      <p class="text-muted" style="font-size: 14px;">Manage and monitor your existing automated testing suites.</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="position-relative mb-4">
+      <i class="bi bi-search position-absolute top-50 translate-middle-y ms-3 text-muted"></i>
+      <input
+        type="text"
+        class="form-control ps-5"
+        placeholder="Search test suites..."
+        [(ngModel)]="searchTerm"
+        (input)="searchTestSuites()"
+        style="height: 54px; border-radius: 12px; border: 1px solid #E5E7EB;"
+      >
+    </div>
+
+    <div *ngIf="filteredTestSuites.length > 0" class="card border-0 shadow-sm p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h5 class="fw-bold mb-0" style="font-size: 18px; color: #333;">ALL TEST SUITES</h5>
+        <button class="btn btn-theme-orange d-flex align-items-center justify-content-center" (click)="navigateToCreate()">
+          <i class="bi bi-plus-lg me-2"></i> Create New Test Suite
+        </button>
+      </div>
+
+      <!-- Test Suite List -->
+      <div *ngFor="let testSuite of paginatedTestSuites">
+        <div class="card border-0 shadow-sm mb-3 p-3" style="background-color: #fcfcfc;">
+          <div class="row align-items-center">
+            <!-- Icon Placeholder -->
+            <div class="col-auto">
+              <div class="rounded-3 bg-light d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                <i class="bi bi-file-earmark-check" style="font-size: 20px; color: #4B0082;"></i>
+              </div>
+            </div>
+            <!-- Test Suite Name and Type -->
+            <div class="col">
+              <h6 class="mb-0 fw-bold" style="color: #4B0082;">{{ testSuite.name }}</h6>
+              <small class="text-muted d-block">{{ testSuite.type }}</small>
+            </div>
+            <!-- Action Links -->
+            <div class="col-auto text-end d-flex align-items-center gap-3">
+              <a (click)="executeTestSuite(testSuite.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-play-fill me-1"></i> Execute
+              </a>
+              <a (click)="MapsToEdit(testSuite.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-pencil me-1"></i> Edit
+              </a>
+              <a (click)="deleteTestSuite(testSuite.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-trash me-1"></i> Delete
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav *ngIf="totalPages > 1" class="mt-4">
+        <ul class="pagination justify-content-center border-0 mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage - 1)" style="cursor: pointer;">
+              <i class="bi bi-chevron-left"></i>
+            </a>
+          </li>
+
+          <li class="page-item mx-1" *ngFor="let page of pages">
+            <a
+              class="page-link border-0 d-flex align-items-center justify-content-center"
+              (click)="setPage(page)"
+              [style.background-color]="currentPage === page ? '#4B0082' : 'transparent'"
+              [style.color]="currentPage === page ? 'white' : '#6C757D'"
+              style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;"
+            >
+              {{ page }}
+            </a>
+          </li>
+
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage + 1)" style="cursor: pointer;">
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="filteredTestSuites.length === 0" class="card border-0 shadow-sm p-5 text-center mt-4">
+      <div class="mb-3">
+        <i class="bi bi-card-list text-muted" style="font-size: 80px; opacity: 0.5;"></i>
+      </div>
+      <h4 class="fw-bold mb-2" style="font-size: 22px; color: #000;">No Test Suites Found</h4>
+      <p class="text-muted mb-4 mx-auto" style="font-size: 16px; max-width: 450px;">
+        It looks like you haven't created any test suites for this project yet.
+      </p>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-theme-orange d-flex align-items-center justify-content-center" (click)="navigateToCreate()">
+          <i class="bi bi-plus-lg me-2"></i> Create Your First Test Suite
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

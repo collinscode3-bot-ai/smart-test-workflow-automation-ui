@@ -28,9 +28,7 @@ export class ProjectsDashboardComponent implements OnInit {
     { id: '5', name: 'Market Research', description: 'Analyzing competitor strategies and consumer behavior for the upcoming fiscal year.', typeIcon: 'bi-bar-chart' },
     { id: '6', name: 'Customer Support Bot', description: 'Implementing AI-driven chatbot to handle common customer inquiries and reduce wait times.', typeIcon: 'bi-chat-dots' },
     { id: '7', name: 'Data Migration', description: 'Transferring local database records to a secure, distributed cloud infrastructure.', typeIcon: 'bi-database-up' },
-    { id: '8', name: 'Security Patching', description: 'Applying critical security updates across all production environments to ensure data integrity.', typeIcon: 'bi-shield-check' },
-    { id: '9', name: 'User Onboarding Flow', description: 'Optimizing the registration process to improve user retention and conversion rates.', typeIcon: 'bi-person-plus' },
-    { id: '10', name: 'Internal Wiki', description: 'Building a centralized knowledge base for internal documentation and team collaboration.', typeIcon: 'bi-book' }
+    { id: '8', name: 'Security Patching', description: 'Applying critical security updates across all production environments to ensure data integrity.', typeIcon: 'bi-shield-check' }
   ];
 
   filteredProjects: Project[] = [];
@@ -48,6 +46,7 @@ export class ProjectsDashboardComponent implements OnInit {
 
   /**
    * Placeholder for GET request to fetch projects from the backend.
+   * // API CALL: GET /api/projects?page={n}&search={query}
    * Integration Tip: Use HttpClient to call your API endpoint.
    * Example:
    * return this.http.get<any>(`${API_URL}/projects?page=${page}&search=${search}`)
@@ -82,6 +81,7 @@ export class ProjectsDashboardComponent implements OnInit {
 
   /**
    * Placeholder for DELETE request with a confirmation dialog.
+   * // API CALL: DELETE /api/projects/{id}
    * Integration Tip: Call the DELETE endpoint and then refresh the list.
    * Example:
    * this.http.delete(`${API_URL}/projects/${id}`).subscribe(() => this.fetchProjects(this.currentPage));
@@ -105,6 +105,14 @@ export class ProjectsDashboardComponent implements OnInit {
    */
   MapsToEdit(id: string): void {
     this.router.navigate(['/edit'], { queryParams: { id: id } });
+  }
+
+  /**
+   * Navigates to the Test Suites dashboard for a specific project.
+   * @param id The ID of the project.
+   */
+  goToTestSuites(id: string): void {
+    this.router.navigate(['/test-suites/list'], { queryParams: { projectId: id } });
   }
 
   updatePagination(): void {

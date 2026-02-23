@@ -3,17 +3,17 @@
   <div class="card border-0 shadow-sm p-4 mb-4">
     <div class="row align-items-center">
       <div class="col-auto">
-        <div class="blue-icon-container d-flex align-items-center justify-content-center">
-          <i class="bi bi-grid-fill text-white fs-2"></i>
+        <div class="indigo-icon-container d-flex align-items-center justify-content-center">
+          <i class="bi bi-grid-fill text-indigo fs-1"></i>
         </div>
       </div>
       <div class="col ps-4">
-        <span class="badge text-primary bg-primary-subtle mb-2 text-uppercase fw-bold" style="font-size: 11px; letter-spacing: 0.5px; padding: 5px 10px;">AUTOMATED SUITE</span>
+        <span class="badge text-indigo bg-indigo-subtle mb-2 text-uppercase fw-bold" style="font-size: 11px; letter-spacing: 0.5px; padding: 5px 10px; background-color: #f0ebf5;">AUTOMATED SUITE</span>
         <h3 class="fw-bold mb-1">{{ suiteName }}</h3>
         <p class="text-muted mb-3" style="font-size: 14px;">{{ suiteDescription }}</p>
         <div class="d-flex align-items-center gap-4 text-muted" style="font-size: 13px;">
-          <span><i class="bi bi-file-earmark-text me-2"></i>12 Test Cases</span>
-          <span><i class="bi bi-clock me-2"></i>Last run 2h ago</span>
+          <span><i class="bi bi-file-earmark-text me-2 text-indigo"></i>12 Test Cases</span>
+          <span><i class="bi bi-clock me-2 text-indigo"></i>Last run 2h ago</span>
         </div>
       </div>
       <div class="col-auto">
@@ -76,7 +76,7 @@
               </div>
             </div>
             <div class="d-flex justify-content-end">
-              <button class="btn btn-outline-primary btn-sm px-4 py-2 fw-bold" (click)="viewTestCaseFlow(testCase.id)">
+              <button class="btn btn-outline-indigo btn-sm px-4 py-2 fw-bold" (click)="viewTestCaseFlow(testCase.id)">
                 View Test Case Flow
               </button>
             </div>

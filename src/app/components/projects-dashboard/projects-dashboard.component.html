@@ -43,15 +43,15 @@
               <small class="text-muted d-block text-truncate-2" style="max-width: 600px;">{{ project.description }}</small>
             </div>
             <!-- Action Links -->
-            <div class="col-auto text-end d-flex align-items-center gap-3">
-              <a (click)="goToTestSuites(project.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
-                Test Suites <i class="bi bi-arrow-right-short ms-1" style="font-size: 18px; vertical-align: middle;"></i>
+            <div class="col-auto text-end d-flex align-items-center gap-4 justify-content-end">
+              <a (click)="goToTestSuites(project.id)" class="text-decoration-none d-flex align-items-center" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                Test Suites <i class="bi bi-arrow-right-short ms-2" style="font-size: 18px;"></i>
               </a>
-              <a (click)="MapsToEdit(project.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
-                <i class="bi bi-pencil me-1"></i> Edit
+              <a (click)="MapsToEdit(project.id)" class="text-decoration-none d-flex align-items-center" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-pencil me-2"></i> Edit
               </a>
-              <a (click)="deleteProject(project.id)" class="text-decoration-none" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
-                <i class="bi bi-trash me-1"></i> Delete
+              <a (click)="deleteProject(project.id)" class="text-decoration-none d-flex align-items-center" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                <i class="bi bi-trash me-2"></i> Delete
               </a>
             </div>
           </div>

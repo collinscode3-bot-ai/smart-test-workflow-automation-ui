@@ -36,15 +36,20 @@ export class BreadcrumbsComponent implements OnInit {
     if (url.includes('/projects/dashboard') || url.includes('/projects/list')) {
       crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
       crumbs.push({ label: 'Dashboard', url: '', active: true });
-    } else if (url.includes('/test-suites/list')) {
+    } else if (url.includes('/test-suites/')) {
       crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
 
-      // Attempt to extract project name from query params or use a realistic mock
       const projectId = this.getQueryParam(url, 'projectId');
       const projectName = this.getMockProjectName(projectId);
 
       crumbs.push({ label: projectName, url: '/projects/dashboard', active: false });
-      crumbs.push({ label: 'Test Suites', url: '', active: true });
+
+      if (url.includes('/list')) {
+        crumbs.push({ label: 'Test Suites', url: '', active: true });
+      } else {
+        crumbs.push({ label: 'Test Suites', url: `/test-suites/list?projectId=${projectId || ''}`, active: false });
+        crumbs.push({ label: url.includes('/create') ? 'New' : 'Edit', url: '', active: true });
+      }
     } else if (url === '/' || url.startsWith('/edit')) {
       crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
       crumbs.push({ label: url === '/' ? 'New Project' : 'Edit Project', url: '', active: true });

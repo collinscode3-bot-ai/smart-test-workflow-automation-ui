@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ProjectsDashboardComponent } from './components/projects-dashboard/projects-dashboard.component';
 import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/test-suite-dashboard.component';
+import { TestSuiteFormComponent } from './components/test-suite-form/test-suite-form.component';
 
 @NgModule({
   declarations: [
@@ -21,11 +22,13 @@ import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/t
     HeaderComponent,
     SidebarComponent,
     ProjectsDashboardComponent,
-    TestSuiteDashboardComponent
+    TestSuiteDashboardComponent,
+    TestSuiteFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [],

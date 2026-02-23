@@ -1,0 +1,80 @@
+<div class="col-12 col-lg-10 mx-auto py-4">
+  <div class="card border-0 shadow-sm p-5">
+    <div class="mb-4">
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit Test Suite' : 'Test Suite Details' }}</h2>
+      <p class="text-muted" style="font-size: 14px;">Define and configure your automated test suite parameters.</p>
+    </div>
+
+    <form [formGroup]="testSuiteForm" (ngSubmit)="onSubmit()">
+      <!-- TestSuite Name -->
+      <div class="mb-4 col-md-11">
+        <label for="name" class="form-label">TestSuite Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          placeholder="Enter suite name (e.g. Core API Validation Suite)"
+          style="height: 54px;"
+        >
+      </div>
+
+      <!-- Suite Description -->
+      <div class="mb-4 col-md-11">
+        <label for="description" class="form-label">Suite Description</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-control"
+          placeholder="Describe the purpose and scope of this test suite..."
+        ></textarea>
+      </div>
+
+      <!-- Suite Type -->
+      <div class="mb-4 col-md-11">
+        <label for="suiteType" class="form-label">Suite Type</label>
+        <select id="suiteType" formControlName="suiteType" class="form-select">
+          <option value="" disabled selected>Select suite type</option>
+          <option value="E2E Testing">E2E Testing</option>
+          <option value="API Testing">API Testing</option>
+          <option value="UI Testing">UI Testing</option>
+        </select>
+      </div>
+
+      <!-- Test Cases Section -->
+      <div class="test-cases-section">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <h5 class="fw-bold mb-1" style="color: #4B0082; font-size: 18px;">Test Cases</h5>
+            <p class="text-muted" style="font-size: 13px;">Add individual test cases to be executed within this suite.</p>
+          </div>
+          <button type="button" class="btn-add-testcases" *ngIf="testCases.length > 0">
+            <i class="bi bi-plus-circle-fill"></i> Add TestCases
+          </button>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="testCases.length === 0" class="empty-state-container d-flex flex-column align-items-center justify-content-center mx-auto col-md-11">
+          <div class="icon-circle">
+            <i class="bi bi-text-indent-left"></i>
+          </div>
+          <h6 class="fw-bold mb-1">No test cases added yet</h6>
+          <p class="text-muted mb-4" style="font-size: 14px;">Once you add test cases, they will appear here as a manageable list.</p>
+          <button type="button" class="btn-add-testcases">
+            <i class="bi bi-plus-circle-fill"></i> Add TestCases
+          </button>
+        </div>
+
+        <!-- List of test cases could go here if implemented -->
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="footer-actions d-flex justify-content-end gap-3 mt-5">
+        <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-theme-orange" [disabled]="testSuiteForm.invalid">
+          {{ mode === 'edit' ? 'Save Changes' : 'Save and Proceed' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

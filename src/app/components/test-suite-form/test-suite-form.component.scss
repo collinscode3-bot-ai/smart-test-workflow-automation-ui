@@ -1,0 +1,76 @@
+@import "variables";
+
+.form-label {
+    color: #6C757D;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.test-cases-section {
+    border-top: 1px solid #f0f0f0;
+    padding-top: 30px;
+    margin-top: 20px;
+}
+
+.empty-state-container {
+    border: 2px dashed #E5E7EB !important;
+    border-radius: 12px;
+    background-color: #fcfcfc;
+    padding: 60px 0;
+    width: 100%;
+}
+
+.icon-circle {
+    width: 56px;
+    height: 56px;
+    background-color: #F3F0FF;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    i {
+        font-size: 24px;
+        color: $primary-color;
+    }
+}
+
+.btn-add-testcases {
+    background-color: $accent-color;
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &:hover {
+        background-color: darken($accent-color, 10%);
+        color: white;
+    }
+}
+
+textarea.form-control {
+    min-height: 120px;
+    resize: none;
+}
+
+/* Ensure focus state visibility */
+.form-control:focus, .form-select:focus {
+    border-color: $primary-color !important;
+    box-shadow: 0 0 0 0.25rem rgba(75, 0, 130, 0.25) !important;
+}
+
+/* Ensure primary button style is preserved when disabled */
+.btn-theme-orange:disabled {
+    background-color: $accent-color !important;
+    opacity: 0.6;
+    color: white !important;
+    cursor: not-allowed;
+}

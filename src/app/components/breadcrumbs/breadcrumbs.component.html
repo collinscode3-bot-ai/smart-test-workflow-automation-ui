@@ -1,7 +1,11 @@
 <nav aria-label="breadcrumb" class="mb-4">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="#">Projects</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+    <li *ngFor="let crumb of breadcrumbs"
+        class="breadcrumb-item"
+        [class.active]="crumb.active"
+        [attr.aria-current]="crumb.active ? 'page' : null">
+      <a *ngIf="!crumb.active" [routerLink]="crumb.url" class="text-decoration-none" style="color: #6C757D;">{{ crumb.label }}</a>
+      <span *ngIf="crumb.active" style="color: #4B0082; font-weight: 500;">{{ crumb.label }}</span>
+    </li>
   </ol>
 </nav>

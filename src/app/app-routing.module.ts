@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProjectFormComponent } from './components/project-form/project-form.component';
 import { ProjectsDashboardComponent } from './components/projects-dashboard/projects-dashboard.component';
+import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/test-suite-dashboard.component';
 
 const routes: Routes = [
   { path: '', component: ProjectFormComponent },
   { path: 'projects/dashboard', component: ProjectsDashboardComponent },
   { path: 'projects/list', component: ProjectsDashboardComponent },
   { path: 'test-suites/create', component: ProjectFormComponent },
-  { path: 'test-suites/list', component: ProjectFormComponent },
+  { path: 'test-suites/list', component: TestSuiteDashboardComponent },
   { path: 'contracts/list', component: ProjectFormComponent },
   { path: 'contracts/upload', component: ProjectFormComponent },
   { path: 'test-data/datasets', component: ProjectFormComponent },

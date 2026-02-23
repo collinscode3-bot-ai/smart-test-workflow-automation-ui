@@ -23,10 +23,10 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
   {
     label: 'Test Suites',
     icon: 'bi-journal-text',
-    isExpanded: false,
+    isExpanded: true,
     subLinks: [
       { label: 'Create Suite', path: '/test-suites/create' },
-      { label: 'Suite List', path: '/test-suites/list' }
+      { label: 'Dashboard', path: '/test-suites/list' }
     ]
   },
   {

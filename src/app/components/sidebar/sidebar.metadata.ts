@@ -16,7 +16,7 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
     icon: 'bi-grid',
     isExpanded: true,
     subLinks: [
-      { label: 'Dashboard', path: '/projects/dashboard' },
+     { label: 'Project Dashboard', path: '/projects/dashboard' },
       { label: 'New Project', path: '/' }
     ]
   },
@@ -25,8 +25,8 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
     icon: 'bi-journal-text',
     isExpanded: true,
     subLinks: [
-      { label: 'Create Suite', path: '/test-suites/create' },
-      { label: 'Dashboard', path: '/test-suites/list' }
+     { label: 'Test Suites Dashboard', path: '/test-suites/list' },
+      { label: 'Create Suite', path: '/test-suites/create' }
     ]
   },
   {

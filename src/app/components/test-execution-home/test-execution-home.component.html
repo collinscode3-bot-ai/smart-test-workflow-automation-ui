@@ -1,0 +1,88 @@
+<div class="col-12 col-lg-10 mx-auto py-4">
+  <!-- Header Card -->
+  <div class="card border-0 shadow-sm p-4 mb-4">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <div class="blue-icon-container d-flex align-items-center justify-content-center">
+          <i class="bi bi-grid-fill text-white fs-2"></i>
+        </div>
+      </div>
+      <div class="col ps-4">
+        <span class="badge text-primary bg-primary-subtle mb-2 text-uppercase fw-bold" style="font-size: 11px; letter-spacing: 0.5px; padding: 5px 10px;">AUTOMATED SUITE</span>
+        <h3 class="fw-bold mb-1">{{ suiteName }}</h3>
+        <p class="text-muted mb-3" style="font-size: 14px;">{{ suiteDescription }}</p>
+        <div class="d-flex align-items-center gap-4 text-muted" style="font-size: 13px;">
+          <span><i class="bi bi-file-earmark-text me-2"></i>12 Test Cases</span>
+          <span><i class="bi bi-clock me-2"></i>Last run 2h ago</span>
+        </div>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-run-suite px-4 d-flex align-items-center gap-2" (click)='runTestSuite()'>
+          <i class="bi bi-play-fill fs-5"></i>
+          <span class="fw-bold">Run Test Suite</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Cases Section (Visible after Run) -->
+  <div *ngIf="isExecuting">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex align-items-center gap-2">
+        <h4 class="fw-bold mb-0">Test Cases</h4>
+        <span class="badge bg-light text-muted border rounded-pill px-3 py-2" style="font-size: 12px;">5 total</span>
+      </div>
+      <div class="d-flex gap-3">
+        <button class="btn btn-link text-muted p-0"><i class="bi bi-filter"></i></button>
+        <button class="btn btn-link text-muted p-0"><i class="bi bi-arrow-down-up"></i></button>
+      </div>
+    </div>
+
+    <div class="accordion border-0" id="testCaseAccordion">
+      <div *ngFor="let testCase of testCases; let i = index" class="accordion-item border-0 mb-3 shadow-sm rounded-3 overflow-hidden">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed bg-white py-3 px-4 d-flex align-items-center" type="button" [attr.data-bs-toggle]="'collapse'" [attr.data-bs-target]="'#collapse' + i">
+            <div class="d-flex align-items-center w-100">
+              <span class="text-muted me-3 fw-medium" style="font-size: 12px; min-width: 50px;">{{ testCase.id }}</span>
+              <span class="fw-bold text-dark flex-grow-1">{{ testCase.name }}</span>
+              <span class="badge status-badge me-3" [ngClass]="getStatusClass(testCase.status)">
+                <i class="bi" [ngClass]="{
+                  'bi-check-circle-fill': testCase.status === 'Passed',
+                  'bi-arrow-repeat': testCase.status === 'In Progress',
+                  'bi-x-circle-fill': testCase.status === 'Failed',
+                  'bi-dash-circle-fill': testCase.status === 'Pending'
+                }"></i>
+                {{ testCase.status | uppercase }}
+              </span>
+            </div>
+          </button>
+        </h2>
+        <div [id]="'collapse' + i" class="accordion-collapse collapse" data-bs-parent="#testCaseAccordion">
+          <div class="accordion-body bg-white border-top p-4">
+            <div class="row mb-4">
+              <div class="col-md-4">
+                <label class="text-uppercase fw-bold text-muted small mb-2">STEPS</label>
+                <ul class="ps-3 mb-0">
+                  <li *ngFor="let step of testCase.steps" class="small mb-1">{{ step }}</li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <label class="text-uppercase fw-bold text-muted small mb-2">INPUT DATA</label>
+                <pre class="bg-light p-3 rounded small mb-0">{{ testCase.inputData }}</pre>
+              </div>
+              <div class="col-md-4">
+                <label class="text-uppercase fw-bold text-muted small mb-2">EXPECTED RESULTS</label>
+                <p class="small mb-0">{{ testCase.expectedResults }}</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-outline-primary btn-sm px-4 py-2 fw-bold" (click)="viewTestCaseFlow(testCase.id)">
+                View Test Case Flow
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

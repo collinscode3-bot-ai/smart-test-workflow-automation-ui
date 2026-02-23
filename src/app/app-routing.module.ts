@@ -4,6 +4,7 @@ import { ProjectFormComponent } from './components/project-form/project-form.com
 import { ProjectsDashboardComponent } from './components/projects-dashboard/projects-dashboard.component';
 import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/test-suite-dashboard.component';
 import { TestSuiteFormComponent } from './components/test-suite-form/test-suite-form.component';
+import { TestExecutionHomeComponent } from './components/test-execution-home/test-execution-home.component';
 
 const routes: Routes = [
   { path: '', component: ProjectFormComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'test-suites/create', component: TestSuiteFormComponent },
   { path: 'test-suites/edit/:id', component: TestSuiteFormComponent, data: { mode: 'edit' } },
   { path: 'test-suites/list', component: TestSuiteDashboardComponent },
+  { path: 'test-suites/execution/:id', component: TestExecutionHomeComponent },
   { path: 'contracts/list', component: ProjectFormComponent },
   { path: 'contracts/upload', component: ProjectFormComponent },
   { path: 'test-data/datasets', component: ProjectFormComponent },

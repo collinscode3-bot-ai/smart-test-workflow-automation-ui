@@ -1,0 +1,76 @@
+.blue-icon-container {
+    width: 140px;
+    height: 140px;
+    background-color: #2D64F1;
+    border-radius: 12px;
+}
+
+.btn-run-suite {
+    background-color: #2D64F1;
+    color: white;
+    height: 60px;
+    border-radius: 8px;
+    border: none;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background-color: darken(#2D64F1, 10%);
+        color: white;
+    }
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 110px;
+    justify-content: center;
+
+    &.status-passed {
+        background-color: #E6F6F0;
+        color: #00B87C;
+    }
+
+    &.status-failed {
+        background-color: #FEEEEE;
+        color: #F24D4D;
+    }
+
+    &.status-in-progress {
+        background-color: #E9F0FE;
+        color: #2D64F1;
+    }
+
+    &.status-pending {
+        background-color: #F4F5F7;
+        color: #7A869A;
+    }
+}
+
+.accordion-button {
+    box-shadow: none !important;
+
+    &::after {
+        background-size: 1rem;
+    }
+
+    &:not(.collapsed) {
+        color: inherit;
+        background-color: white;
+        box-shadow: none;
+    }
+}
+
+.accordion-item {
+    border: 1px solid #E5E7EB !important;
+    border-radius: 8px !important;
+}
+
+pre {
+    border: 1px solid #E5E7EB;
+    white-space: pre-wrap;
+}

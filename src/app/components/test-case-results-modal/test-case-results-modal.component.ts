@@ -10,7 +10,10 @@ export class TestCaseResultsModalComponent implements OnInit {
   @Input() executionData: any;
   @Output() close = new EventEmitter<void>();
 
-  // Default mock data with multiple datasets
+  // Tracks selected service index for each dataset
+  selectedServiceIndices: { [datasetId: string]: number } = {};
+
+  // Default mock data with service-level details
   datasets: any[] = [
     {
       id: 'ds-001',
@@ -19,26 +22,27 @@ export class TestCaseResultsModalComponent implements OnInit {
       applicationName: "Smart Workflow API",
       serviceName: "Auth-Service",
       services: [
-        { name: "Authentication Service", status: "success", active: false },
-        { name: "User Profile Service", status: "success", active: true },
-        { name: "Authorization Service", status: "success", active: false },
-        { name: "Logging Service", status: "success", active: false }
-      ],
-      entryPayload: JSON.stringify({
-        "requestId": "req_9921",
-        "timestamp": "2023-11-05T10:00:00Z",
-        "user_id": "usr_1a2b3c4d",
-        "action": "LOGIN"
-      }, null, 2),
-      exitPayload: JSON.stringify({
-        "status": "success",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-        "expires_in": 3600
-      }, null, 2),
-      validations: [
-        { name: "user_id_format", value: "\"usr_1a2b3c4d\"", status: "PASSED" },
-        { name: "token_presence", value: "true", status: "PASSED" },
-        { name: "response_time", value: "145ms", status: "PASSED" }
+        {
+          name: "Authentication Service",
+          status: "success",
+          entryPayload: JSON.stringify({ "action": "AUTH", "user": "jules" }, null, 2),
+          exitPayload: JSON.stringify({ "status": "authenticated", "uid": "123" }, null, 2),
+          validations: [{ name: "auth_token", value: "valid", status: "PASSED" }]
+        },
+        {
+          name: "User Profile Service",
+          status: "success",
+          entryPayload: JSON.stringify({ "get": "profile", "uid": "123" }, null, 2),
+          exitPayload: JSON.stringify({ "name": "Jules", "role": "Engineer" }, null, 2),
+          validations: [{ name: "profile_fields", value: "complete", status: "PASSED" }]
+        },
+        {
+          name: "Authorization Service",
+          status: "success",
+          entryPayload: JSON.stringify({ "check": "perm", "uid": "123" }, null, 2),
+          exitPayload: JSON.stringify({ "allowed": true }, null, 2),
+          validations: [{ name: "permission_check", value: "granted", status: "PASSED" }]
+        }
       ]
     },
     {
@@ -48,23 +52,20 @@ export class TestCaseResultsModalComponent implements OnInit {
       applicationName: "Smart Workflow API",
       serviceName: "Auth-Service",
       services: [
-        { name: "Authentication Service", status: "success", active: false },
-        { name: "User Profile Service", status: "error", active: true }
-      ],
-      entryPayload: JSON.stringify({
-        "requestId": "req_9922",
-        "timestamp": "2023-11-05T10:05:00Z",
-        "user_id": "invalid_id",
-        "action": "LOGIN"
-      }, null, 2),
-      exitPayload: JSON.stringify({
-        "status": "error",
-        "message": "User not found",
-        "code": "AUTH_001"
-      }, null, 2),
-      validations: [
-        { name: "user_id_format", value: "\"invalid_id\"", status: "FAILED" },
-        { name: "error_code", value: "\"AUTH_001\"", status: "PASSED" }
+        {
+          name: "Authentication Service",
+          status: "success",
+          entryPayload: JSON.stringify({ "action": "AUTH", "user": "unknown" }, null, 2),
+          exitPayload: JSON.stringify({ "status": "authenticated", "uid": "999" }, null, 2),
+          validations: [{ name: "auth_token", value: "valid", status: "PASSED" }]
+        },
+        {
+          name: "User Profile Service",
+          status: "error",
+          entryPayload: JSON.stringify({ "get": "profile", "uid": "999" }, null, 2),
+          exitPayload: JSON.stringify({ "error": "not_found" }, null, 2),
+          validations: [{ name: "user_exists", value: "false", status: "FAILED" }]
+        }
       ]
     }
   ];
@@ -75,6 +76,19 @@ export class TestCaseResultsModalComponent implements OnInit {
     if (this.executionData && this.executionData.datasets) {
       this.datasets = this.executionData.datasets;
     }
+    // Initialize default selections (first service for each dataset)
+    this.datasets.forEach(ds => {
+      this.selectedServiceIndices[ds.id] = 0;
+    });
+  }
+
+  selectService(datasetId: string, index: number): void {
+    this.selectedServiceIndices[datasetId] = index;
+  }
+
+  getSelectedService(dataset: any): any {
+    const index = this.selectedServiceIndices[dataset.id] || 0;
+    return dataset.services[index];
   }
 
   formatJson(json: string): SafeHtml {

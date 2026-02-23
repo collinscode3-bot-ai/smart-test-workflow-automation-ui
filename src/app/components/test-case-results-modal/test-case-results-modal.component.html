@@ -31,11 +31,12 @@
 
                 <!-- Execution Ribbon -->
                 <div class="execution-ribbon mb-4 mt-2">
-                  <div *ngFor="let service of dataset.services.slice(0, 10); let first = first"
-                       class="ribbon-step"
+                  <div *ngFor="let service of dataset.services.slice(0, 10); let j = index; let first = first"
+                       class="ribbon-step clickable"
                        [class.status-success]="service.status === 'success'"
-                       [class.active]="service.active"
-                       [class.first-step]="first">
+                       [class.active]="selectedServiceIndices[dataset.id] === j"
+                       [class.first-step]="first"
+                       (click)="selectService(dataset.id, j)">
                     {{ service.name }}
                   </div>
                 </div>
@@ -52,51 +53,54 @@
                   </div>
                 </div>
 
-                <!-- Payloads Section -->
-                <div class="row mb-5">
-                  <div class="col-md-6">
-                    <label class="section-label mb-3">ENTRY PAYLOAD</label>
-                    <div class="json-payload-container shadow-sm">
-                      <pre class="mb-0" [innerHTML]="formatJson(dataset.entryPayload)"></pre>
+                <!-- Service Details Section (Dynamic based on selected ribbon link) -->
+                <div *ngIf="getSelectedService(dataset) as activeService">
+                  <!-- Payloads Section -->
+                  <div class="row mb-5">
+                    <div class="col-md-6">
+                      <label class="section-label mb-3">ENTRY PAYLOAD</label>
+                      <div class="json-payload-container shadow-sm fixed-size-payload">
+                        <pre class="mb-0" [innerHTML]="formatJson(activeService.entryPayload)"></pre>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="section-label mb-3">EXIT PAYLOAD</label>
+                      <div class="json-payload-container shadow-sm fixed-size-payload">
+                        <pre class="mb-0" [innerHTML]="formatJson(activeService.exitPayload)"></pre>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <label class="section-label mb-3">EXIT PAYLOAD</label>
-                    <div class="json-payload-container shadow-sm">
-                      <pre class="mb-0" [innerHTML]="formatJson(dataset.exitPayload)"></pre>
-                    </div>
-                  </div>
-                </div>
 
-                <!-- Field Validations Table -->
-                <div class="validations-section">
-                  <label class="section-label mb-3">FIELD VALIDATIONS</label>
-                  <div class="card border shadow-sm overflow-hidden">
-                    <div class="table-responsive">
-                      <table class="table table-hover mb-0 align-middle custom-table">
-                        <thead>
-                          <tr>
-                            <th class="px-4 py-3 text-uppercase fw-bold">Field Validation Name</th>
-                            <th class="px-4 py-3 text-uppercase fw-bold">Value</th>
-                            <th class="px-4 py-3 text-uppercase fw-bold text-end">Result</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let validation of dataset.validations">
-                            <td class="px-4 py-3 fw-medium text-dark">{{ validation.name }}</td>
-                            <td class="px-4 py-3 text-muted">
-                              <code class="bg-light px-2 py-1 rounded border" style="font-size: 13px; color: #4B0082;">{{ validation.value }}</code>
-                            </td>
-                            <td class="px-4 py-3 text-end">
-                              <span class="badge" [ngClass]="getStatusBadgeClass(validation.status)">
-                                <i class="bi bi-check-circle-fill me-1" *ngIf="validation.status === 'PASSED'"></i>
-                                <i class="bi bi-x-circle-fill me-1" *ngIf="validation.status === 'FAILED'"></i>
-                                {{ validation.status }}
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                  <!-- Field Validations Table -->
+                  <div class="validations-section">
+                    <label class="section-label mb-3">FIELD VALIDATIONS ({{ activeService.name }})</label>
+                    <div class="card border shadow-sm overflow-hidden">
+                      <div class="table-responsive">
+                        <table class="table table-hover mb-0 align-middle custom-table">
+                          <thead>
+                            <tr>
+                              <th class="px-4 py-3 text-uppercase fw-bold">Field Validation Name</th>
+                              <th class="px-4 py-3 text-uppercase fw-bold">Value</th>
+                              <th class="px-4 py-3 text-uppercase fw-bold text-end">Result</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let validation of activeService.validations">
+                              <td class="px-4 py-3 fw-medium text-dark">{{ validation.name }}</td>
+                              <td class="px-4 py-3 text-muted">
+                                <code class="bg-light px-2 py-1 rounded border" style="font-size: 13px; color: #4B0082;">{{ validation.value }}</code>
+                              </td>
+                              <td class="px-4 py-3 text-end">
+                                <span class="badge" [ngClass]="getStatusBadgeClass(validation.status)">
+                                  <i class="bi bi-check-circle-fill me-1" *ngIf="validation.status === 'PASSED'"></i>
+                                  <i class="bi bi-x-circle-fill me-1" *ngIf="validation.status === 'FAILED'"></i>
+                                  {{ validation.status }}
+                                </span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>

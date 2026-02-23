@@ -101,7 +101,7 @@ export class TestSuiteDashboardComponent implements OnInit {
    * Router logic to navigate to the dual-purpose test suite form in 'edit' mode.
    */
   MapsToEdit(id: string): void {
-    this.router.navigate(['/edit'], { queryParams: { id: id, type: 'test-suite' } });
+    this.router.navigate([`/test-suites/edit/${id}`], { queryParams: { projectId: this.projectId } });
   }
 
   updatePagination(): void {
@@ -125,6 +125,6 @@ export class TestSuiteDashboardComponent implements OnInit {
   }
 
   navigateToCreate(): void {
-    this.router.navigate(['/test-suites/create']);
+    this.router.navigate(['/test-suites/create'], { queryParams: { projectId: this.projectId } });
   }
 }

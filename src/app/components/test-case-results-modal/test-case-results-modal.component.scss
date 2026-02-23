@@ -16,26 +16,26 @@
 /* Execution Ribbon */
 .execution-ribbon {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   overflow-x: auto;
-  padding: 10px 0;
+  padding: 5px 0;
 
   .ribbon-step {
     position: relative;
-    padding: 12px 25px 12px 35px;
+    padding: 8px 15px 8px 25px;
     color: white;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 11px;
     white-space: nowrap;
     transition: all 0.2s ease;
 
     // Chevron shape using clip-path
     clip-path: polygon(
-      calc(100% - 15px) 0,
+      calc(100% - 10px) 0,
       100% 50%,
-      calc(100% - 15px) 100%,
+      calc(100% - 10px) 100%,
       0 100%,
-      15px 50%,
+      10px 50%,
       0 0
     );
 
@@ -49,13 +49,20 @@
 
     &.first-step {
       clip-path: polygon(
-        calc(100% - 15px) 0,
+        calc(100% - 10px) 0,
         100% 50%,
-        calc(100% - 15px) 100%,
+        calc(100% - 10px) 100%,
         0 100%,
         0 0
       );
-      padding-left: 20px;
+      padding-left: 15px;
+    }
+
+    &.clickable {
+      cursor: pointer;
+      &:hover {
+        filter: brightness(1.1);
+      }
     }
   }
 }
@@ -67,8 +74,12 @@
   padding: 20px;
   color: #F8FAFC;
   overflow: auto;
-  max-height: 400px;
   border: 0;
+
+  &.fixed-size-payload {
+    height: 300px;
+    width: 100%;
+  }
 
   pre {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
@@ -119,21 +130,45 @@
   }
 }
 
-/* Table styling */
-.table {
-  thead th {
-    border-top: 0;
-    border-bottom: 1px solid #F1F5F9;
-  }
+/* Table styling for better contrast */
+.custom-table {
+  border-collapse: separate;
+  border-spacing: 0;
 
-  tbody tr {
-    border-bottom: 1px solid #F8FAFC;
-    &:last-child {
-      border-bottom: 0;
+  thead {
+    background-color: #F8FAFC;
+
+    th {
+      color: #334155; // Darker text for headers
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #E2E8F0; // Stronger bottom border for header
+      border-top: 0;
     }
   }
 
-  code {
-    color: #4B0082;
+  tbody {
+    tr {
+      border-bottom: 1px solid #E2E8F0;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      &:hover {
+        background-color: #F1F5F9;
+      }
+    }
+
+    td {
+      padding: 12px 24px;
+      color: #1E293B;
+    }
   }
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #F8FAFC;
+  color: inherit;
+  box-shadow: none;
 }

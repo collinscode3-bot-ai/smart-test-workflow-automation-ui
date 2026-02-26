@@ -142,17 +142,17 @@ export class TestCaseDetailsComponent implements OnInit {
   }
 
   addVerification() {
-    const nextId = this.verifications.length > 0 ? Math.max(...this.verifications.map(v => v.id)) + 1 : 1;
-    this.verifications.push({
-      id: nextId,
-      step: `New Verification Step ${nextId}`,
-      type: 'Response'
-    });
+    const projectId = this.route.snapshot.queryParamMap.get('projectId') || '1';
+    const suiteId = this.route.snapshot.queryParamMap.get('suiteId') || '1';
+    const caseId = this.testCaseId || '1';
+    this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/new`]);
   }
 
   editVerification(id: number) {
-    console.log(`Editing verification with id: ${id}`);
-    // Logic for editing a verification
+    const projectId = this.route.snapshot.queryParamMap.get('projectId') || '1';
+    const suiteId = this.route.snapshot.queryParamMap.get('suiteId') || '1';
+    const caseId = this.testCaseId || '1';
+    this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/edit/${id}`]);
   }
 
   deleteVerification(id: number) {

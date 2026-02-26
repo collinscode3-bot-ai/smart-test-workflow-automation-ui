@@ -16,6 +16,7 @@ import { TestExecutionHomeComponent } from './components/test-execution-home/tes
 import { TestCaseResultsModalComponent } from './components/test-case-results-modal/test-case-results-modal.component';
 import { TestCaseDetailsComponent } from './components/test-case-details/test-case-details.component';
 import { ContractDetailsComponent } from './components/contract-details/contract-details.component';
+import { VerificationDetailsComponent } from './components/verification-details/verification-details.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ContractDetailsComponent } from './components/contract-details/contract
     TestExecutionHomeComponent,
     TestCaseResultsModalComponent,
     TestCaseDetailsComponent,
-    ContractDetailsComponent
+    ContractDetailsComponent,
+    VerificationDetailsComponent
   ],
   imports: [
     BrowserModule,

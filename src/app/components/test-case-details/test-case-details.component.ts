@@ -43,8 +43,8 @@ export class TestCaseDetailsComponent implements OnInit {
   ];
 
   testData: TestData[] = [
-    { id: 1, name: '"Production Credentials Set"', details: '(JSON, 4 fields)' },
-    { id: 2, name: '"QA Sandbox Environment"', details: '(JSON, 4 fields)' }
+    { id: 1, name: 'Production Credentials Set', details: '(JSON, 4 fields)' },
+    { id: 2, name: 'QA Sandbox Environment', details: '(JSON, 4 fields)' }
   ];
 
   constructor(
@@ -138,6 +138,11 @@ export class TestCaseDetailsComponent implements OnInit {
     });
   }
 
+  editContract(id: number) {
+    console.log(`Editing contract with id: ${id}`);
+    // Logic for editing a contract
+  }
+
   deleteContract(id: number) {
     this.contracts = this.contracts.filter(c => c.id !== id);
   }
@@ -151,6 +156,11 @@ export class TestCaseDetailsComponent implements OnInit {
     });
   }
 
+  editVerification(id: number) {
+    console.log(`Editing verification with id: ${id}`);
+    // Logic for editing a verification
+  }
+
   deleteVerification(id: number) {
     this.verifications = this.verifications.filter(v => v.id !== id);
   }
@@ -159,9 +169,14 @@ export class TestCaseDetailsComponent implements OnInit {
     const nextId = this.testData.length > 0 ? Math.max(...this.testData.map(d => d.id)) + 1 : 1;
     this.testData.push({
       id: nextId,
-      name: `"New Test Dataset ${nextId}"`,
+      name: `New Test Dataset ${nextId}`,
       details: '(JSON, 0 fields)'
     });
+  }
+
+  editTestData(id: number) {
+    console.log(`Editing test data with id: ${id}`);
+    // Logic for editing test data
   }
 
   deleteTestData(id: number) {

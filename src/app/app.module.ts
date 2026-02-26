@@ -14,6 +14,7 @@ import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/t
 import { TestSuiteFormComponent } from './components/test-suite-form/test-suite-form.component';
 import { TestExecutionHomeComponent } from './components/test-execution-home/test-execution-home.component';
 import { TestCaseResultsModalComponent } from './components/test-case-results-modal/test-case-results-modal.component';
+import { TestCaseDetailsComponent } from './components/test-case-details/test-case-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TestCaseResultsModalComponent } from './components/test-case-results-mo
     TestSuiteDashboardComponent,
     TestSuiteFormComponent,
     TestExecutionHomeComponent,
-    TestCaseResultsModalComponent
+    TestCaseResultsModalComponent,
+    TestCaseDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -2,21 +2,32 @@
 > angular-app@0.0.0 start
 > ng serve
 
-? Port 4200 is already in use.
-Would you like to use a diff✔ Browser application bundle generation complete.
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
 
 Initial Chunk Files   | Names         |  Raw Size
 vendor.js             | vendor        |   2.25 MB |
 styles.css, styles.js | styles        | 398.05 kB |
 polyfills.js          | polyfills     | 234.35 kB |
-main.js               | main          | 183.17 kB |
+main.js               | main          | 209.46 kB |
 runtime.js            | runtime       |   6.50 kB |
 
-| Initial Total |   3.05 MB
+| Initial Total |   3.08 MB
 
-Build at: 2026-02-23T17:42:08.607Z - Hash: bc619c1583891dca - Time: 8995ms
+Build at: 2026-02-26T10:55:03.217Z - Hash: 9a18246b411074dc - Time: 12207ms
 
 ** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
 
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 209.46 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-02-26T10:57:18.863Z - Hash: 3eaa49d332bcf8ed - Time: 3054ms
 
 ✔ Compiled successfully.

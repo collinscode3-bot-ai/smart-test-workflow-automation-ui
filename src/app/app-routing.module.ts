@@ -6,6 +6,7 @@ import { TestSuiteDashboardComponent } from './components/test-suite-dashboard/t
 import { TestSuiteFormComponent } from './components/test-suite-form/test-suite-form.component';
 import { TestExecutionHomeComponent } from './components/test-execution-home/test-execution-home.component';
 import { TestCaseDetailsComponent } from './components/test-case-details/test-case-details.component';
+import { ContractDetailsComponent } from './components/contract-details/contract-details.component';
 
 const routes: Routes = [
   { path: '', component: ProjectFormComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'test-suites/execution/:id', component: TestExecutionHomeComponent },
   { path: 'test-cases/create', component: TestCaseDetailsComponent },
   { path: 'test-cases/edit/:id', component: TestCaseDetailsComponent, data: { mode: 'edit' } },
+  { path: 'contracts/create', component: ContractDetailsComponent },
+  { path: 'contracts/edit/:id', component: ContractDetailsComponent, data: { mode: 'edit' } },
   { path: 'contracts/list', component: ProjectFormComponent },
   { path: 'contracts/upload', component: ProjectFormComponent },
   { path: 'test-data/datasets', component: ProjectFormComponent },

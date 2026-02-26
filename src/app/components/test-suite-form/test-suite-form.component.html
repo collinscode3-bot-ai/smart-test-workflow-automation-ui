@@ -48,7 +48,7 @@
             <h5 class="fw-bold mb-1" style="color: #4B0082; font-size: 18px;">Test Cases</h5>
             <p class="text-muted" style="font-size: 13px;">Add individual test cases to be executed within this suite.</p>
           </div>
-          <button type="button" class="btn-add-testcases" *ngIf="testCases.length > 0">
+          <button type="button" class="btn-add-testcases" *ngIf="testCases.length > 0" routerLink="/test-cases/create">
             <i class="bi bi-plus-circle-fill"></i> Add TestCases
           </button>
         </div>
@@ -60,7 +60,7 @@
           </div>
           <h6 class="fw-bold mb-1">No test cases added yet</h6>
           <p class="text-muted mb-4" style="font-size: 14px;">Once you add test cases, they will appear here as a manageable list.</p>
-          <button type="button" class="btn-add-testcases">
+          <button type="button" class="btn-add-testcases" routerLink="/test-cases/create">
             <i class="bi bi-plus-circle-fill"></i> Add TestCases
           </button>
         </div>

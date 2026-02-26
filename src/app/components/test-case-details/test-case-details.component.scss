@@ -8,7 +8,7 @@
   border-radius: 12px;
 }
 
-.form-control, .form-select, textarea.form-control {
+.form-control, .form-select {
   height: 54px;
   border-radius: 8px;
   font-size: 16px;
@@ -22,7 +22,7 @@
 
 textarea.form-control {
   height: auto;
-  min-height: 120px;
+  min-height: 100px;
 }
 
 .form-label {
@@ -30,6 +30,16 @@ textarea.form-control {
   font-size: 16px;
   color: #4B0082;
   margin-bottom: 12px;
+}
+
+.form-label-secondary {
+  display: block;
+  font-weight: bold;
+  font-size: 12px;
+  color: #6C757D; // $text-secondary
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
 }
 
 .btn-theme-orange {
@@ -102,4 +112,21 @@ h5 {
   border: 1px dashed #E5E7EB;
   border-radius: 12px;
   background-color: #fcfcfc;
+}
+
+/* Custom Switch Styling */
+.custom-switch {
+  width: 50px !important;
+  height: 24px !important;
+  cursor: pointer;
+
+  &:checked {
+    background-color: #4B0082 !important;
+    border-color: #4B0082 !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(75, 0, 130, 0.25) !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%2875, 0, 130, 0.25%29'/%3e%3c/svg%3e") !important;
+  }
 }

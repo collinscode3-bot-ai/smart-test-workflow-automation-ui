@@ -6,25 +6,82 @@
     </div>
 
     <!-- Primary Info Section -->
-    <div class="mb-5">
-      <div class="row">
-        <div class="col-md-11">
-          <div class="mb-4">
-            <label for="name" class="form-label">TestCase Name</label>
-            <input
-              type="text"
-              id="name"
-              [(ngModel)]="testCase.name"
-              class="form-control"
-              placeholder="Enter test case name (e.g. User Authentication Flow)"
-              style="height: 54px;"
-            >
+    <div class="mb-5" [formGroup]="testCaseForm">
+      <!-- Row 1: Name and Sequence -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-secondary">TEST CASE NAME</label>
+            <input type="text" formControlName="testCaseName" class="form-control" placeholder="Enter test case name">
           </div>
-          <div class="mb-4">
-            <label for="description" class="form-label">Description</label>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-secondary">SEQ NO</label>
+            <input type="number" formControlName="sequenceNo" class="form-control" placeholder="e.g. 1">
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Action and Payload Format -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-secondary">ACTION</label>
+            <select formControlName="actionType" class="form-select">
+              <option value="" disabled>Select Action</option>
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label-secondary">INPUT PAYLOAD FORMAT</label>
+            <select formControlName="payloadFormat" class="form-select">
+              <option value="" disabled>Select Format</option>
+              <option value="JSON">JSON</option>
+              <option value="XML">XML</option>
+              <option value="TEXT">TEXT</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Conditional Execution Toggle -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="form-group d-flex flex-column">
+            <label class="form-label-secondary">EXECUTE IF PREVIOUS SUCCESSFUL</label>
+            <div class="form-check form-switch mt-2">
+              <input class="form-check-input custom-switch" type="checkbox" role="switch" id="conditionalExecute" formControlName="isConditionalExecute">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <!-- Empty for balance -->
+        </div>
+      </div>
+
+      <!-- Row 4: Trigger URL (Full Width) -->
+      <div class="row mb-4">
+        <div class="col-md-11">
+          <div class="form-group">
+            <label class="form-label-secondary">TRIGGER URL</label>
+            <input type="text" formControlName="triggerUrl" class="form-control" placeholder="https://api.example.com/endpoint">
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5: Description (Full Width) -->
+      <div class="row mb-4">
+        <div class="col-md-11">
+          <div class="form-group">
+            <label class="form-label-secondary">DESCRIPTION</label>
             <textarea
-              id="description"
-              [(ngModel)]="testCase.description"
+              formControlName="description"
               class="form-control"
               rows="4"
               placeholder="Describe the purpose and scope of this test case..."
@@ -183,7 +240,7 @@
       <button type="button" class="btn btn-link text-decoration-none text-muted fw-semibold" (click)="onCancel()" style="font-size: 16px;">
         Cancel
       </button>
-      <button type="button" class="btn btn-theme-orange" (click)="onSave()" style="height: 50px; min-width: 180px;">
+      <button type="button" class="btn btn-theme-orange" (click)="onSave()" style="height: 50px; min-width: 180px;" [disabled]="testCaseForm.invalid">
         {{ mode === 'edit' ? 'Save Changes' : 'Save and Proceed' }}
       </button>
     </div>

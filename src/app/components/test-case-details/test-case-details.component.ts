@@ -130,17 +130,11 @@ export class TestCaseDetailsComponent implements OnInit {
   // CRUD: Logic for adding/deleting rows in each section datatable.
 
   addContract() {
-    const nextId = this.contracts.length > 0 ? Math.max(...this.contracts.map(c => c.id)) + 1 : 1;
-    this.contracts.push({
-      id: nextId,
-      name: `New Contract ${nextId}`,
-      type: 'Consumer Contract'
-    });
+    this.router.navigate(['/contracts/create']);
   }
 
   editContract(id: number) {
-    console.log(`Editing contract with id: ${id}`);
-    // Logic for editing a contract
+    this.router.navigate(['/contracts/edit', id]);
   }
 
   deleteContract(id: number) {

@@ -11,14 +11,14 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label-secondary">TEST CASE NAME</label>
-            <input type="text" formControlName="testCaseName" class="form-control" placeholder="Enter test case name">
+            <label for="testCaseName" class="form-label">Test Case Name</label>
+            <input type="text" id="testCaseName" formControlName="testCaseName" class="form-control" placeholder="Enter test case name">
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label-secondary">SEQ NO</label>
-            <input type="number" formControlName="sequenceNo" class="form-control" placeholder="e.g. 1">
+            <label for="sequenceNo" class="form-label">Seq No</label>
+            <input type="number" id="sequenceNo" formControlName="sequenceNo" class="form-control" placeholder="e.g. 1">
           </div>
         </div>
       </div>
@@ -27,8 +27,8 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label-secondary">ACTION</label>
-            <select formControlName="actionType" class="form-select">
+            <label for="actionType" class="form-label">Action</label>
+            <select id="actionType" formControlName="actionType" class="form-select">
               <option value="" disabled>Select Action</option>
               <option value="GET">GET</option>
               <option value="POST">POST</option>
@@ -39,8 +39,8 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label-secondary">INPUT PAYLOAD FORMAT</label>
-            <select formControlName="payloadFormat" class="form-select">
+            <label for="payloadFormat" class="form-label">Input Payload Format</label>
+            <select id="payloadFormat" formControlName="payloadFormat" class="form-select">
               <option value="" disabled>Select Format</option>
               <option value="JSON">JSON</option>
               <option value="XML">XML</option>
@@ -54,7 +54,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group d-flex flex-column">
-            <label class="form-label-secondary">EXECUTE IF PREVIOUS SUCCESSFUL</label>
+            <label class="form-label">Execute If Previous Successful</label>
             <div class="form-check form-switch mt-2">
               <input class="form-check-input custom-switch" type="checkbox" role="switch" id="conditionalExecute" formControlName="isConditionalExecute">
             </div>
@@ -69,8 +69,8 @@
       <div class="row mb-4">
         <div class="col-md-11">
           <div class="form-group">
-            <label class="form-label-secondary">TRIGGER URL</label>
-            <input type="text" formControlName="triggerUrl" class="form-control" placeholder="https://api.example.com/endpoint">
+            <label for="triggerUrl" class="form-label">Trigger URL</label>
+            <input type="text" id="triggerUrl" formControlName="triggerUrl" class="form-control" placeholder="https://api.example.com/endpoint">
           </div>
         </div>
       </div>
@@ -79,8 +79,9 @@
       <div class="row mb-4">
         <div class="col-md-11">
           <div class="form-group">
-            <label class="form-label-secondary">DESCRIPTION</label>
+            <label for="description" class="form-label">Description</label>
             <textarea
+              id="description"
               formControlName="description"
               class="form-control"
               rows="4"
@@ -93,7 +94,7 @@
 
     <!-- Section 1: Contract Management -->
     <div class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex justify-content-start align-items-center gap-4 mb-4">
         <h5 class="fw-bold mb-0" style="font-size: 18px; color: #333;">CONTRACT MANAGEMENT</h5>
         <button *ngIf="contracts.length > 0" class="btn btn-theme-orange btn-add-custom" (click)="addContract()">
           <i class="bi bi-plus-lg me-2"></i> Add Contracts
@@ -141,7 +142,7 @@
 
     <!-- Section 2: Verifications -->
     <div class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex justify-content-start align-items-center gap-4 mb-4">
         <h5 class="fw-bold mb-0" style="font-size: 18px; color: #333;">VERIFICATIONS</h5>
         <button *ngIf="verifications.length > 0" class="btn btn-theme-orange btn-add-custom" (click)="addVerification()">
           <i class="bi bi-plus-lg me-2"></i> Add Verifications
@@ -189,7 +190,7 @@
 
     <!-- Section 3: Test Data Management -->
     <div class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex justify-content-start align-items-center gap-4 mb-4">
         <h5 class="fw-bold mb-0" style="font-size: 18px; color: #333;">TEST DATA MANAGEMENT</h5>
         <button *ngIf="testData.length > 0" class="btn btn-theme-orange btn-add-custom" (click)="addTestData()">
           <i class="bi bi-plus-lg me-2"></i> Add TestData

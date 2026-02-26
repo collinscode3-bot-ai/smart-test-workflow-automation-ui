@@ -1,0 +1,155 @@
+<div class="col-12 col-lg-10 mx-auto py-4">
+  <div class="mb-4">
+    <h2 class="fw-bold mb-1" style="color: #4B0082;">Contract Details</h2>
+    <p class="text-muted" style="font-size: 14px;">Define the structural and baseline data for your test suites by providing schema definitions.</p>
+  </div>
+
+  <!-- Primary Configuration -->
+  <div class="card border-0 shadow-sm p-4 mb-4" [formGroup]="contractForm">
+    <div class="row col-md-11 mx-auto">
+      <div class="col-md-6 mb-3">
+        <label for="contractName" class="form-label">Contract Name</label>
+        <input type="text" id="contractName" formControlName="contractName" class="form-control" placeholder="Enter contract name" style="height: 54px;" [class.is-invalid]="contractForm.get('contractName')?.touched && contractForm.get('contractName')?.invalid">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="contractType" class="form-label">Contract Type</label>
+        <select id="contractType" formControlName="contractType" class="form-select" style="height: 54px;" [class.is-invalid]="contractForm.get('contractType')?.touched && contractForm.get('contractType')?.invalid">
+          <option value="" selected disabled>Select type</option>
+          <option value="Provider">Provider</option>
+          <option value="Consumer">Consumer</option>
+          <option value="MQ">MQ</option>
+        </select>
+      </div>
+      <div class="col-12">
+        <label for="contractDescription" class="form-label">Contract Description</label>
+        <textarea id="contractDescription" formControlName="contractDescription" class="form-control" placeholder="Enter contract description" style="min-height: 100px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schema Contract -->
+  <div class="card border-0 shadow-sm p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h5 class="fw-bold mb-1" style="font-size: 1.1rem; letter-spacing: 0.5px;">
+          <i class="bi bi-diagram-2-fill me-2 text-primary"></i>SCHEMA CONTRACT
+        </h5>
+        <p class="text-muted small">Upload or paste the structural definition of your contract (JSON Schema).</p>
+      </div>
+      <div class="btn-group p-1 bg-light rounded" role="group" style="height: 40px;">
+        <button type="button" class="btn btn-sm px-3 fw-semibold" [class.btn-white]="schemaMode === 'upload'" [class.shadow-sm]="schemaMode === 'upload'" [class.btn-light]="schemaMode !== 'upload'" [class.text-muted]="schemaMode !== 'upload'" (click)="schemaMode = 'upload'">File Upload</button>
+        <button type="button" class="btn btn-sm px-3 fw-semibold" [class.btn-white]="schemaMode === 'editor'" [class.shadow-sm]="schemaMode === 'editor'" [class.btn-light]="schemaMode !== 'editor'" [class.text-muted]="schemaMode !== 'editor'" (click)="schemaMode = 'editor'">JSON Editor</button>
+      </div>
+    </div>
+
+    <!-- Upload Zone -->
+    <div *ngIf="schemaMode === 'upload'" class="upload-zone border border-2 border-dashed rounded-3 p-5 text-center bg-white" style="border-color: #DEE2E6 !important; cursor: pointer;" (click)="schemaFileInput.click()">
+      <input type="file" #schemaFileInput class="d-none" (change)="onFileUpload($event)">
+      <div class="mb-3">
+        <i class="bi bi-cloud-arrow-up text-secondary opacity-50" style="font-size: 2.5rem;"></i>
+      </div>
+      <h6 class="fw-bold">Click to upload or drag and drop</h6>
+      <p class="text-muted small mb-0">JSON, YAML, or TXT (MAX. 5MB)</p>
+    </div>
+
+    <!-- JSON Editor (Schema) -->
+    <div *ngIf="schemaMode === 'editor'" class="json-editor-container rounded-3 overflow-hidden border">
+      <div class="editor-header bg-light px-3 py-2 d-flex justify-content-between align-items-center border-bottom">
+        <span class="text-uppercase fw-bold text-muted" style="font-size: 10px; letter-spacing: 0.8px;">SCHEMA DEFINITION</span>
+        <button class="btn btn-link btn-sm text-decoration-none p-0 text-primary">
+          <i class="bi bi-copy me-1"></i> Copy
+        </button>
+      </div>
+      <pre class="m-0 p-4 text-light bg-dark" style="min-height: 200px; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6;"><code>{{ sampleSchema | json }}</code></pre>
+    </div>
+  </div>
+
+  <!-- Base Contract -->
+  <div class="card border-0 shadow-sm p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h5 class="fw-bold mb-1" style="font-size: 1.1rem; letter-spacing: 0.5px;">
+          <i class="bi bi-braces me-2 text-primary"></i>BASE CONTRACT
+        </h5>
+        <p class="text-muted small">Define the default values and baseline data for successful test execution.</p>
+      </div>
+      <div class="btn-group p-1 bg-light rounded" role="group" style="height: 40px;">
+        <button type="button" class="btn btn-sm px-3 fw-semibold" [class.btn-white]="baseContractMode === 'upload'" [class.shadow-sm]="baseContractMode === 'upload'" [class.btn-light]="baseContractMode !== 'upload'" [class.text-muted]="baseContractMode !== 'upload'" (click)="baseContractMode = 'upload'">File Upload</button>
+        <button type="button" class="btn btn-sm px-3 fw-semibold" [class.btn-white]="baseContractMode === 'editor'" [class.shadow-sm]="baseContractMode === 'editor'" [class.btn-light]="baseContractMode !== 'editor'" [class.text-muted]="baseContractMode !== 'editor'" (click)="baseContractMode = 'editor'">JSON Editor</button>
+      </div>
+    </div>
+
+    <!-- Upload Zone (Base) -->
+    <div *ngIf="baseContractMode === 'upload'" class="upload-zone border border-2 border-dashed rounded-3 p-5 text-center bg-white" style="border-color: #DEE2E6 !important; cursor: pointer;" (click)="baseFileInput.click()">
+      <input type="file" #baseFileInput class="d-none" (change)="onFileUpload($event)">
+      <div class="mb-3">
+        <i class="bi bi-cloud-arrow-up text-secondary opacity-50" style="font-size: 2.5rem;"></i>
+      </div>
+      <h6 class="fw-bold">Click to upload or drag and drop</h6>
+      <p class="text-muted small mb-0">JSON, YAML, or TXT (MAX. 5MB)</p>
+    </div>
+
+    <!-- JSON Editor Container (Base) -->
+    <div *ngIf="baseContractMode === 'editor'" class="json-editor-container rounded-3 overflow-hidden border">
+      <div class="editor-header bg-light px-3 py-2 d-flex justify-content-between align-items-center border-bottom">
+        <span class="text-uppercase fw-bold text-muted" style="font-size: 10px; letter-spacing: 0.8px;">JSON CONFIGURATION</span>
+        <button class="btn btn-link btn-sm text-decoration-none p-0 text-primary">
+          <i class="bi bi-copy me-1"></i> Copy
+        </button>
+      </div>
+      <pre class="m-0 p-4 text-light bg-dark" style="min-height: 200px; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6;"><code>{{ sampleBaseContract | json }}</code></pre>
+    </div>
+  </div>
+
+  <!-- Field Properties -->
+  <div class="card border-0 shadow-sm p-4 mb-4">
+    <div class="mb-4">
+      <h5 class="fw-bold mb-1" style="font-size: 1.1rem; letter-spacing: 0.5px;">
+        <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>FIELD PROPERTIES
+      </h5>
+      <p class="text-muted small">Configure specific validation and generation rules for individual fields.</p>
+    </div>
+
+    <div class="mb-4">
+      <span class="text-uppercase fw-bold text-muted d-block mb-3" style="font-size: 10px; letter-spacing: 0.8px;">CONFIGURED FIELD PROPERTIES</span>
+      <div class="d-flex flex-wrap gap-3">
+        <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center">
+          <span class="me-2 text-success">●</span> contractId <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;"></button>
+        </span>
+        <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center">
+          <span class="me-2 text-success">●</span> version <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;"></button>
+        </span>
+        <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center">
+          <span class="me-2 text-success">●</span> status <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;"></button>
+        </span>
+      </div>
+    </div>
+
+    <div>
+      <button class="btn btn-theme-purple d-flex align-items-center justify-content-center">
+        <i class="bi bi-plus-lg me-2"></i> Add Field Properties
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="d-flex justify-content-end align-items-center gap-3 mb-5">
+    <button class="btn btn-link text-dark fw-bold text-decoration-none px-4" (click)="onCancel()">Cancel</button>
+    <button class="btn btn-theme-orange d-flex align-items-center justify-content-center px-4" (click)="onSave()">
+      <i class="bi bi-save me-2"></i> Save and Proceed
+    </button>
+  </div>
+
+  <!-- Pro Tip Card -->
+  <div class="card border-0 shadow-sm p-4 bg-light border-start border-4 border-primary">
+    <div class="d-flex align-items-start gap-3">
+      <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; min-width: 24px;">
+        <i class="bi bi-info text-white"></i>
+      </div>
+      <div>
+        <h6 class="fw-bold mb-1">Pro Tip: Schema Validation</h6>
+        <p class="text-muted small mb-0">The system automatically validates your Base Contract against the provided Schema Contract. Ensure types match before saving to avoid deployment errors.</p>
+      </div>
+    </div>
+  </div>
+</div>

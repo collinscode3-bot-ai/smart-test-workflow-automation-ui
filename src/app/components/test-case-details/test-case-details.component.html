@@ -130,7 +130,10 @@
               <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ contract.name }}</span>
               <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ contract.type }}</span>
             </div>
-            <div class="col-auto">
+            <div class="col-auto d-flex gap-3">
+              <button class="btn btn-link text-primary p-0" (click)="editContract(contract.id)">
+                <i class="bi bi-pencil-square" style="font-size: 18px;"></i>
+              </button>
               <button class="btn btn-link text-danger p-0" (click)="deleteContract(contract.id)">
                 <i class="bi bi-trash" style="font-size: 18px;"></i>
               </button>
@@ -178,7 +181,10 @@
               <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ v.step }}</span>
               <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ v.type }}</span>
             </div>
-            <div class="col-auto">
+            <div class="col-auto d-flex gap-3">
+              <button class="btn btn-link text-primary p-0" (click)="editVerification(v.id)">
+                <i class="bi bi-pencil-square" style="font-size: 18px;"></i>
+              </button>
               <button class="btn btn-link text-danger p-0" (click)="deleteVerification(v.id)">
                 <i class="bi bi-trash" style="font-size: 18px;"></i>
               </button>
@@ -226,7 +232,10 @@
               <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ data.name }}</span>
               <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ data.details }}</span>
             </div>
-            <div class="col-auto">
+            <div class="col-auto d-flex gap-3">
+              <button class="btn btn-link text-primary p-0" (click)="editTestData(data.id)">
+                <i class="bi bi-pencil-square" style="font-size: 18px;"></i>
+              </button>
               <button class="btn btn-link text-danger p-0" (click)="deleteTestData(data.id)">
                 <i class="bi bi-trash" style="font-size: 18px;"></i>
               </button>
@@ -242,7 +251,7 @@
         Cancel
       </button>
       <button type="button" class="btn btn-theme-orange" (click)="onSave()" style="height: 50px; min-width: 180px;" [disabled]="testCaseForm.invalid">
-        {{ mode === 'edit' ? 'Save Changes' : 'Save and Proceed' }}
+        {{ mode === 'edit' ? 'Update TestCase' : 'Save TestCase' }}
       </button>
     </div>
   </div>

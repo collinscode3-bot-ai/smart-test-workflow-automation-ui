@@ -93,14 +93,14 @@ export class ContractDetailsComponent implements OnInit {
         // API CALL: POST /api/contracts
         console.log('Creating new contract', formData);
       }
-      this.router.navigate(['/contracts/list']);
+      window.history.back();
     } else {
       this.contractForm.markAllAsTouched();
     }
   }
 
   onCancel() {
-    this.router.navigate(['/contracts/list']);
+    window.history.back();
   }
 
   // LOGIC: File upload handler and JSON validation.

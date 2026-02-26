@@ -8,6 +8,10 @@ interface VerificationParam {
   id: number;
   paramSequence: number;
   paramKey: string;
+  paramValuePath?: string;
+  paramValueSource?: string;
+  valueDataType?: string;
+  paramValue?: string;
 }
 
 @Component({
@@ -23,10 +27,15 @@ export class VerificationDetailsComponent implements OnInit {
   verificationId: string | null = null;
   verificationForm: FormGroup;
 
+  // Modal State
+  isModalOpen = false;
+  modalMode: 'add' | 'edit' = 'add';
+  selectedParam: VerificationParam | null = null;
+
   // Mock Data
   verificationParams: VerificationParam[] = [
-    { id: 1, paramSequence: 1, paramKey: 'tracking_number' },
-    { id: 2, paramSequence: 2, paramKey: 'api_key' }
+    { id: 1, paramSequence: 1, paramKey: 'tracking_number', paramValuePath: '$.tracking_number', paramValueSource: 'Response', valueDataType: 'String', paramValue: '12345' },
+    { id: 2, paramSequence: 2, paramKey: 'api_key', paramValuePath: '$.api_key', paramValueSource: 'Config', valueDataType: 'String', paramValue: 'abc-xyz' }
   ];
 
   constructor(
@@ -117,16 +126,37 @@ export class VerificationDetailsComponent implements OnInit {
   }
 
   addVerificationParam() {
-    console.log('Adding new verification param');
-    const nextId = this.verificationParams.length > 0 ? Math.max(...this.verificationParams.map(p => p.id)) + 1 : 1;
-    this.verificationParams.push({
-      id: nextId,
-      paramSequence: nextId,
-      paramKey: 'new_param'
-    });
+    this.modalMode = 'add';
+    this.selectedParam = null;
+    this.isModalOpen = true;
   }
 
   editVerificationParam(param: VerificationParam) {
-    console.log('Editing verification param', param);
+    this.modalMode = 'edit';
+    this.selectedParam = { ...param };
+    this.isModalOpen = true;
+  }
+
+  handleParamSave(data: any) {
+    if (this.modalMode === 'add') {
+      const nextId = this.verificationParams.length > 0 ? Math.max(...this.verificationParams.map(p => p.id)) + 1 : 1;
+      this.verificationParams.push({
+        id: nextId,
+        ...data
+      });
+    } else if (this.selectedParam) {
+      const index = this.verificationParams.findIndex(p => p.id === this.selectedParam?.id);
+      if (index !== -1) {
+        this.verificationParams[index] = {
+          ...this.verificationParams[index],
+          ...data
+        };
+      }
+    }
+    this.isModalOpen = false;
+  }
+
+  handleParamCancel() {
+    this.isModalOpen = false;
   }
 }

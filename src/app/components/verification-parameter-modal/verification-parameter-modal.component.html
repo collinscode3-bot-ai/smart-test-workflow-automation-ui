@@ -1,0 +1,94 @@
+<div class="modal-backdrop-custom d-flex align-items-start justify-content-center pt-5">
+  <div class="modal-container-custom shadow-lg">
+    <!-- Breadcrumbs Section -->
+    <div class="modal-breadcrumbs px-5 pt-4 pb-2">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">Projects</li>
+          <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Test Suite</li>
+          <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Verifications</li>
+          <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Verification Details</li>
+          <li class="breadcrumb-item active"><i class="bi bi-chevron-right mx-2"></i>{{ mode === 'edit' ? 'Edit' : 'Add' }} Parameter</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Header Section -->
+    <div class="px-5 pb-4 border-bottom">
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">Verification Parameter Configuration</h2>
+      <p class="text-muted" style="font-size: 14px;">Define the technical parameters for the selected verification step.</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="px-5 py-4">
+      <form [formGroup]="parameterForm">
+        <!-- Row 1 -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="modal-label">PARAM SEQUENCE</label>
+              <input type="text" formControlName="paramSequence" class="form-control" placeholder="e.g. 1">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="modal-label">PARAM KEY</label>
+              <input type="text" formControlName="paramKey" class="form-control" placeholder="Enter key name">
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="modal-label">PARAM VALUE PATH</label>
+              <input type="text" formControlName="paramValuePath" class="form-control" placeholder="Enter value path">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="modal-label">PARAM VALUE SOURCE</label>
+              <input type="text" formControlName="paramValueSource" class="form-control" placeholder="Enter source">
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="modal-label">VALUE DATA TYPE</label>
+              <select formControlName="valueDataType" class="form-select">
+                <option value="" disabled>Select data type</option>
+                <option value="String">String</option>
+                <option value="Number">Number</option>
+                <option value="Boolean">Boolean</option>
+                <option value="JSON">JSON</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="modal-label">PARAM VALUE</label>
+              <input type="text" formControlName="paramValue" class="form-control" placeholder="Enter value">
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="px-5 pb-5 pt-3 d-flex justify-content-end align-items-center gap-3">
+      <button type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn btn-save-parameter-custom" (click)="onSave()" [disabled]="parameterForm.invalid">
+        Save Parameter
+      </button>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="text-center pb-4">
+      <p class="text-muted mb-0" style="font-size: 12px;">© 2024 Technical Verification Platform. All rights reserved.</p>
+    </div>
+  </div>
+</div>

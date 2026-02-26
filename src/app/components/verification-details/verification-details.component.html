@@ -132,3 +132,12 @@
     </form>
   </div>
 </div>
+
+<!-- Verification Parameter Modal -->
+<app-verification-parameter-modal
+  *ngIf="isModalOpen"
+  [mode]="modalMode"
+  [parameterData]="selectedParam"
+  (save)="handleParamSave($event)"
+  (cancel)="handleParamCancel()">
+</app-verification-parameter-modal>

@@ -1,0 +1,82 @@
+@import 'variables';
+
+:host {
+  display: block;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.form-control, .form-select, textarea.form-control {
+  height: 54px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: 1px solid #E5E7EB;
+
+  &:focus {
+    border-color: #4B0082;
+    box-shadow: 0 0 0 0.25rem rgba(75, 0, 130, 0.25);
+  }
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 120px;
+}
+
+.form-label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #4B0082;
+  margin-bottom: 12px;
+}
+
+.btn-theme-orange {
+  min-width: 160px;
+  height: 50px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    filter: brightness(90%);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+}
+
+.btn-link {
+  text-decoration: none;
+  font-size: 14px;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+h2 {
+  font-size: 28px;
+}
+
+h6 {
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: 0.8px;
+  color: #4B0082;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.list-item-card {
+  background-color: #F8F9FA;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #F1F3F5;
+  }
+}
+
+.text-muted {
+  font-size: 14px;
+}

@@ -1,0 +1,120 @@
+<div class="col-12 col-lg-10 mx-auto py-4">
+  <div class="card border-0 shadow-sm p-5">
+    <!-- Header -->
+    <h2 class="fw-bold mb-2" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit TestCase' : 'New TestCase' }}</h2>
+    <p class="mb-5" style="font-size: 14px; color: #6C757D;">
+      Configure your test case parameters and associated contracts.
+    </p>
+
+    <!-- Primary Info Section -->
+    <div class="mb-5">
+      <div class="row">
+        <div class="col-md-11">
+          <div class="mb-4">
+            <label for="testCaseName" class="form-label">Testcase Name</label>
+            <input type="text" id="testCaseName" class="form-control" placeholder="e.g. User Authentication Flow" [(ngModel)]="testCase.name">
+          </div>
+          <div class="mb-4">
+            <label for="testCaseDescription" class="form-label">Description</label>
+            <textarea id="testCaseDescription" class="form-control" rows="4" placeholder="Describe the purpose of this test case..." [(ngModel)]="testCase.description"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 1: Contract Management -->
+    <div class="mb-5">
+      <h6 class="fw-bold mb-3">CONTRACT MANAGEMENT</h6>
+
+      <div *ngFor="let contract of contracts" class="card border-0 mb-2 p-3 list-item-card">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <i class="bi bi-file-earmark-text" style="font-size: 18px; color: #4B0082;"></i>
+          </div>
+          <div class="col">
+            <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ contract.name }}</span>
+            <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px;">Type: {{ contract.type }}</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-link text-danger p-0" (click)="deleteContract(contract.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-theme-orange mt-2 d-flex align-items-center" (click)="addContract()" style="background-color: #FF6200 !important; border: none;">
+        <i class="bi bi-plus-circle-fill me-2"></i> Add Contracts
+      </button>
+    </div>
+
+    <!-- Section 2: Verifications -->
+    <div class="mb-5">
+      <h6 class="fw-bold mb-3">VERIFICATIONS</h6>
+
+      <div *ngFor="let v of verifications" class="card border-0 mb-2 p-3 list-item-card">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <i class="bi bi-check2-square" style="font-size: 18px; color: #4B0082;"></i>
+          </div>
+          <div class="col">
+            <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ v.step }}</span>
+            <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px;">{{ v.type }}</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-link text-danger p-0" (click)="deleteVerification(v.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-theme-orange mt-2 d-flex align-items-center" (click)="addVerification()" style="background-color: #FF6200 !important; border: none;">
+        <i class="bi bi-plus-circle-fill me-2"></i> Add Verifications
+      </button>
+    </div>
+
+    <!-- Section 3: Test Data Management -->
+    <div class="mb-5">
+      <h6 class="fw-bold mb-3">TEST DATA MANAGEMENT</h6>
+
+      <div *ngFor="let data of testData" class="card border-0 mb-2 p-3 list-item-card">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; background-color: #E9ECEF; color: #4B0082; font-size: 12px; font-weight: bold;">
+              {{ data.id }}
+            </div>
+          </div>
+          <div class="col">
+            <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ data.name }}</span>
+            <span class="text-muted">{{ data.details }}</span>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-link text-danger p-0" (click)="deleteTestData(data.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-theme-orange mt-2 d-flex align-items-center" (click)="addTestData()" style="background-color: #FF6200 !important; border: none;">
+        <i class="bi bi-plus-circle-fill me-2"></i> Add TestData
+      </button>
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="d-flex justify-content-end gap-3 pt-4 border-top mt-5">
+      <button type="button" class="btn btn-link text-decoration-none text-secondary fw-semibold" (click)="cancel()" style="min-width: 160px;">Cancel</button>
+      <button type="button" class="btn btn-theme-orange" (click)="saveTestCase()" style="background-color: #FF6200 !important; min-width: 160px; height: 50px; border: none;">{{ mode === 'edit' ? 'Update TestCase' : 'Save TestCases' }}</button>
+    </div>
+  </div>
+
+  <!-- Environment Info -->
+  <div class="mt-4 p-3 rounded d-flex align-items-center" style="background-color: #F0EDF5; color: #4B0082; border-radius: 8px;">
+    <i class="bi bi-info-circle-fill me-3" style="font-size: 20px;"></i>
+    <div>
+      <div class="fw-bold" style="font-size: 14px;">Environment: Production</div>
+      <div style="font-size: 12px; color: #6C757D;">This test case will be available for manual trigger or scheduled CI/CD pipelines once saved.</div>
+    </div>
+  </div>
+</div>

@@ -34,4 +34,26 @@
 
 .btn-theme-orange {
     background-color: #FF6200 !important;
+    color: white !important;
+    border: none !important;
+    height: 50px;
+    min-width: 160px;
+    font-weight: 600;
+    border-radius: 8px;
+    &:hover {
+        background-color: #e65c00 !important;
+    }
+}
+
+.btn-theme-purple {
+    background-color: #4B0082 !important;
+    color: white !important;
+    border: none !important;
+    height: 50px;
+    min-width: 160px;
+    font-weight: 600;
+    border-radius: 8px;
+    &:hover {
+        background-color: #3b0066 !important;
+    }
 }

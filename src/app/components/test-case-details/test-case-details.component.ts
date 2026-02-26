@@ -15,6 +15,12 @@ interface Verification {
   type: string;
 }
 
+interface Validation {
+  id: number;
+  name: string;
+  type: string;
+}
+
 interface TestData {
   id: number;
   name: string;
@@ -40,6 +46,11 @@ export class TestCaseDetailsComponent implements OnInit {
   verifications: Verification[] = [
     { id: 1, step: 'Status Code is 200', type: 'Response' },
     { id: 2, step: 'Body contains success: true', type: 'Validation' }
+  ];
+
+  validations: Validation[] = [
+    { id: 1, name: 'JSON Schema Validation', type: 'Schema' },
+    { id: 2, name: 'Business Logic Check', type: 'Logic' }
   ];
 
   testData: TestData[] = [
@@ -157,6 +168,24 @@ export class TestCaseDetailsComponent implements OnInit {
 
   deleteVerification(id: number) {
     this.verifications = this.verifications.filter(v => v.id !== id);
+  }
+
+  addValidation() {
+    const nextId = this.validations.length > 0 ? Math.max(...this.validations.map(v => v.id)) + 1 : 1;
+    this.validations.push({
+      id: nextId,
+      name: `New Validation Rule ${nextId}`,
+      type: 'General'
+    });
+  }
+
+  editValidation(id: number) {
+    console.log(`Editing validation with id: ${id}`);
+    // Logic for editing a validation
+  }
+
+  deleteValidation(id: number) {
+    this.validations = this.validations.filter(v => v.id !== id);
   }
 
   addTestData() {

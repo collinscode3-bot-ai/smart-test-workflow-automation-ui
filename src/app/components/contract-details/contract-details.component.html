@@ -6,7 +6,8 @@
 
   <!-- Primary Configuration -->
   <div class="card border-0 shadow-sm p-4 mb-4" [formGroup]="contractForm">
-    <div class="row col-md-11 mx-auto">
+    <div class="col-md-11 mx-auto">
+      <div class="row">
       <div class="col-md-6 mb-3">
         <label for="contractName" class="form-label">Contract Name</label>
         <input type="text" id="contractName" formControlName="contractName" class="form-control" placeholder="Enter contract name" style="height: 54px;" [class.is-invalid]="contractForm.get('contractName')?.touched && contractForm.get('contractName')?.invalid">
@@ -20,9 +21,10 @@
           <option value="MQ">MQ</option>
         </select>
       </div>
-      <div class="col-12">
-        <label for="contractDescription" class="form-label">Contract Description</label>
-        <textarea id="contractDescription" formControlName="contractDescription" class="form-control" placeholder="Enter contract description" style="min-height: 100px;"></textarea>
+        <div class="col-12">
+          <label for="contractDescription" class="form-label">Contract Description</label>
+          <textarea id="contractDescription" formControlName="contractDescription" class="form-control" placeholder="Enter contract description" style="min-height: 100px;"></textarea>
+        </div>
       </div>
     </div>
   </div>
@@ -140,16 +142,4 @@
     </button>
   </div>
 
-  <!-- Pro Tip Card -->
-  <div class="card border-0 shadow-sm p-4 bg-light border-start border-4 border-primary">
-    <div class="d-flex align-items-start gap-3">
-      <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 24px; height: 24px; min-width: 24px;">
-        <i class="bi bi-info text-white"></i>
-      </div>
-      <div>
-        <h6 class="fw-bold mb-1">Pro Tip: Schema Validation</h6>
-        <p class="text-muted small mb-0">The system automatically validates your Base Contract against the provided Schema Contract. Ensure types match before saving to avoid deployment errors.</p>
-      </div>
-    </div>
-  </div>
 </div>

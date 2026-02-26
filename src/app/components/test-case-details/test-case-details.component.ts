@@ -56,7 +56,7 @@ export class TestCaseDetailsComponent implements OnInit {
     // Initialize Reactive Form
     this.testCaseForm = this.fb.group({
       testCaseName: ['', Validators.required],
-      sequenceNo: ['', Validators.required],
+      sequenceNo: [{ value: 1, disabled: true }, Validators.required],
       actionType: ['', Validators.required],
       payloadFormat: ['', Validators.required],
       isConditionalExecute: [false],

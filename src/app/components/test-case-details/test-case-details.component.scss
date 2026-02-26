@@ -33,6 +33,9 @@ textarea.form-control {
 }
 
 .btn-theme-orange {
+  background-color: #FF6200 !important;
+  border: none;
+  color: white;
   min-width: 160px;
   height: 50px;
   border-radius: 8px;
@@ -40,9 +43,23 @@ textarea.form-control {
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    filter: brightness(90%);
+    background-color: darken(#FF6200, 5%) !important;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
+
+  &:disabled {
+    background-color: #ffb085 !important;
+    cursor: not-allowed;
+  }
+}
+
+.btn-add-custom {
+  min-width: 180px;
+  height: 48px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-link {
@@ -58,25 +75,31 @@ h2 {
   font-size: 28px;
 }
 
-h6 {
+h5 {
   font-weight: bold;
   font-size: 12px;
   letter-spacing: 0.8px;
   color: #4B0082;
   text-transform: uppercase;
-  margin-bottom: 16px;
 }
 
 .list-item-card {
-  background-color: #F8F9FA;
   border-radius: 8px;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
+  border: 1px solid transparent !important;
 
   &:hover {
-    background-color: #F1F3F5;
+    border-color: #E5E7EB !important;
+    transform: translateY(-2px);
   }
 }
 
 .text-muted {
   font-size: 14px;
+}
+
+.empty-state-container {
+  border: 1px dashed #E5E7EB;
+  border-radius: 12px;
+  background-color: #fcfcfc;
 }

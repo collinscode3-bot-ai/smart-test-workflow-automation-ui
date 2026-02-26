@@ -1,0 +1,73 @@
+@import "../../../variables";
+
+.btn-indigo {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+        color: white;
+    }
+}
+
+.btn-group {
+    height: 54px;
+
+    .btn {
+        border-radius: 8px !important;
+        font-weight: 500;
+        font-size: 15px;
+    }
+
+    .btn-indigo {
+        z-index: 2;
+    }
+
+    .btn-outline-secondary {
+        border-color: #dee2e6;
+        color: #6C757D;
+
+        &:hover {
+            background-color: #f8f9fa;
+            color: #6C757D;
+        }
+    }
+}
+
+.table {
+    margin-bottom: 0;
+
+    thead th {
+        font-weight: 600;
+        padding-bottom: 15px;
+    }
+
+    tbody tr {
+        border-top: 1px solid #edf2f7 !important;
+
+        td {
+            padding: 15px 0;
+            color: #4A5568;
+        }
+    }
+}
+
+label {
+    margin-bottom: 0.75rem;
+}
+
+.btn-save-orange {
+    background-color: #FF6200;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover {
+        background-color: darken(#FF6200, 10%);
+        color: white;
+    }
+}

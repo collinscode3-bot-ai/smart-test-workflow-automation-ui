@@ -53,6 +53,19 @@ export class BreadcrumbsComponent implements OnInit {
         crumbs.push({ label: 'Test Suites', url: `/test-suites/list?projectId=${projectId || ''}`, active: false });
         crumbs.push({ label: url.includes('/create') ? 'New' : 'Edit', url: '', active: true });
       }
+    } else if (url.includes('/verifications/')) {
+      crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
+
+      const parts = url.split('/');
+      const projIdx = parts.indexOf('projects');
+      const projectId = projIdx !== -1 ? parts[projIdx + 1] : '1';
+      const caseIdx = parts.indexOf('testcases');
+      const caseId = caseIdx !== -1 ? parts[caseIdx + 1] : '1';
+
+      crumbs.push({ label: this.getMockProjectName(projectId), url: '/projects/dashboard', active: false });
+      crumbs.push({ label: 'Test Suite', url: `/test-suites/list?projectId=${projectId}`, active: false });
+      crumbs.push({ label: 'TestCase', url: `/test-cases/edit/${caseId}`, active: false });
+      crumbs.push({ label: 'Verification Details', url: '', active: true });
     } else if (url === '/' || url.startsWith('/edit')) {
       crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
       crumbs.push({ label: url === '/' ? 'New Project' : 'Edit Project', url: '', active: true });

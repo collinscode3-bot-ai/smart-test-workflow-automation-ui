@@ -14,6 +14,14 @@ interface VerificationParam {
   paramValue?: string;
 }
 
+interface Validation {
+  id: number;
+  validationName: string;
+  payloadSource: string;
+  payloadId: string;
+  validationType: string;
+}
+
 @Component({
   selector: 'app-verification-details',
   templateUrl: './verification-details.component.html',
@@ -33,10 +41,9 @@ export class VerificationDetailsComponent implements OnInit {
   selectedParam: VerificationParam | null = null;
 
   // Mock Data
-  verificationParams: VerificationParam[] = [
-    { id: 1, paramSequence: 1, paramKey: 'tracking_number', paramValuePath: '$.tracking_number', paramValueSource: 'Response', valueDataType: 'String', paramValue: '12345' },
-    { id: 2, paramSequence: 2, paramKey: 'api_key', paramValuePath: '$.api_key', paramValueSource: 'Config', valueDataType: 'String', paramValue: 'abc-xyz' }
-  ];
+  verificationParams: VerificationParam[] = [];
+
+  validations: Validation[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -76,6 +83,7 @@ export class VerificationDetailsComponent implements OnInit {
           'Configure detailed verification steps and parameters for your test case.'
         );
         this.loadVerification(this.verificationId);
+        this.loadValidations(this.verificationId);
       } else {
         this.headerService.setHeaderData(
           'Add Verification',
@@ -125,16 +133,51 @@ export class VerificationDetailsComponent implements OnInit {
     this.location.back();
   }
 
+  loadValidations(id: string) {
+    // API CALL: GET /api/verifications/{id}/validations
+    console.log(`Fetching validations for verification with id: ${id}`);
+  }
+
   addVerificationParam() {
     this.modalMode = 'add';
     this.selectedParam = null;
     this.isModalOpen = true;
   }
 
+  viewVerificationParam(param: VerificationParam) {
+    console.log('Viewing verification parameter', param);
+  }
+
   editVerificationParam(param: VerificationParam) {
     this.modalMode = 'edit';
     this.selectedParam = { ...param };
     this.isModalOpen = true;
+  }
+
+  deleteVerificationParam(id: number) {
+    // API CALL: DELETE /api/verifications/params/{paramId}
+    console.log('Deleting verification parameter', id);
+    this.verificationParams = this.verificationParams.filter(p => p.id !== id);
+  }
+
+  addValidation() {
+    // NAVIGATION: Logic to open the Validation Modal (Add/Edit).
+    console.log('Opening Add Validation Modal');
+  }
+
+  viewValidation(val: Validation) {
+    console.log('Viewing validation', val);
+  }
+
+  editValidation(val: Validation) {
+    // NAVIGATION: Logic to open the Validation Modal (Add/Edit).
+    console.log('Opening Edit Validation Modal', val);
+  }
+
+  deleteValidation(id: number) {
+    // API CALL: DELETE /api/verifications/validations/{valId}
+    console.log('Deleting validation', id);
+    this.validations = this.validations.filter(v => v.id !== id);
   }
 
   handleParamSave(data: any) {

@@ -1,0 +1,78 @@
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.modal-container-custom {
+  background-color: white;
+  width: 100%;
+  max-width: 600px; /* Adjusted for single column layout */
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.modal-label {
+  font-weight: 700;
+  font-size: 12px;
+  color: #4B0082; /* Indigo colored */
+  margin-bottom: 0.5rem;
+  display: block;
+  text-transform: uppercase;
+}
+
+.form-control {
+  height: 54px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: 1px solid #dee2e6;
+  padding-left: 1rem;
+
+  &::placeholder {
+    color: #adb5bd;
+  }
+
+  &:focus {
+    border-color: #4B0082 !important;
+    box-shadow: 0 0 0 0.2rem rgba(75, 0, 130, 0.1) !important;
+  }
+}
+
+textarea.form-control {
+    height: auto;
+}
+
+.bg-light-gray {
+  background-color: #F8F9FA;
+}
+
+.btn-save-error {
+  height: 54px;
+  min-width: 200px;
+  background-color: #4B0082; /* Indigo button */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: darken(#4B0082, 5%);
+    box-shadow: 0 4px 12px rgba(75, 0, 130, 0.3);
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  i {
+    font-size: 1.1rem;
+  }
+}

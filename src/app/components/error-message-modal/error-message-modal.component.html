@@ -1,0 +1,47 @@
+<div class="modal-backdrop-custom d-flex align-items-center justify-content-center">
+  <div class="modal-container-custom shadow-lg">
+    <!-- Header Section -->
+    <div class="px-5 pt-5 pb-4">
+      <h2 class="fw-bold mb-1" style="color: #4B0082; font-size: 2rem; text-transform: uppercase;">
+        {{ mode === 'add' ? 'Add' : mode === 'edit' ? 'Edit' : 'View' }} Error Message
+      </h2>
+      <p class="text-muted" style="font-size: 16px;">Define specific error codes and messages for validation failures.</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="px-5 py-4 border-top">
+      <form [formGroup]="errorForm">
+        <!-- Error Code -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="errorCode" class="modal-label">Error Code</label>
+              <input type="text" id="errorCode" formControlName="errorCode" class="form-control" placeholder="e.g. ERR_VALIDATION_001">
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="errorMessage" class="modal-label">Error Message</label>
+              <textarea id="errorMessage" formControlName="errorMessage" class="form-control" rows="4" style="min-height: 120px; padding-top: 1rem;" placeholder="Enter the error message description..."></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="px-5 py-5 d-flex justify-content-end align-items-center gap-4 bg-light-gray rounded-bottom">
+      <button type="button" class="btn btn-link text-decoration-none text-muted fw-bold px-0" (click)="onCancel()">
+        {{ mode === 'view' ? 'Close' : 'Cancel' }}
+      </button>
+      <button *ngIf="mode !== 'view'" type="button" class="btn btn-save-error d-flex align-items-center justify-content-center gap-2" (click)="onSave()" [disabled]="errorForm.invalid">
+        <i class="bi bi-save-fill"></i>
+        <span>Save Message</span>
+      </button>
+    </div>
+  </div>
+</div>

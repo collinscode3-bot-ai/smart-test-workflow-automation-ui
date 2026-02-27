@@ -163,17 +163,18 @@ export class VerificationDetailsComponent implements OnInit {
   }
 
   addValidation() {
-    // NAVIGATION: Logic to open the Validation Modal (Add/Edit).
-    console.log('Opening Add Validation Modal');
+    const vId = this.verificationId || '1';
+    this.router.navigate([`projects/${this.projectId}/suites/${this.suiteId}/testcases/${this.caseId}/verifications/${vId}/validations/new`]);
   }
 
   viewValidation(val: Validation) {
-    console.log('Viewing validation', val);
+    const vId = this.verificationId || '1';
+    this.router.navigate([`projects/${this.projectId}/suites/${this.suiteId}/testcases/${this.caseId}/verifications/${vId}/validations/edit/${val.id}`]);
   }
 
   editValidation(val: Validation) {
-    // NAVIGATION: Logic to open the Validation Modal (Add/Edit).
-    console.log('Opening Edit Validation Modal', val);
+    const vId = this.verificationId || '1';
+    this.router.navigate([`projects/${this.projectId}/suites/${this.suiteId}/testcases/${this.caseId}/verifications/${vId}/validations/edit/${val.id}`]);
   }
 
   deleteValidation(id: number) {

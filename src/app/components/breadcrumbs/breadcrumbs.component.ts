@@ -65,7 +65,12 @@ export class BreadcrumbsComponent implements OnInit {
       crumbs.push({ label: this.getMockProjectName(projectId), url: '/projects/dashboard', active: false });
       crumbs.push({ label: 'Test Suite', url: `/test-suites/list?projectId=${projectId}`, active: false });
       crumbs.push({ label: 'TestCase', url: `/test-cases/edit/${caseId}`, active: false });
-      crumbs.push({ label: 'Verification Details', url: '', active: true });
+
+      if (url.includes('/validations/')) {
+        crumbs.push({ label: 'Validations', url: '', active: true });
+      } else {
+        crumbs.push({ label: 'Verification Details', url: '', active: true });
+      }
     } else if (url === '/' || url.startsWith('/edit')) {
       crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
       crumbs.push({ label: url === '/' ? 'New Project' : 'Edit Project', url: '', active: true });

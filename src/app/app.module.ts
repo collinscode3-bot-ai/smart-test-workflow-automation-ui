@@ -18,6 +18,7 @@ import { TestCaseDetailsComponent } from './components/test-case-details/test-ca
 import { ContractDetailsComponent } from './components/contract-details/contract-details.component';
 import { VerificationDetailsComponent } from './components/verification-details/verification-details.component';
 import { VerificationParameterModalComponent } from './components/verification-parameter-modal/verification-parameter-modal.component';
+import { ValidationConfigurationComponent } from './components/validation-configuration/validation-configuration.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { VerificationParameterModalComponent } from './components/verification-p
     TestCaseDetailsComponent,
     ContractDetailsComponent,
     VerificationDetailsComponent,
-    VerificationParameterModalComponent
+    VerificationParameterModalComponent,
+    ValidationConfigurationComponent
   ],
   imports: [
     BrowserModule,

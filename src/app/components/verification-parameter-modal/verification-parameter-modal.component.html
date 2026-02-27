@@ -8,7 +8,7 @@
           <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Test Suite</li>
           <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Verifications</li>
           <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Verification Details</li>
-          <li class="breadcrumb-item active"><i class="bi bi-chevron-right mx-2"></i>{{ mode === 'edit' ? 'Edit' : 'Add' }} Parameter</li>
+          <li class="breadcrumb-item active"><i class="bi bi-chevron-right mx-2"></i>{{ mode === 'edit' ? 'Edit' : mode === 'view' ? 'View' : 'Add' }} Parameter</li>
         </ol>
       </nav>
     </div>
@@ -80,10 +80,13 @@
 
     <!-- Footer Section -->
     <div class="px-5 pb-5 pt-3 d-flex justify-content-end align-items-center gap-3">
-      <button type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Cancel</button>
-      <button type="button" class="btn btn-save-parameter-custom" (click)="onSave()" [disabled]="parameterForm.invalid">
-        Save Parameter
-      </button>
+      <ng-container *ngIf="mode !== 'view'">
+        <button type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn btn-save-parameter-custom" (click)="onSave()" [disabled]="parameterForm.invalid">
+          Save Parameter
+        </button>
+      </ng-container>
+      <button *ngIf="mode === 'view'" type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Close</button>
     </div>
 
     <!-- Copyright Section -->

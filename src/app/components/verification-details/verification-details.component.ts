@@ -37,7 +37,7 @@ export class VerificationDetailsComponent implements OnInit {
 
   // Modal State
   isModalOpen = false;
-  modalMode: 'add' | 'edit' = 'add';
+  modalMode: 'add' | 'edit' | 'view' = 'add';
   selectedParam: VerificationParam | null = null;
 
   // Mock Data
@@ -145,7 +145,9 @@ export class VerificationDetailsComponent implements OnInit {
   }
 
   viewVerificationParam(param: VerificationParam) {
-    console.log('Viewing verification parameter', param);
+    this.modalMode = 'view';
+    this.selectedParam = { ...param };
+    this.isModalOpen = true;
   }
 
   editVerificationParam(param: VerificationParam) {

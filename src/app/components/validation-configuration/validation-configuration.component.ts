@@ -3,13 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
-
-interface ValidationParameter {
-  seqNo: number;
-  type: string;
-  value: string | number;
-  dataType: string;
-}
+import { ValidationParameter } from '../validation-parameter-modal/validation-parameter-modal.component';
 
 interface ErrorMessage {
   errorCode: string;
@@ -24,9 +18,15 @@ interface ErrorMessage {
 export class ValidationConfigurationComponent implements OnInit {
   validationForm: FormGroup;
   parametersList: ValidationParameter[] = [
-    { seqNo: 1, type: 'Status', value: 200, dataType: 'INTEGER' },
-    { seqNo: 2, type: 'Message', value: 'Success', dataType: 'STRING' }
+    { parameterSeqNo: 1, parameterType: 'Header', parameterValue: 'application/json', parameterId: 'Content-Type', dataType: 'String' },
+    { parameterSeqNo: 2, parameterType: 'Body', parameterValue: 'Success', parameterId: 'message', dataType: 'String' }
   ];
+
+  // Modal State
+  isModalOpen = false;
+  modalMode: 'add' | 'edit' | 'view' = 'add';
+  selectedParam: ValidationParameter | null = null;
+
   errorsList: ErrorMessage[] = [
     { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
     { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
@@ -103,29 +103,41 @@ export class ValidationConfigurationComponent implements OnInit {
   }
 
   addParameter(): void {
-    console.log('Add Parameter clicked');
-    // Logic to open a modal or add a new row to parametersList
+    this.modalMode = 'add';
+    this.selectedParam = null;
+    this.isModalOpen = true;
   }
 
   editParameter(param: ValidationParameter): void {
-    console.log('Edit Parameter:', param);
-    /*
-    // API Integration Placeholder
-    // this.validationService.editParameter(param.id, ...).subscribe(...);
-    */
+    this.modalMode = 'edit';
+    this.selectedParam = { ...param };
+    this.isModalOpen = true;
   }
 
   deleteParameter(param: ValidationParameter): void {
-    console.log('Delete Parameter:', param);
     this.parametersList = this.parametersList.filter(p => p !== param);
-    /*
-    // API Integration Placeholder
-    // this.validationService.deleteParameter(param.id).subscribe(...);
-    */
   }
 
   viewParameter(param: ValidationParameter): void {
-    console.log('View Parameter:', param);
+    this.modalMode = 'view';
+    this.selectedParam = { ...param };
+    this.isModalOpen = true;
+  }
+
+  handleParamSave(data: ValidationParameter): void {
+    if (this.modalMode === 'add') {
+      this.parametersList.push(data);
+    } else if (this.selectedParam) {
+      const index = this.parametersList.findIndex(p => p.parameterId === this.selectedParam?.parameterId);
+      if (index !== -1) {
+        this.parametersList[index] = data;
+      }
+    }
+    this.isModalOpen = false;
+  }
+
+  handleParamCancel(): void {
+    this.isModalOpen = false;
   }
 
   addErrorMessage(): void {

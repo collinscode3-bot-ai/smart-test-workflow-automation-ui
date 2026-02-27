@@ -20,6 +20,7 @@ import { VerificationDetailsComponent } from './components/verification-details/
 import { VerificationParameterModalComponent } from './components/verification-parameter-modal/verification-parameter-modal.component';
 import { ValidationConfigurationComponent } from './components/validation-configuration/validation-configuration.component';
 import { FieldPropertiesModalComponent } from './components/field-properties-modal/field-properties-modal.component';
+import { ValidationParameterModalComponent } from './components/validation-parameter-modal/validation-parameter-modal.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { FieldPropertiesModalComponent } from './components/field-properties-mod
     VerificationDetailsComponent,
     VerificationParameterModalComponent,
     ValidationConfigurationComponent,
-    FieldPropertiesModalComponent
+    FieldPropertiesModalComponent,
+    ValidationParameterModalComponent
   ],
   imports: [
     BrowserModule,

@@ -77,6 +77,7 @@
             <thead>
               <tr>
                 <th class="text-secondary small fw-bold text-uppercase">Seq No</th>
+                <th class="text-secondary small fw-bold text-uppercase">Parameter ID</th>
                 <th class="text-secondary small fw-bold text-uppercase">Type</th>
                 <th class="text-secondary small fw-bold text-uppercase">Value</th>
                 <th class="text-secondary small fw-bold text-uppercase">Data Type</th>
@@ -85,11 +86,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let param of parametersList">
-                <td>{{ param.seqNo }}</td>
-                <td>{{ param.type }}</td>
-                <td>{{ param.value }}</td>
+                <td>{{ param.parameterSeqNo }}</td>
+                <td>{{ param.parameterId }}</td>
+                <td>{{ param.parameterType }}</td>
+                <td>{{ param.parameterValue }}</td>
                 <td>
-                  <span class="badge" [ngClass]="param.dataType === 'INTEGER' ? 'bg-indigo' : 'bg-purple-light text-indigo'">
+                  <span class="badge" [ngClass]="param.dataType === 'Integer' ? 'bg-indigo' : 'bg-purple-light text-indigo'">
                     {{ param.dataType }}
                   </span>
                 </td>
@@ -182,3 +184,12 @@
     </form>
   </div>
 </div>
+
+<!-- Validation Parameter Modal -->
+<app-validation-parameter-modal
+  *ngIf="isModalOpen"
+  [mode]="modalMode"
+  [parameterData]="selectedParam"
+  (save)="handleParamSave($event)"
+  (cancel)="handleParamCancel()">
+</app-validation-parameter-modal>

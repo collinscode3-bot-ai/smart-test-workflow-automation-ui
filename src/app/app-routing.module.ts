@@ -8,6 +8,7 @@ import { TestExecutionHomeComponent } from './components/test-execution-home/tes
 import { TestCaseDetailsComponent } from './components/test-case-details/test-case-details.component';
 import { ContractDetailsComponent } from './components/contract-details/contract-details.component';
 import { VerificationDetailsComponent } from './components/verification-details/verification-details.component';
+import { ValidationConfigurationComponent } from './components/validation-configuration/validation-configuration.component';
 import { ModalGuard } from './guards/modal-guard.guard';
 
 const routes: Routes = [
@@ -24,6 +25,8 @@ const routes: Routes = [
   { path: 'contracts/edit/:id', component: ContractDetailsComponent, data: { mode: 'edit' } },
   { path: 'projects/:projectId/suites/:suiteId/testcases/:caseId/verifications/new', component: VerificationDetailsComponent, canDeactivate: [ModalGuard] },
   { path: 'projects/:projectId/suites/:suiteId/testcases/:caseId/verifications/edit/:verificationId', component: VerificationDetailsComponent, data: { mode: 'edit' }, canDeactivate: [ModalGuard] },
+  { path: 'projects/:projectId/suites/:suiteId/testcases/:caseId/verifications/:verificationId/validations/new', component: ValidationConfigurationComponent },
+  { path: 'projects/:projectId/suites/:suiteId/testcases/:caseId/verifications/:verificationId/validations/edit/:validationId', component: ValidationConfigurationComponent, data: { mode: 'edit' } },
   { path: 'contracts/list', component: ProjectFormComponent },
   { path: 'contracts/upload', component: ProjectFormComponent },
   { path: 'test-data/datasets', component: ProjectFormComponent },

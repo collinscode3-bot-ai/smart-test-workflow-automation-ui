@@ -115,20 +115,15 @@
     <div class="mb-4">
       <span class="text-uppercase fw-bold text-muted d-block mb-3" style="font-size: 10px; letter-spacing: 0.8px;">CONFIGURED FIELD PROPERTIES</span>
       <div class="d-flex flex-wrap gap-3">
-        <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center">
-          <span class="me-2 text-success">●</span> contractId <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;"></button>
+        <span *ngFor="let prop of configuredFieldProperties; let i = index" class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center" style="cursor: pointer;" (click)="openEditPropertyModal(prop, i)">
+          <span class="me-2" [class.text-success]="prop.isMandatory" [class.text-muted]="!prop.isMandatory">●</span> {{ prop.key }} <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;" (click)="removeProperty(i); $event.stopPropagation()"></button>
         </span>
-        <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center">
-          <span class="me-2 text-success">●</span> version <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;"></button>
-        </span>
-        <span class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center">
-          <span class="me-2 text-success">●</span> status <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;"></button>
-        </span>
+        <div *ngIf="configuredFieldProperties.length === 0" class="text-muted small italic">No field properties configured.</div>
       </div>
     </div>
 
     <div>
-      <button class="btn btn-theme-purple d-flex align-items-center justify-content-center">
+      <button class="btn btn-theme-purple d-flex align-items-center justify-content-center" (click)="openAddPropertyModal()">
         <i class="bi bi-plus-lg me-2"></i> Add Field Properties
       </button>
     </div>
@@ -143,3 +138,12 @@
   </div>
 
 </div>
+
+<!-- Field Properties Modal -->
+<app-field-properties-modal
+  *ngIf="isPropertyModalOpen"
+  [mode]="propertyModalMode"
+  [propertyData]="selectedProperty"
+  (save)="handlePropertySave($event)"
+  (cancel)="handlePropertyCancel()">
+</app-field-properties-modal>

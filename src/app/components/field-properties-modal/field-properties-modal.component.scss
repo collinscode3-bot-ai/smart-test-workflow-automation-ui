@@ -1,0 +1,88 @@
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2000;
+  overflow-y: auto;
+}
+
+.modal-container-custom {
+  background-color: white;
+  width: 100%;
+  max-width: 850px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.modal-label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-control, .form-select {
+  height: 54px !important;
+  border-radius: 8px !important;
+  font-size: 14px;
+  border: 1px solid #dee2e6;
+  padding-left: 1rem;
+
+  &::placeholder {
+    color: #adb5bd;
+  }
+
+  &:focus {
+    border-color: #4B0082 !important;
+    box-shadow: 0 0 0 0.2rem rgba(75, 0, 130, 0.1) !important;
+  }
+}
+
+.bg-light-gray {
+  background-color: #F8F9FA;
+}
+
+/* Custom Toggle Switch Styling */
+.custom-switch {
+  width: 3.5rem !important;
+  height: 1.75rem !important;
+  background-color: #E9ECEF;
+  border: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='white'/%3e%3c/svg%3e") !important;
+
+  &:checked {
+    background-color: #4B0082 !important;
+    border-color: #4B0082 !important;
+  }
+}
+
+.btn-save-property {
+  height: 54px;
+  min-width: 200px;
+  background-color: #5C46E5; /* Adjusting to match the vibrant indigo in the reference */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: darken(#5C46E5, 5%);
+    box-shadow: 0 4px 12px rgba(92, 70, 229, 0.3);
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  i {
+    font-size: 1.1rem;
+  }
+}

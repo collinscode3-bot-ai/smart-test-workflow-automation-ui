@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./verification-parameter-modal.component.scss']
 })
 export class VerificationParameterModalComponent implements OnInit {
-  @Input() mode: 'add' | 'edit' = 'add';
+  @Input() mode: 'add' | 'edit' | 'view' = 'add';
   @Input() parameterData: any = null;
   @Output() save = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
@@ -26,9 +26,13 @@ export class VerificationParameterModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.mode === 'edit' && this.parameterData) {
+    if ((this.mode === 'edit' || this.mode === 'view') && this.parameterData) {
       // GET /api/verification-params/{id} (For Edit mode placeholder)
       this.parameterForm.patchValue(this.parameterData);
+    }
+
+    if (this.mode === 'view') {
+      this.parameterForm.disable();
     }
   }
 

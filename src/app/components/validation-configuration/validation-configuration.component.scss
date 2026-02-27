@@ -86,30 +86,6 @@ h5 {
   }
 }
 
-.btn-save-orange {
-  background-color: #FF6200;
-  border: none;
-  border-radius: 8px;
-  min-width: 200px;
-  height: 54px;
-
-  &:hover {
-    background-color: darken(#FF6200, 5%);
-  }
-}
-
-.btn-light {
-  background-color: #F3F4F6;
-  border: none;
-  border-radius: 8px;
-  min-width: 120px;
-  height: 54px;
-  color: #374151;
-
-  &:hover {
-    background-color: darken(#F3F4F6, 5%);
-  }
-}
 
 .btn-link {
   text-decoration: none;

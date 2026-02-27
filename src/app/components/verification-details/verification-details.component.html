@@ -95,11 +95,11 @@
 
         <div class="table-responsive">
           <table class="table table-borderless align-middle">
-            <thead class="text-muted" style="font-size: 13px;">
+            <thead class="text-muted">
               <tr>
-                <th>Param Sequence</th>
-                <th>Param Key</th>
-                <th class="text-end">Actions</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">PARAM SEQUENCE</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">PARAM KEY</th>
+                <th class="text-end" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
@@ -107,9 +107,17 @@
                 <td style="font-size: 14px;">{{ param.paramSequence }}</td>
                 <td style="font-size: 14px;">{{ param.paramKey }}</td>
                 <td class="text-end">
-                  <button type="button" class="btn btn-link text-muted p-0" (click)="editVerificationParam(param)">
-                    <i class="bi bi-pencil" style="font-size: 1.1rem;"></i>
-                  </button>
+                  <div class="d-flex justify-content-end gap-3">
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="viewVerificationParam(param)">
+                      <i class="bi bi-eye" style="font-size: 1.1rem;"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="editVerificationParam(param)">
+                      <i class="bi bi-pencil" style="font-size: 1.1rem;"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-danger p-0" (click)="deleteVerificationParam(param.id)">
+                      <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -120,6 +128,65 @@
           <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center gap-2" style="width: 280px; height: 50px;" (click)="addVerificationParam()">
             <i class="bi bi-plus-circle"></i>
             <span>+ Add Verification Param</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Validations Section -->
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
+        <div class="d-flex align-items-center mb-4">
+          <i class="bi bi-check-circle me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
+          <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px;">VALIDATIONS</h5>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="validations.length === 0" class="d-flex flex-column align-items-center justify-content-center py-5 mb-3" style="border: 2px dashed #E5E7EB; border-radius: 12px; background-color: #fcfcfc;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background-color: #F3F0FF;">
+            <i class="bi bi-check-circle" style="font-size: 24px; color: #4B0082;"></i>
+          </div>
+          <h6 class="fw-bold mb-1" style="color: #000;">No validations added yet</h6>
+          <p class="text-muted mb-0" style="font-size: 14px;">Once you add validations, they will appear here as a manageable list.</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="validations.length > 0">
+          <table class="table table-borderless align-middle">
+            <thead class="text-muted">
+              <tr>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">VALIDATION NAME</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">PAYLOAD SOURCE</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">PAYLOAD ID</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">VALIDATION TYPE</th>
+                <th class="text-end" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let val of validations" class="border-top">
+                <td style="font-size: 14px;">{{ val.validationName }}</td>
+                <td style="font-size: 14px;">{{ val.payloadSource }}</td>
+                <td style="font-size: 14px;">{{ val.payloadId }}</td>
+                <td style="font-size: 14px;">{{ val.validationType }}</td>
+                <td class="text-end">
+                  <div class="d-flex justify-content-end gap-3">
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="viewValidation(val)">
+                      <i class="bi bi-eye" style="font-size: 1.1rem;"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="editValidation(val)">
+                      <i class="bi bi-pencil" style="font-size: 1.1rem;"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-danger p-0" (click)="deleteValidation(val.id)">
+                      <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-3">
+          <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center gap-2" style="width: 280px; height: 50px;" (click)="addValidation()">
+            <i class="bi bi-plus-circle"></i>
+            <span>+ Add Validation</span>
           </button>
         </div>
       </div>

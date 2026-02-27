@@ -193,3 +193,12 @@
   (save)="handleParamSave($event)"
   (cancel)="handleParamCancel()">
 </app-validation-parameter-modal>
+
+<!-- Error Message Modal -->
+<app-error-message-modal
+  *ngIf="isErrorModalOpen"
+  [mode]="errorModalMode"
+  [errorData]="selectedError"
+  (save)="handleErrorSave($event)"
+  (cancel)="handleErrorCancel()">
+</app-error-message-modal>

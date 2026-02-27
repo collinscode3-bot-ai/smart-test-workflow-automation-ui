@@ -22,10 +22,15 @@ export class ValidationConfigurationComponent implements OnInit {
     { parameterSeqNo: 2, parameterType: 'Body', parameterValue: 'Success', parameterId: 'message', dataType: 'String' }
   ];
 
-  // Modal State
+  // Modal State for Validation Parameters
   isModalOpen = false;
   modalMode: 'add' | 'edit' | 'view' = 'add';
   selectedParam: ValidationParameter | null = null;
+
+  // Modal State for Error Messages
+  isErrorModalOpen = false;
+  errorModalMode: 'add' | 'edit' | 'view' = 'add';
+  selectedError: ErrorMessage | null = null;
 
   errorsList: ErrorMessage[] = [
     { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
@@ -141,28 +146,40 @@ export class ValidationConfigurationComponent implements OnInit {
   }
 
   addErrorMessage(): void {
-    console.log('Add Error Message clicked');
-    // Logic to open a modal or add a new row to errorsList
+    this.errorModalMode = 'add';
+    this.selectedError = null;
+    this.isErrorModalOpen = true;
   }
 
   editError(error: ErrorMessage): void {
-    console.log('Edit Error:', error);
-    /*
-    // API Integration Placeholder
-    // this.validationService.editError(error.id, ...).subscribe(...);
-    */
+    this.errorModalMode = 'edit';
+    this.selectedError = { ...error };
+    this.isErrorModalOpen = true;
   }
 
   deleteError(error: ErrorMessage): void {
-    console.log('Delete Error:', error);
     this.errorsList = this.errorsList.filter(e => e !== error);
-    /*
-    // API Integration Placeholder
-    // this.validationService.deleteError(error.id).subscribe(...);
-    */
   }
 
   viewError(error: ErrorMessage): void {
-    console.log('View Error:', error);
+    this.errorModalMode = 'view';
+    this.selectedError = { ...error };
+    this.isErrorModalOpen = true;
+  }
+
+  handleErrorSave(data: ErrorMessage): void {
+    if (this.errorModalMode === 'add') {
+      this.errorsList.push(data);
+    } else if (this.selectedError) {
+      const index = this.errorsList.findIndex(e => e.errorCode === this.selectedError?.errorCode);
+      if (index !== -1) {
+        this.errorsList[index] = data;
+      }
+    }
+    this.isErrorModalOpen = false;
+  }
+
+  handleErrorCancel(): void {
+    this.isErrorModalOpen = false;
   }
 }

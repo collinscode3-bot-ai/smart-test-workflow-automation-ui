@@ -1,17 +1,18 @@
 <div class="col-12 col-lg-10 mx-auto py-4">
-  <!-- Title and Description -->
-  <div class="mb-4">
-    <h2 class="fw-bold mb-1" style="color: #4B0082;">Validations</h2>
-    <p class="text-muted" style="font-size: 14px;">Configure validation rules and parameters for your test suite.</p>
-  </div>
+  <div class="card border-0 shadow-sm p-5">
+    <!-- Title and Description -->
+    <div class="mb-4">
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">Validations</h2>
+      <p class="text-muted" style="font-size: 14px;">Configure validation rules and parameters for your test suite.</p>
+    </div>
 
-  <form [formGroup]="validationForm" (ngSubmit)="onSubmit()">
-    <!-- Configuration Card -->
-    <div class="card border-0 shadow-sm p-5 mb-5">
-      <div class="d-flex align-items-center mb-4">
-        <i class="bi bi-gear me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
-        <h5 class="fw-bold mb-0">Configuration</h5>
-      </div>
+    <form [formGroup]="validationForm" (ngSubmit)="onSubmit()">
+      <!-- Configuration Card -->
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
+        <div class="d-flex align-items-center mb-4">
+          <i class="bi bi-gear me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
+          <h5 class="fw-bold mb-0">Configuration</h5>
+        </div>
 
       <div class="row g-4">
         <div class="col-md-4">
@@ -55,110 +56,129 @@
       </div>
     </div>
 
-    <!-- Validation Parameters Card -->
-    <div class="card border-0 shadow-sm p-4 mb-5">
-      <div class="d-flex align-items-center mb-4">
-        <i class="bi bi-grid-3x3-gap me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
-        <h5 class="fw-bold mb-0">Validation Parameters</h5>
+      <!-- Validation Parameters Card -->
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
+        <div class="d-flex align-items-center mb-4">
+          <i class="bi bi-grid-3x3-gap me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
+          <h5 class="fw-bold mb-0">Validation Parameters</h5>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="parametersList.length === 0" class="d-flex flex-column align-items-center justify-content-center py-5 mb-3" style="border: 2px dashed #E5E7EB; border-radius: 12px; background-color: #fcfcfc;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background-color: #F3F0FF;">
+            <i class="bi bi-grid-3x3-gap" style="font-size: 24px; color: #4B0082;"></i>
+          </div>
+          <h6 class="fw-bold mb-1" style="color: #000;">No validation parameters added yet</h6>
+          <p class="text-muted mb-0" style="font-size: 14px;">Once you add validation parameters, they will appear here as a manageable list.</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="parametersList.length > 0">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th class="text-secondary small fw-bold text-uppercase">Seq No</th>
+                <th class="text-secondary small fw-bold text-uppercase">Type</th>
+                <th class="text-secondary small fw-bold text-uppercase">Value</th>
+                <th class="text-secondary small fw-bold text-uppercase">Data Type</th>
+                <th class="text-secondary small fw-bold text-uppercase text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let param of parametersList">
+                <td>{{ param.seqNo }}</td>
+                <td>{{ param.type }}</td>
+                <td>{{ param.value }}</td>
+                <td>
+                  <span class="badge" [ngClass]="param.dataType === 'INTEGER' ? 'bg-indigo' : 'bg-purple-light text-indigo'">
+                    {{ param.dataType }}
+                  </span>
+                </td>
+                <td class="text-end">
+                  <div class="d-flex justify-content-end gap-3">
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="viewParameter(param)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="editParameter(param)">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-danger p-0" (click)="deleteParameter(param)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-dark-purple d-flex align-items-center gap-2" (click)="addParameter()">
+            <i class="bi bi-plus-circle"></i>
+            + Add Validation Parameter
+          </button>
+        </div>
       </div>
 
-      <div class="table-responsive">
-        <table class="table table-striped align-middle">
-          <thead>
-            <tr>
-              <th class="text-secondary small fw-bold text-uppercase">Seq No</th>
-              <th class="text-secondary small fw-bold text-uppercase">Type</th>
-              <th class="text-secondary small fw-bold text-uppercase">Value</th>
-              <th class="text-secondary small fw-bold text-uppercase">Data Type</th>
-              <th class="text-secondary small fw-bold text-uppercase text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let param of parametersList">
-              <td>{{ param.seqNo }}</td>
-              <td>{{ param.type }}</td>
-              <td>{{ param.value }}</td>
-              <td>
-                <span class="badge" [ngClass]="param.dataType === 'INTEGER' ? 'bg-indigo' : 'bg-purple-light text-indigo'">
-                  {{ param.dataType }}
-                </span>
-              </td>
-              <td class="text-end">
-                <div class="d-flex justify-content-end gap-3">
-                  <button type="button" class="btn btn-link text-muted p-0" (click)="viewParameter(param)">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button type="button" class="btn btn-link text-muted p-0" (click)="editParameter(param)">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button type="button" class="btn btn-link text-danger p-0" (click)="deleteParameter(param)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Error Configuration Card -->
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
+        <div class="d-flex align-items-center mb-4">
+          <i class="bi bi-exclamation-circle me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
+          <h5 class="fw-bold mb-0">Error Configuration</h5>
+        </div>
+
+        <!-- Empty State -->
+        <div *ngIf="errorsList.length === 0" class="d-flex flex-column align-items-center justify-content-center py-5 mb-3" style="border: 2px dashed #E5E7EB; border-radius: 12px; background-color: #fcfcfc;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px; background-color: #F3F0FF;">
+            <i class="bi bi-exclamation-circle" style="font-size: 24px; color: #4B0082;"></i>
+          </div>
+          <h6 class="fw-bold mb-1" style="color: #000;">No error messages added yet</h6>
+          <p class="text-muted mb-0" style="font-size: 14px;">Once you add error messages, they will appear here as a manageable list.</p>
+        </div>
+
+        <div class="table-responsive" *ngIf="errorsList.length > 0">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th class="text-secondary small fw-bold text-uppercase">Error Code</th>
+                <th class="text-secondary small fw-bold text-uppercase">Error Message</th>
+                <th class="text-secondary small fw-bold text-uppercase text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let error of errorsList">
+                <td>{{ error.errorCode }}</td>
+                <td class="text-muted">{{ error.errorMessage }}</td>
+                <td class="text-end">
+                  <div class="d-flex justify-content-end gap-3">
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="viewError(error)">
+                      <i class="bi bi-eye"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-muted p-0" (click)="editError(error)">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button type="button" class="btn btn-link text-danger p-0" (click)="deleteError(error)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-dark-purple d-flex align-items-center gap-2" (click)="addErrorMessage()">
+            <i class="bi bi-plus-circle"></i>
+            + Add Error Message
+          </button>
+        </div>
       </div>
 
-      <div class="d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-dark-purple d-flex align-items-center gap-2" (click)="addParameter()">
-          <i class="bi bi-plus-circle"></i>
-          + Add Validation Parameter
-        </button>
+      <!-- Footer Actions -->
+      <div class="d-flex justify-content-end align-items-center gap-3 mt-5">
+        <button type="button" class="btn btn-outline-secondary" style="height: 50px; min-width: 160px;" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn btn-save-orange" style="height: 50px; min-width: 200px;">Save Validation</button>
       </div>
-    </div>
-
-    <!-- Error Configuration Card -->
-    <div class="card border-0 shadow-sm p-4 mb-5">
-      <div class="d-flex align-items-center mb-4">
-        <i class="bi bi-exclamation-circle me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
-        <h5 class="fw-bold mb-0">Error Configuration</h5>
-      </div>
-
-      <div class="table-responsive">
-        <table class="table table-striped align-middle">
-          <thead>
-            <tr>
-              <th class="text-secondary small fw-bold text-uppercase">Error Code</th>
-              <th class="text-secondary small fw-bold text-uppercase">Error Message</th>
-              <th class="text-secondary small fw-bold text-uppercase text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let error of errorsList">
-              <td>{{ error.errorCode }}</td>
-              <td class="text-muted">{{ error.errorMessage }}</td>
-              <td class="text-end">
-                <div class="d-flex justify-content-end gap-3">
-                  <button type="button" class="btn btn-link text-muted p-0" (click)="viewError(error)">
-                    <i class="bi bi-eye"></i>
-                  </button>
-                  <button type="button" class="btn btn-link text-muted p-0" (click)="editError(error)">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                  <button type="button" class="btn btn-link text-danger p-0" (click)="deleteError(error)">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-dark-purple d-flex align-items-center gap-2" (click)="addErrorMessage()">
-          <i class="bi bi-plus-circle"></i>
-          + Add Error Message
-        </button>
-      </div>
-    </div>
-
-    <!-- Footer Actions -->
-    <div class="d-flex justify-content-between align-items-center mt-5">
-      <button type="button" class="btn btn-light px-5 py-3 fw-bold" (click)="onCancel()">Cancel</button>
-      <button type="submit" class="btn btn-save-orange px-5 py-3 fw-bold text-white">Save Validation</button>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

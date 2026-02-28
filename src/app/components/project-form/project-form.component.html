@@ -55,8 +55,7 @@
       <button
         type="submit"
         class="btn"
-        [ngClass]="mode === 'edit' ? 'btn-theme-purple' : 'btn-theme-orange'"
-        [disabled]="projectForm.invalid">
+        [ngClass]="mode === 'edit' ? 'btn-theme-purple' : 'btn-theme-orange'">
         {{ mode === 'edit' ? 'Update Project' : 'Add Project' }}
       </button>
       <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" routerLink="/projects/dashboard">Cancel</button>

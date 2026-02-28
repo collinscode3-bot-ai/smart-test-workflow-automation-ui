@@ -1,0 +1,41 @@
+.is-invalid {
+  border-color: #DC3545 !important;
+}
+
+.btn-theme-orange {
+  background-color: #FF6200 !important;
+  color: white !important;
+  min-width: 160px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #E65800 !important;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.btn-theme-purple {
+  background-color: #4B0082 !important;
+  color: white !important;
+  min-width: 160px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #3d0069 !important;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}

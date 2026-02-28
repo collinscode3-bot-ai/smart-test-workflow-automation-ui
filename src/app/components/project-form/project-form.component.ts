@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 @Component({
   selector: 'app-project-form',
@@ -38,7 +39,8 @@ export class ProjectFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private errorMessageService: ErrorMessageService
   ) {
     this.projectForm = this.fb.group({
       projectName: ['', Validators.required],
@@ -126,6 +128,10 @@ export class ProjectFormComponent implements OnInit {
        this.errorMessage = 'An error occurred while creating the project.';
     });
     */
+  }
+
+  getError(field: string, type: string): string {
+    return this.errorMessageService.getErrorMessage('PROJECT', field, type);
   }
 
   update() {

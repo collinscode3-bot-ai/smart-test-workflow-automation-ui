@@ -30,7 +30,7 @@
             [ngClass]="{'is-invalid': projectForm.get('projectName')?.invalid && projectForm.get('projectName')?.dirty}"
             placeholder="Enter project name">
           <div *ngIf="projectForm.get('projectName')?.invalid && projectForm.get('projectName')?.dirty" class="text-danger small mt-1">
-            Project Name is Mandatory
+            {{ getError('NAME', 'REQUIRED') }}
           </div>
         </div>
 
@@ -45,7 +45,7 @@
             [ngClass]="{'is-invalid': projectForm.get('projectDescription')?.invalid && projectForm.get('projectDescription')?.dirty}"
             placeholder="Describe the project objective"></textarea>
           <div *ngIf="projectForm.get('projectDescription')?.invalid && projectForm.get('projectDescription')?.dirty" class="text-danger small mt-1">
-            Project Description is Mandatory
+            {{ getError('DESCRIPTION', 'REQUIRED') }}
           </div>
         </div>
       </div>

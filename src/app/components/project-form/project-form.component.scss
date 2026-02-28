@@ -2,6 +2,16 @@
   border-color: #DC3545 !important;
 }
 
+.alert {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  .bi {
+    font-size: 1.25rem;
+  }
+}
+
 .btn-theme-orange {
   background-color: #FF6200 !important;
   color: white !important;

@@ -13,6 +13,9 @@ export class ProjectFormComponent implements OnInit {
   projectForm: FormGroup;
   projectId: string | null = null;
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   project: any = {
     name: '',
     description: '',
@@ -98,20 +101,54 @@ export class ProjectFormComponent implements OnInit {
 
   save() {
     console.log('Saving project...', this.projectForm.value);
+
+    // SUCCESS: Set successMessage on 200/201 response.
+    this.successMessage = 'Project saved successfully!';
+    this.errorMessage = null;
+
+    // ERROR: Set errorMessage on 4xx/5xx response.
+    // this.errorMessage = 'Failed to save project. Please try again.';
+    // this.successMessage = null;
+
+    // AUTO-HIDE: Implement a setTimeout to clear messages after 5 seconds.
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+
     // API CALL: POST /api/projects (Create)
     /*
     this.projectService.save(this.projectForm.value).subscribe(response => {
        console.log('Project created successfully', response);
+       this.successMessage = 'Project saved successfully!';
+       // ... auto-hide logic
+    }, error => {
+       this.errorMessage = 'An error occurred while creating the project.';
     });
     */
   }
 
   update() {
     console.log('Updating project...', this.projectForm.value);
+
+    // SUCCESS: Set successMessage on 200/201 response.
+    this.successMessage = 'Project updated successfully!';
+    this.errorMessage = null;
+
+    // AUTO-HIDE: Implement a setTimeout to clear messages after 5 seconds.
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+
     // API CALL: PUT /api/projects/' + this.projectId + ' (Update)
     /*
     this.projectService.update(this.projectId, this.projectForm.value).subscribe(response => {
        console.log('Project updated successfully', response);
+       this.successMessage = 'Project updated successfully!';
+       // ... auto-hide logic
+    }, error => {
+       this.errorMessage = 'An error occurred while updating the project.';
     });
     */
   }

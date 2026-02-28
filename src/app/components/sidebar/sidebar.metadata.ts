@@ -25,8 +25,8 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
     icon: 'bi-journal-text',
     isExpanded: true,
     subLinks: [
-     { label: 'Test Suites Dashboard', path: '/test-suites/list' },
-      { label: 'Create Suite', path: '/test-suites/create' }
+     { label: 'Test Suites Dashboard', path: '/test-suites/list' }//,
+      // { label: 'Create Suite', path: '/test-suites/create' }
     ]
   },
   {

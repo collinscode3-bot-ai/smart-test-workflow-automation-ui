@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
 
@@ -9,6 +10,12 @@ import { HeaderService } from '../../services/header.service';
 })
 export class ProjectFormComponent implements OnInit {
   @Input() mode: 'create' | 'edit' = 'create';
+  projectForm: FormGroup;
+  projectId: string | null = null;
+
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   project: any = {
     name: '',
     description: '',
@@ -29,9 +36,15 @@ export class ProjectFormComponent implements OnInit {
   ];
 
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private headerService: HeaderService
-  ) {}
+  ) {
+    this.projectForm = this.fb.group({
+      projectName: ['', Validators.required],
+      projectDescription: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     // Check route data for mode
@@ -43,6 +56,7 @@ export class ProjectFormComponent implements OnInit {
       // Check query params for id
       this.route.queryParams.subscribe(params => {
         if (params['id'] && this.mode === 'edit') {
+          this.projectId = params['id'];
           this.loadProject(params['id']);
         }
       });
@@ -63,33 +77,78 @@ export class ProjectFormComponent implements OnInit {
     const foundProject = this.mockProjects.find(p => p.id === id);
     if (foundProject) {
       this.project = { ...foundProject };
+      this.projectForm.patchValue({
+        projectName: foundProject.name,
+        projectDescription: foundProject.description
+      });
     }
   }
 
   onSubmit() {
-    if (this.mode === 'create') {
-      this.save();
+    if (this.projectForm.valid) {
+      if (this.mode === 'create') {
+        this.save();
+      } else {
+        this.update();
+      }
     } else {
-      this.update();
+      // Mark all as dirty to show errors if someone tries to submit an empty form
+      Object.keys(this.projectForm.controls).forEach(key => {
+        this.projectForm.get(key)?.markAsDirty();
+      });
     }
   }
 
   save() {
-    console.log('Saving project...');
+    console.log('Saving project...', this.projectForm.value);
+
+    // SUCCESS: Set successMessage on 200/201 response.
+    this.successMessage = 'Project saved successfully!';
+    this.errorMessage = null;
+
+    // ERROR: Set errorMessage on 4xx/5xx response.
+    // this.errorMessage = 'Failed to save project. Please try again.';
+    // this.successMessage = null;
+
+    // AUTO-HIDE: Implement a setTimeout to clear messages after 5 seconds.
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+
+    // API CALL: POST /api/projects (Create)
     /*
-    API Placeholder:
-    this.projectService.save(projectData).subscribe(response => {
+    this.projectService.save(this.projectForm.value).subscribe(response => {
        console.log('Project created successfully', response);
+       this.successMessage = 'Project saved successfully!';
+       // ... auto-hide logic
+    }, error => {
+       this.errorMessage = 'An error occurred while creating the project.';
     });
     */
   }
 
   update() {
-    console.log('Updating project...');
+    console.log('Updating project...', this.projectForm.value);
+
+    // SUCCESS: Set successMessage on 200/201 response.
+    this.successMessage = 'Project updated successfully!';
+    this.errorMessage = null;
+
+    // AUTO-HIDE: Implement a setTimeout to clear messages after 5 seconds.
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+
+    // API CALL: PUT /api/projects/' + this.projectId + ' (Update)
     /*
-    API Placeholder:
-    this.projectService.update(projectData).subscribe(response => {
+    this.projectService.update(this.projectId, this.projectForm.value).subscribe(response => {
        console.log('Project updated successfully', response);
+       this.successMessage = 'Project updated successfully!';
+       // ... auto-hide logic
+    }, error => {
+       this.errorMessage = 'An error occurred while updating the project.';
     });
     */
   }

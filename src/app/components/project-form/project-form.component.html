@@ -4,23 +4,59 @@
     Create, edit, and manage your automation project configurations and metadata.
   </p>
 
-  <form (ngSubmit)="onSubmit()">
+  <!-- Dynamic Alerts -->
+  <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+    <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+    <div>{{ successMessage }}</div>
+    <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+    <i class="bi bi-x-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+    <div>{{ errorMessage }}</div>
+    <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+  </div>
+
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-md-12">
         <div class="mb-4">
-          <label for="projectName" class="form-label">Project Name</label>
-          <input type="text" id="projectName" name="projectName" class="form-control" placeholder="Enter project name" [(ngModel)]="project.name">
+          <label for="projectName" class="form-label">Project Name <span class="text-danger">*</span></label>
+          <input
+            type="text"
+            id="projectName"
+            formControlName="projectName"
+            class="form-control"
+            [ngClass]="{'is-invalid': projectForm.get('projectName')?.invalid && projectForm.get('projectName')?.dirty}"
+            placeholder="Enter project name">
+          <div *ngIf="projectForm.get('projectName')?.invalid && projectForm.get('projectName')?.dirty" class="text-danger small mt-1">
+            Project Name is Mandatory
+          </div>
         </div>
 
         <div class="mb-4">
-          <label for="projectDetails" class="form-label">Project Details</label>
-          <textarea id="projectDetails" name="projectDetails" class="form-control" rows="4" style="height: auto;" placeholder="Describe the project objective" [(ngModel)]="project.description"></textarea>
+          <label for="projectDetails" class="form-label">Project Details <span class="text-danger">*</span></label>
+          <textarea
+            id="projectDetails"
+            formControlName="projectDescription"
+            class="form-control"
+            rows="4"
+            style="height: auto;"
+            [ngClass]="{'is-invalid': projectForm.get('projectDescription')?.invalid && projectForm.get('projectDescription')?.dirty}"
+            placeholder="Describe the project objective"></textarea>
+          <div *ngIf="projectForm.get('projectDescription')?.invalid && projectForm.get('projectDescription')?.dirty" class="text-danger small mt-1">
+            Project Description is Mandatory
+          </div>
         </div>
       </div>
     </div>
 
     <div class="d-flex justify-content-center gap-3 mt-2">
-      <button type="submit" [class]="mode === 'edit' ? 'btn btn-theme-purple' : 'btn btn-theme-orange'">
+      <button
+        type="submit"
+        class="btn"
+        [ngClass]="mode === 'edit' ? 'btn-theme-purple' : 'btn-theme-orange'"
+        [disabled]="projectForm.invalid">
         {{ mode === 'edit' ? 'Update Project' : 'Add Project' }}
       </button>
       <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" routerLink="/projects/dashboard">Cancel</button>

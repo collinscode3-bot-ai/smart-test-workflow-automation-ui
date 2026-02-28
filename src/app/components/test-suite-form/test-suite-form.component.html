@@ -5,40 +5,69 @@
       <p class="text-muted" style="font-size: 14px;">Define and configure your automated test suite parameters.</p>
     </div>
 
+    <!-- Dynamic Alerts -->
+    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ successMessage }}</div>
+      <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-x-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ errorMessage }}</div>
+      <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+    </div>
+
     <form [formGroup]="testSuiteForm" (ngSubmit)="onSubmit()">
       <!-- TestSuite Name -->
       <div class="mb-4 col-md-11">
-        <label for="name" class="form-label">Test Suite Name</label>
+        <label for="suiteName" class="form-label">Test Suite Name <span class="text-danger">*</span></label>
         <input
           type="text"
-          id="name"
-          formControlName="name"
+          id="suiteName"
+          formControlName="suiteName"
           class="form-control"
+          [ngClass]="{'is-invalid': testSuiteForm.get('suiteName')?.invalid && testSuiteForm.get('suiteName')?.dirty}"
           placeholder="Enter suite name (e.g. Core API Validation Suite)"
           style="height: 54px;"
         >
+        <div *ngIf="testSuiteForm.get('suiteName')?.invalid && testSuiteForm.get('suiteName')?.dirty" class="text-danger small mt-1">
+          {{ getError('NAME', 'REQUIRED') }}
+        </div>
       </div>
 
       <!-- Suite Description -->
       <div class="mb-4 col-md-11">
-        <label for="description" class="form-label">Suite Description</label>
+        <label for="suiteDescription" class="form-label">Suite Description <span class="text-danger">*</span></label>
         <textarea
-          id="description"
-          formControlName="description"
+          id="suiteDescription"
+          formControlName="suiteDescription"
           class="form-control"
+          [ngClass]="{'is-invalid': testSuiteForm.get('suiteDescription')?.invalid && testSuiteForm.get('suiteDescription')?.dirty}"
           placeholder="Describe the purpose and scope of this test suite..."
         ></textarea>
+        <div *ngIf="testSuiteForm.get('suiteDescription')?.invalid && testSuiteForm.get('suiteDescription')?.dirty" class="text-danger small mt-1">
+          {{ getError('DESCRIPTION', 'REQUIRED') }}
+        </div>
       </div>
 
       <!-- Suite Type -->
       <div class="mb-4 col-md-11">
-        <label for="suiteType" class="form-label">Suite Type</label>
-        <select id="suiteType" formControlName="suiteType" class="form-select">
+        <label for="suiteType" class="form-label">Suite Type <span class="text-danger">*</span></label>
+        <select
+          id="suiteType"
+          formControlName="suiteType"
+          class="form-select"
+          [ngClass]="{'is-invalid': testSuiteForm.get('suiteType')?.invalid && testSuiteForm.get('suiteType')?.dirty}"
+        >
           <option value="" disabled selected>Select suite type</option>
           <option value="E2E Testing">E2E Testing</option>
           <option value="API Testing">API Testing</option>
           <option value="UI Testing">UI Testing</option>
         </select>
+        <div *ngIf="testSuiteForm.get('suiteType')?.invalid && testSuiteForm.get('suiteType')?.dirty" class="text-danger small mt-1">
+          {{ getError('TYPE', 'REQUIRED') }}
+        </div>
       </div>
 
       <!-- Test Cases Section -->
@@ -71,7 +100,7 @@
       <!-- Footer Actions -->
       <div class="footer-actions d-flex justify-content-end gap-3 mt-5">
         <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onCancel()">Cancel</button>
-        <button type="submit" class="btn btn-theme-orange" [disabled]="testSuiteForm.invalid">
+        <button type="submit" class="btn btn-theme-orange">
           {{ mode === 'edit' ? 'Save Changes' : 'Save and Proceed' }}
         </button>
       </div>

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-field-properties-modal',
@@ -13,6 +15,7 @@ export class FieldPropertiesModalComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   propertyForm: FormGroup;
+  filteredKeys$!: Observable<string[]>;
 
   constructor(private fb: FormBuilder) {
     this.propertyForm = this.fb.group({
@@ -31,6 +34,25 @@ export class FieldPropertiesModalComponent implements OnInit {
       // API CALL: GET /api/contracts/fields/{id} (to fetch specific field metadata).
       this.propertyForm.patchValue(this.propertyData);
     }
+
+    this.filteredKeys$ = this.propertyForm.get('key')!.valueChanges.pipe(
+      startWith(''),
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(value => this.fetchKeys(value || ''))
+    );
+  }
+
+  private fetchKeys(searchTerm: string): Observable<string[]> {
+    if (!searchTerm) {
+      return of([]);
+    }
+    // API CALL: GET /api/contracts/keys/lookup?query={searchTerm}.
+    // Sample Implementation:
+    // return this.http.get<string[]>(`/api/contracts/keys/lookup?query=${searchTerm}`);
+
+    const mockKeys = ['userId', 'userName', 'email', 'createdAt', 'updatedAt', 'status', 'roles', 'profile'];
+    return of(mockKeys.filter(key => key.toLowerCase().includes(searchTerm.toLowerCase())));
   }
 
   onSave(): void {

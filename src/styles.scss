@@ -1,5 +1,11 @@
 @import "variables";
 @import "bootstrap/scss/bootstrap";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* Ensure Material Overlays (Autocomplete) appear above custom modals (z-index: 2000) */
+.cdk-overlay-container {
+  z-index: 3000 !important;
+}
 
 /* High-Fidelity Inputs */
 .form-control, .form-select {

@@ -40,6 +40,9 @@ export class VerificationDetailsComponent implements OnInit {
   modalMode: 'add' | 'edit' | 'view' = 'add';
   selectedParam: VerificationParam | null = null;
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   // Mock Data
   verificationParams: VerificationParam[] = [];
 
@@ -113,17 +116,40 @@ export class VerificationDetailsComponent implements OnInit {
     this.verificationForm.patchValue(mockResponse);
   }
 
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
   onSave() {
     if (this.verificationForm.valid) {
       const formData = this.verificationForm.getRawValue();
       if (this.mode === 'edit') {
         // API CALL: PUT /api/verifications/{id}
         console.log('Updating verification', this.verificationId, formData);
+        this.triggerAlert('success', 'Verification updated successfully!');
       } else {
         // API CALL: POST /api/verifications
         console.log('Creating new verification', formData);
+        this.triggerAlert('success', 'Verification saved successfully!');
       }
-      this.location.back();
+
+      // ERROR: Set errorMessage (Placeholder for API failures)
+      // this.triggerAlert('error', 'An error occurred. Please try again.');
+
+      setTimeout(() => {
+        this.location.back();
+      }, 5000);
     } else {
       this.verificationForm.markAllAsTouched();
     }

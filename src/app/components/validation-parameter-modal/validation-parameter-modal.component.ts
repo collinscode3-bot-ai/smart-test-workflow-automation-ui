@@ -23,6 +23,9 @@ export class ValidationParameterModalComponent implements OnInit {
   parameterForm: FormGroup;
   seqNumbers: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   constructor(private fb: FormBuilder) {
     this.parameterForm = this.fb.group({
       parameterId: ['', Validators.required],
@@ -44,12 +47,35 @@ export class ValidationParameterModalComponent implements OnInit {
     }
   }
 
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
   onSave(): void {
     if (this.parameterForm.valid) {
       const data = this.parameterForm.getRawValue();
       // API CALL: POST /api/validations/parameters (to save new data).
       // LOGIC: Emit data back to the 'Validation Parameters' table in the parent component.
-      this.save.emit(data);
+
+      this.triggerAlert('success', 'Parameter saved successfully!');
+
+      // ERROR: Set errorMessage (Placeholder for API failures)
+      // this.triggerAlert('error', 'Failed to save parameter. Please try again.');
+
+      setTimeout(() => {
+        this.save.emit(data);
+      }, 5000);
     } else {
       this.parameterForm.markAllAsTouched();
     }

@@ -19,6 +19,9 @@ export class ErrorMessageModalComponent implements OnInit {
 
   errorForm: FormGroup;
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   constructor(private fb: FormBuilder) {
     this.errorForm = this.fb.group({
       errorCode: ['', [Validators.required]],
@@ -47,11 +50,34 @@ export class ErrorMessageModalComponent implements OnInit {
     });
   }
 
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
   onSave(): void {
     if (this.errorForm.valid) {
       const data = this.errorForm.getRawValue();
       // API CALL: POST /api/validations/errors (to save new data).
-      this.save.emit(data);
+
+      this.triggerAlert('success', 'Error message saved successfully!');
+
+      // ERROR: Set errorMessage (Placeholder for API failures)
+      // this.triggerAlert('error', 'Failed to save error message. Please try again.');
+
+      setTimeout(() => {
+        this.save.emit(data);
+      }, 5000);
     } else {
       this.errorForm.markAllAsTouched();
     }

@@ -5,6 +5,19 @@
       <p class="text-muted" style="font-size: 14px;">Configure your test case parameters and associated contracts.</p>
     </div>
 
+    <!-- Dynamic Alerts -->
+    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ successMessage }}</div>
+      <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-x-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ errorMessage }}</div>
+      <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+    </div>
+
     <!-- Primary Info Section -->
     <div class="mb-5" [formGroup]="testCaseForm">
       <!-- Row 1: Name and Sequence -->

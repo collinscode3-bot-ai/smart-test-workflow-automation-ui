@@ -89,16 +89,32 @@ export class TestSuiteFormComponent implements OnInit {
     }
   }
 
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
   createTestSuite(): void {
     console.log('Creating test suite:', this.testSuiteForm.value);
 
     // SUCCESS: Set successMessage
-    this.successMessage = 'Test Suite created successfully!';
-    this.errorMessage = null;
+    this.triggerAlert('success', 'Test Suite created successfully!');
+
+    // ERROR: Set errorMessage (Placeholder for API failures)
+    // this.triggerAlert('error', 'Failed to create test suite. Please try again.');
 
     // AUTO-HIDE and navigate
     setTimeout(() => {
-      this.successMessage = null;
       this.router.navigate(['/test-suites/list']);
     }, 5000);
   }
@@ -107,12 +123,13 @@ export class TestSuiteFormComponent implements OnInit {
     console.log('Updating test suite:', this.testSuiteId, this.testSuiteForm.value);
 
     // SUCCESS: Set successMessage
-    this.successMessage = 'Test Suite updated successfully!';
-    this.errorMessage = null;
+    this.triggerAlert('success', 'Test Suite updated successfully!');
+
+    // ERROR: Set errorMessage (Placeholder for API failures)
+    // this.triggerAlert('error', 'Failed to update test suite. Please try again.');
 
     // AUTO-HIDE and navigate
     setTimeout(() => {
-      this.successMessage = null;
       this.router.navigate(['/test-suites/list']);
     }, 5000);
   }

@@ -31,6 +31,9 @@ export class TestCaseDetailsComponent implements OnInit {
   testCaseId: string | null = null;
   testCaseForm: FormGroup;
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   // Mock Data Arrays
   contracts: Contract[] = [
     { id: 1, name: 'Auth Response Schema', type: 'Consumer Contract' },
@@ -107,17 +110,40 @@ export class TestCaseDetailsComponent implements OnInit {
     this.testCaseForm.patchValue(mockData);
   }
 
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
   onSave() {
     if (this.testCaseForm.valid) {
       const formData = this.testCaseForm.value;
       if (this.mode === 'edit') {
         // API CALL: PUT /api/testcases/{id}
         console.log('Updating test case', formData);
+        this.triggerAlert('success', 'TestCase updated successfully!');
       } else {
         // API CALL: POST /api/testcases
         console.log('Creating new test case', formData);
+        this.triggerAlert('success', 'TestCase saved successfully!');
       }
-      this.router.navigate(['/test-suites/list']);
+
+      // ERROR: Set errorMessage (Placeholder for API failures)
+      // this.triggerAlert('error', 'An error occurred. Please try again.');
+
+      setTimeout(() => {
+        this.router.navigate(['/test-suites/list']);
+      }, 5000);
     } else {
       this.testCaseForm.markAllAsTouched();
     }

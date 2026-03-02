@@ -17,6 +17,9 @@ export class FieldPropertiesModalComponent implements OnInit {
   propertyForm: FormGroup;
   filteredKeys$!: Observable<string[]>;
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   constructor(private fb: FormBuilder) {
     this.propertyForm = this.fb.group({
       key: ['', Validators.required],
@@ -55,11 +58,34 @@ export class FieldPropertiesModalComponent implements OnInit {
     return of(mockKeys.filter(key => key.toLowerCase().includes(searchTerm.toLowerCase())));
   }
 
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
   onSave(): void {
     if (this.propertyForm.valid) {
       const data = this.propertyForm.value;
       // API CALL: POST /api/contracts/fields/validate (to check for duplicate keys).
-      this.save.emit(data);
+
+      this.triggerAlert('success', 'Property saved successfully!');
+
+      // ERROR: Set errorMessage (Placeholder for API failures)
+      // this.triggerAlert('error', 'Failed to save property. Please try again.');
+
+      setTimeout(() => {
+        this.save.emit(data);
+      }, 5000);
     } else {
       this.propertyForm.markAllAsTouched();
     }

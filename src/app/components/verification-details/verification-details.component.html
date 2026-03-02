@@ -5,6 +5,19 @@
       <p class="text-muted" style="font-size: 14px;">Configure detailed verification steps and parameters for your test case.</p>
     </div>
 
+    <!-- Dynamic Alerts -->
+    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ successMessage }}</div>
+      <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-x-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ errorMessage }}</div>
+      <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+    </div>
+
     <form [formGroup]="verificationForm" (ngSubmit)="onSave()">
       <!-- Row 1: App Name and Service Name -->
       <div class="row mb-4">

@@ -13,8 +13,20 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="modalKey" class="modal-label">Key</label>
-              <input type="text" id="modalKey" formControlName="key" class="form-control" placeholder="e.g. userId">
+              <label for="modalKey" class="modal-label" style="color: #4B0082; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Key</label>
+              <mat-form-field appearance="fill" class="field-properties-autocomplete w-100">
+                <input type="text"
+                       id="modalKey"
+                       placeholder="e.g. userId"
+                       matInput
+                       formControlName="key"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let key of filteredKeys$ | async" [value]="key">
+                    {{ key }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
           </div>
           <div class="col-md-6">

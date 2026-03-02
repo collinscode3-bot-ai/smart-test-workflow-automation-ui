@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 interface Contract {
   id: number;
@@ -34,6 +35,14 @@ export class TestCaseDetailsComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
+  // Pagination State
+  contractsPage: number = 1;
+  verificationsPage: number = 1;
+  testDataPage: number = 1;
+
+  totalPages: number = 5; // Mocking total pages
+  pages: number[] = [1, 2, 3, 4, 5];
+
   // Mock Data Arrays
   contracts: Contract[] = [
     { id: 1, name: 'Auth Response Schema', type: 'Consumer Contract' },
@@ -54,17 +63,18 @@ export class TestCaseDetailsComponent implements OnInit {
     private headerService: HeaderService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private errorMessageService: ErrorMessageService
   ) {
     // Initialize Reactive Form
     this.testCaseForm = this.fb.group({
       testCaseName: ['', Validators.required],
       sequenceNo: [{ value: 1, disabled: true }, Validators.required],
-      actionType: ['', Validators.required],
+      action: ['', Validators.required],
       payloadFormat: ['', Validators.required],
       isConditionalExecute: [false],
       triggerUrl: ['', Validators.required],
-      description: ['']
+      description: ['', Validators.required]
     });
   }
 
@@ -90,6 +100,10 @@ export class TestCaseDetailsComponent implements OnInit {
       'TestCase Details',
       'Configure your test case parameters and associated contracts.'
     );
+
+    // API CALL: GET /api/testcases/{id}/contracts?page=1
+    // API CALL: GET /api/testcases/{id}/verifications?page=1
+    // API CALL: GET /api/testcases/{id}/testdata?page=1
   }
 
   loadTestCase(id: string) {
@@ -100,7 +114,7 @@ export class TestCaseDetailsComponent implements OnInit {
     const mockData = {
       testCaseName: 'User Authentication Flow',
       sequenceNo: 1,
-      actionType: 'GET',
+      action: 'GET',
       payloadFormat: 'JSON',
       isConditionalExecute: true,
       triggerUrl: 'https://api.example.com/v1/auth',
@@ -151,6 +165,30 @@ export class TestCaseDetailsComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['/test-suites/list']);
+  }
+
+  getError(field: string, type: string): string {
+    return this.errorMessageService.getErrorMessage('TESTCASE', field, type);
+  }
+
+  viewRow(type: string, id: any) {
+    console.log(`Viewing ${type} with id: ${id}`);
+    // Placeholder for navigation or modal logic
+  }
+
+  setPage(type: string, page: number) {
+    if (page < 1 || page > this.totalPages) return;
+
+    if (type === 'contracts') {
+      this.contractsPage = page;
+      // API CALL: GET /api/testcases/{id}/contracts?page={page}
+    } else if (type === 'verifications') {
+      this.verificationsPage = page;
+      // API CALL: GET /api/testcases/{id}/verifications?page={page}
+    } else if (type === 'testData') {
+      this.testDataPage = page;
+      // API CALL: GET /api/testcases/{id}/testdata?page={page}
+    }
   }
 
   // CRUD: Logic for adding/deleting rows in each section datatable.

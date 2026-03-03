@@ -1,5 +1,9 @@
 @import 'variables';
 
+.is-invalid {
+  border-color: #DC3545 !important;
+}
+
 :host {
   display: block;
 }

@@ -39,6 +39,7 @@ export class TestCaseDetailsComponent implements OnInit {
   contractsPage: number = 1;
   verificationsPage: number = 1;
   testDataPage: number = 1;
+  pageSize: number = 5;
 
   totalPages: number = 5; // Mocking total pages
   pages: number[] = [1, 2, 3, 4, 5];
@@ -140,6 +141,8 @@ export class TestCaseDetailsComponent implements OnInit {
   }
 
   onSave() {
+    this.testCaseForm.markAllAsTouched();
+
     if (this.testCaseForm.valid) {
       const formData = this.testCaseForm.value;
       if (this.mode === 'edit') {
@@ -159,7 +162,7 @@ export class TestCaseDetailsComponent implements OnInit {
         this.router.navigate(['/test-suites/list']);
       }, 5000);
     } else {
-      this.testCaseForm.markAllAsTouched();
+      console.log('Form is invalid');
     }
   }
 
@@ -167,13 +170,32 @@ export class TestCaseDetailsComponent implements OnInit {
     this.router.navigate(['/test-suites/list']);
   }
 
-  getError(field: string, type: string): string {
-    return this.errorMessageService.getErrorMessage('TESTCASE', field, type);
+  getDynamicError(controlName: string, fieldName: string): string {
+    const control = this.testCaseForm.get(controlName);
+    if (control && control.errors) {
+      const firstErrorKey = Object.keys(control.errors)[0];
+      const dynamicKey = firstErrorKey.toUpperCase();
+      return this.errorMessageService.getErrorMessage('TESTCASE', fieldName, dynamicKey);
+    }
+    return '';
   }
 
-  viewRow(type: string, id: any) {
+  onView(type: string, id: any) {
     console.log(`Viewing ${type} with id: ${id}`);
-    // Placeholder for navigation or modal logic
+  }
+
+  onEdit(type: string, id: any) {
+    console.log(`Editing ${type} with id: ${id}`);
+    if (type === 'contract') this.editContract(id);
+    else if (type === 'verification') this.editVerification(id);
+    else if (type === 'testData') this.editTestData(id);
+  }
+
+  onDelete(type: string, id: any) {
+    console.log(`Deleting ${type} with id: ${id}`);
+    if (type === 'contract') this.deleteContract(id);
+    else if (type === 'verification') this.deleteVerification(id);
+    else if (type === 'testData') this.deleteTestData(id);
   }
 
   setPage(type: string, page: number) {

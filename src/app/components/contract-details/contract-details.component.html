@@ -1,6 +1,6 @@
 <div class="col-12 col-lg-10 mx-auto py-4">
   <div class="mb-4">
-    <h2 class="fw-bold mb-1" style="color: #4B0082;">Contract Details</h2>
+    <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'view' ? 'View Contract' : (mode === 'edit' ? 'Edit Contract' : 'Contract Details') }}</h2>
     <p class="text-muted" style="font-size: 14px;">Define the structural and baseline data for your test suites by providing schema definitions.</p>
   </div>
 
@@ -104,7 +104,7 @@
   </div>
 
   <!-- Field Properties -->
-  <div class="card border-0 shadow-sm p-4 mb-4">
+  <div class="card border-0 shadow-sm p-4 mb-4" *ngIf="mode !== 'view'">
     <div class="mb-4">
       <h5 class="fw-bold mb-1" style="font-size: 1.1rem; letter-spacing: 0.5px;">
         <i class="bi bi-grid-3x3-gap-fill me-2 text-primary"></i>FIELD PROPERTIES
@@ -131,9 +131,12 @@
 
   <!-- Footer Actions -->
   <div class="d-flex justify-content-end align-items-center gap-3 mb-5">
-    <button class="btn btn-link text-dark fw-bold text-decoration-none px-4" (click)="onCancel()">Cancel</button>
-    <button class="btn btn-theme-orange d-flex align-items-center justify-content-center px-4" (click)="onSave()">
-      <i class="bi bi-save me-2"></i> Save and Proceed
+    <button *ngIf="mode !== 'view'" class="btn btn-link text-dark fw-bold text-decoration-none px-4" (click)="onCancel()">Cancel</button>
+    <button *ngIf="mode !== 'view'" class="btn btn-theme-orange d-flex align-items-center justify-content-center px-4" (click)="onSave()">
+      <i class="bi bi-save me-2"></i> {{ mode === 'edit' ? 'Update Contract' : 'Save and Proceed' }}
+    </button>
+    <button *ngIf="mode === 'view'" class="btn btn-theme-purple d-flex align-items-center justify-content-center px-4" (click)="onCancel()">
+      <i class="bi bi-arrow-left me-2"></i> Back to TestCase
     </button>
   </div>
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 interface Contract {
   id: number;
@@ -34,6 +35,15 @@ export class TestCaseDetailsComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
+  // Pagination State
+  contractsPage: number = 1;
+  verificationsPage: number = 1;
+  testDataPage: number = 1;
+  pageSize: number = 5;
+
+  totalPages: number = 5; // Mocking total pages
+  pages: number[] = [1, 2, 3, 4, 5];
+
   // Mock Data Arrays
   contracts: Contract[] = [
     { id: 1, name: 'Auth Response Schema', type: 'Consumer Contract' },
@@ -54,17 +64,18 @@ export class TestCaseDetailsComponent implements OnInit {
     private headerService: HeaderService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private errorMessageService: ErrorMessageService
   ) {
     // Initialize Reactive Form
     this.testCaseForm = this.fb.group({
       testCaseName: ['', Validators.required],
       sequenceNo: [{ value: 1, disabled: true }, Validators.required],
-      actionType: ['', Validators.required],
+      action: ['', Validators.required],
       payloadFormat: ['', Validators.required],
       isConditionalExecute: [false],
       triggerUrl: ['', Validators.required],
-      description: ['']
+      description: ['', Validators.required]
     });
   }
 
@@ -90,6 +101,10 @@ export class TestCaseDetailsComponent implements OnInit {
       'TestCase Details',
       'Configure your test case parameters and associated contracts.'
     );
+
+    // API CALL: GET /api/testcases/{id}/contracts?page=1
+    // API CALL: GET /api/testcases/{id}/verifications?page=1
+    // API CALL: GET /api/testcases/{id}/testdata?page=1
   }
 
   loadTestCase(id: string) {
@@ -100,7 +115,7 @@ export class TestCaseDetailsComponent implements OnInit {
     const mockData = {
       testCaseName: 'User Authentication Flow',
       sequenceNo: 1,
-      actionType: 'GET',
+      action: 'GET',
       payloadFormat: 'JSON',
       isConditionalExecute: true,
       triggerUrl: 'https://api.example.com/v1/auth',
@@ -126,6 +141,8 @@ export class TestCaseDetailsComponent implements OnInit {
   }
 
   onSave() {
+    this.testCaseForm.markAllAsTouched();
+
     if (this.testCaseForm.valid) {
       const formData = this.testCaseForm.value;
       if (this.mode === 'edit') {
@@ -145,12 +162,80 @@ export class TestCaseDetailsComponent implements OnInit {
         this.router.navigate(['/test-suites/list']);
       }, 5000);
     } else {
-      this.testCaseForm.markAllAsTouched();
+      console.log('Form is invalid');
     }
   }
 
   onCancel() {
     this.router.navigate(['/test-suites/list']);
+  }
+
+  getDynamicError(controlName: string, fieldName: string): string {
+    const control = this.testCaseForm.get(controlName);
+    if (control && control.errors) {
+      const firstErrorKey = Object.keys(control.errors)[0];
+      const dynamicKey = firstErrorKey.toUpperCase();
+      return this.errorMessageService.getErrorMessage('TESTCASE', fieldName, dynamicKey);
+    }
+    return '';
+  }
+
+  onAction(actionType: string, section: string, item: any) {
+    console.log(`${actionType} action on ${section} with id: ${item.id}`);
+
+    if (actionType === 'delete') {
+      this.onDelete(section, item.id);
+      return;
+    }
+
+    const mode = actionType === 'view' ? 'view' : 'edit';
+    const projectId = this.route.snapshot.queryParamMap.get('projectId') || '1';
+    const suiteId = this.route.snapshot.queryParamMap.get('suiteId') || '1';
+    const caseId = this.testCaseId || '1';
+
+    if (section === 'contract') {
+      // API CALL: GET /api/testcases/{id}/contracts/{id}
+      this.router.navigate(['/contracts/edit', item.id], { queryParams: { mode: mode } });
+    } else if (section === 'verification') {
+      // API CALL: GET /api/testcases/{id}/verifications/{id}
+      this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/edit/${item.id}`], { queryParams: { mode: mode } });
+    } else if (section === 'testData') {
+      // API CALL: GET /api/testcases/{id}/testdata/{id}
+      console.log(`${mode} test data with id: ${item.id}`);
+      // Logic for view/edit test data
+    }
+  }
+
+  onDelete(section: string, id: any) {
+    // UI: window.confirm('Are you sure you want to delete this ' + section + '?');
+    console.log(`Deleting ${section} with id: ${id}`);
+
+    // API CALL: DELETE /api/{section}/{id}
+
+    if (section === 'contract') {
+      this.contracts = this.contracts.filter(c => c.id !== id);
+    } else if (section === 'verification') {
+      this.verifications = this.verifications.filter(v => v.id !== id);
+    } else if (section === 'testData') {
+      this.testData = this.testData.filter(d => d.id !== id);
+    }
+
+    this.triggerAlert('success', `${section.charAt(0).toUpperCase() + section.slice(1)} deleted successfully!`);
+  }
+
+  setPage(type: string, page: number) {
+    if (page < 1 || page > this.totalPages) return;
+
+    if (type === 'contracts') {
+      this.contractsPage = page;
+      // API CALL: GET /api/testcases/{id}/contracts?page={page}
+    } else if (type === 'verifications') {
+      this.verificationsPage = page;
+      // API CALL: GET /api/testcases/{id}/verifications?page={page}
+    } else if (type === 'testData') {
+      this.testDataPage = page;
+      // API CALL: GET /api/testcases/{id}/testdata?page={page}
+    }
   }
 
   // CRUD: Logic for adding/deleting rows in each section datatable.

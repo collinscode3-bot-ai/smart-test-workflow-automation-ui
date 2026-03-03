@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-10 mx-auto py-4">
   <div class="card border-0 shadow-sm p-5 mb-5">
     <div class="mb-4">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit Verification' : 'Add Verification' }}</h2>
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'view' ? 'View Verification' : (mode === 'edit' ? 'Edit Verification' : 'Add Verification') }}</h2>
       <p class="text-muted" style="font-size: 14px;">Configure detailed verification steps and parameters for your test case.</p>
     </div>
 
@@ -100,7 +100,7 @@
       </div>
 
       <!-- Verification Parameters Section -->
-      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;" *ngIf="mode !== 'view'">
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-sliders2 me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
           <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px;">VERIFICATION PARAMETERS</h5>
@@ -155,7 +155,7 @@
       </div>
 
       <!-- Validations Section -->
-      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;" *ngIf="mode !== 'view'">
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-check-circle me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
           <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px;">VALIDATIONS</h5>
@@ -215,8 +215,13 @@
 
       <!-- Footer Actions -->
       <div class="d-flex justify-content-end align-items-center gap-3">
-        <button type="button" class="btn btn-outline-secondary" style="height: 50px; min-width: 120px;" (click)="onCancel()">Cancel</button>
-        <button type="submit" class="btn btn-save-orange" style="height: 50px; min-width: 200px;" [disabled]="verificationForm.invalid">Save Verification</button>
+        <button *ngIf="mode !== 'view'" type="button" class="btn btn-outline-secondary" style="height: 50px; min-width: 120px;" (click)="onCancel()">Cancel</button>
+        <button *ngIf="mode !== 'view'" type="submit" class="btn btn-save-orange" style="height: 50px; min-width: 200px;" [disabled]="verificationForm.invalid">
+          {{ mode === 'edit' ? 'Update Verification' : 'Save Verification' }}
+        </button>
+        <button *ngIf="mode === 'view'" type="button" class="btn btn-indigo" style="height: 50px; min-width: 200px;" (click)="onCancel()">
+          <i class="bi bi-arrow-left me-2"></i> Back to TestCase
+        </button>
       </div>
     </form>
   </div>

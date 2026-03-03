@@ -28,7 +28,7 @@ interface Validation {
   styleUrls: ['./verification-details.component.scss']
 })
 export class VerificationDetailsComponent implements OnInit {
-  mode: 'new' | 'edit' = 'new';
+  mode: 'new' | 'edit' | 'view' = 'new';
   projectId: string | null = null;
   suiteId: string | null = null;
   caseId: string | null = null;
@@ -73,6 +73,15 @@ export class VerificationDetailsComponent implements OnInit {
       this.mode = data['mode'] === 'edit' ? 'edit' : 'new';
     });
 
+    this.route.queryParamMap.subscribe(params => {
+      const modeParam = params.get('mode');
+      if (modeParam === 'view') {
+        this.mode = 'view';
+      } else if (modeParam === 'edit') {
+        this.mode = 'edit';
+      }
+    });
+
     // Parameter extraction
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('projectId');
@@ -80,9 +89,10 @@ export class VerificationDetailsComponent implements OnInit {
       this.caseId = params.get('caseId');
       this.verificationId = params.get('verificationId');
 
-      if (this.mode === 'edit' && this.verificationId) {
+      if ((this.mode === 'edit' || this.mode === 'view') && this.verificationId) {
+        const title = this.mode === 'view' ? 'View Verification' : 'Edit Verification';
         this.headerService.setHeaderData(
-          'Edit Verification',
+          title,
           'Configure detailed verification steps and parameters for your test case.'
         );
         this.loadVerification(this.verificationId);
@@ -96,6 +106,10 @@ export class VerificationDetailsComponent implements OnInit {
         this.verificationForm.patchValue({ sequenceNo: 10 });
       }
     });
+
+    if (this.mode === 'view') {
+      this.verificationForm.disable();
+    }
   }
 
   loadVerification(id: string) {
@@ -183,6 +197,7 @@ export class VerificationDetailsComponent implements OnInit {
   }
 
   deleteVerificationParam(id: number) {
+    // UI: window.confirm('Are you sure you want to delete this verification parameter?');
     // API CALL: DELETE /api/verifications/params/{paramId}
     console.log('Deleting verification parameter', id);
     this.verificationParams = this.verificationParams.filter(p => p.id !== id);
@@ -204,6 +219,7 @@ export class VerificationDetailsComponent implements OnInit {
   }
 
   deleteValidation(id: number) {
+    // UI: window.confirm('Are you sure you want to delete this validation?');
     // API CALL: DELETE /api/verifications/validations/{valId}
     console.log('Deleting validation', id);
     this.validations = this.validations.filter(v => v.id !== id);

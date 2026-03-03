@@ -9,7 +9,7 @@ import { HeaderService } from '../../services/header.service';
   styleUrls: ['./contract-details.component.scss']
 })
 export class ContractDetailsComponent implements OnInit {
-  mode: 'new' | 'edit' = 'new';
+  mode: 'new' | 'edit' | 'view' = 'new';
   contractId: string | null = null;
   contractForm: FormGroup;
 
@@ -66,16 +66,30 @@ export class ContractDetailsComponent implements OnInit {
       this.mode = data['mode'] === 'edit' ? 'edit' : 'new';
     });
 
+    this.route.queryParamMap.subscribe(params => {
+      const modeParam = params.get('mode');
+      if (modeParam === 'view') {
+        this.mode = 'view';
+      } else if (modeParam === 'edit') {
+        this.mode = 'edit';
+      }
+    });
+
     this.route.paramMap.subscribe(params => {
       this.contractId = params.get('id');
-      if (this.mode === 'edit' && this.contractId) {
+      if ((this.mode === 'edit' || this.mode === 'view') && this.contractId) {
         this.loadContract(this.contractId);
       }
     });
 
+    if (this.mode === 'view') {
+      this.contractForm.disable();
+    }
+
     // Header Service Integration
+    const title = this.mode === 'view' ? 'View Contract' : (this.mode === 'edit' ? 'Edit Contract' : 'Contract Details');
     this.headerService.setHeaderData(
-      'Contract Details',
+      title,
       'Define the structural and baseline data for your test suites by providing schema definitions.'
     );
   }

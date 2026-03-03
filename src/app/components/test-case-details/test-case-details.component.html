@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-10 mx-auto py-4">
   <div class="card border-0 shadow-sm p-5 mb-5">
     <div class="mb-4">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit TestCase' : 'New TestCase' }}</h2>
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit Test Case' : 'New Test Case' }}</h2>
       <p class="text-muted" style="font-size: 14px;">Configure your test case parameters and associated contracts.</p>
     </div>
 
@@ -65,10 +65,10 @@
               class="form-select"
               [ngClass]="{'is-invalid': testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)}">
               <option value="" disabled>Select Action</option>
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="DELETE">DELETE</option>
+              <option value="TRIG_BY_PSTNG_TO_TPC">Trigger Test Case by Posting to Topic</option>
+              <option value="TRIG_BY_PSTNG_TO_QUE">Trigger Test Case by Posting to Queue</option>
+              <option value="TRIG_BY_PSTNG_TO_TPC_VRFY">Trigger Test Case by Posting to Topic & Verify</option>
+              <option value="TRIG_BY_PSTNG_TO_QUE_VRFY">Trigger Test Case by Posting to Queue & Verify</option>
             </select>
             <div *ngIf="testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)" class="text-danger small mt-1">
               {{ getDynamicError('action', 'ACTION') }}
@@ -82,7 +82,6 @@
               <option value="" disabled>Select Format</option>
               <option value="JSON">JSON</option>
               <option value="XML">XML</option>
-              <option value="TEXT">TEXT</option>
             </select>
           </div>
         </div>
@@ -392,7 +391,7 @@
         Cancel
       </button>
       <button type="button" class="btn btn-theme-orange" (click)="onSave()" style="height: 50px; min-width: 200px;">
-        {{ mode === 'edit' ? 'Update TestCase' : 'Save TestCase' }}
+        {{ mode === 'edit' ? 'Update Test Case' : 'Save Test Case' }}
       </button>
     </div>
   </div>

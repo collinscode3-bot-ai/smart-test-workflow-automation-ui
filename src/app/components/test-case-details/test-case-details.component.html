@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-10 mx-auto py-4">
   <div class="card border-0 shadow-sm p-5 mb-5">
     <div class="mb-4">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit Test Case' : 'New Test Case' }}</h2>
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ mode === 'edit' ? 'Edit TestCase' : 'New TestCase' }}</h2>
       <p class="text-muted" style="font-size: 14px;">Configure your test case parameters and associated contracts.</p>
     </div>
 
@@ -65,10 +65,10 @@
               class="form-select"
               [ngClass]="{'is-invalid': testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)}">
               <option value="" disabled>Select Action</option>
-              <option value="TRIG_BY_PSTNG_TO_TPC">Trigger Test Case by Posting to Topic</option>
-              <option value="TRIG_BY_PSTNG_TO_QUE">Trigger Test Case by Posting to Queue</option>
-              <option value="TRIG_BY_PSTNG_TO_TPC_VRFY">Trigger Test Case by Posting to Topic & Verify</option>
-              <option value="TRIG_BY_PSTNG_TO_QUE_VRFY">Trigger Test Case by Posting to Queue & Verify</option>
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
             </select>
             <div *ngIf="testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)" class="text-danger small mt-1">
               {{ getDynamicError('action', 'ACTION') }}
@@ -82,6 +82,7 @@
               <option value="" disabled>Select Format</option>
               <option value="JSON">JSON</option>
               <option value="XML">XML</option>
+              <option value="TEXT">TEXT</option>
             </select>
           </div>
         </div>
@@ -181,13 +182,13 @@
               <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ contract.type }}</span>
             </div>
             <div class="col-auto d-flex gap-3">
-              <button class="btn btn-link text-muted p-0" (click)="onView('contract', contract.id)">
+              <button class="btn btn-link text-muted p-0" (click)="onAction('view', 'contract', contract)">
                 <i class="bi bi-eye" style="font-size: 18px;"></i>
               </button>
-              <button class="btn btn-link text-primary p-0" (click)="onEdit('contract', contract.id)">
+              <button class="btn btn-link text-primary p-0" (click)="onAction('edit', 'contract', contract)">
                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
               </button>
-              <button class="btn btn-link text-danger p-0" (click)="onDelete('contract', contract.id)">
+              <button class="btn btn-link text-danger p-0" (click)="onAction('delete', 'contract', contract)">
                 <i class="bi bi-trash" style="font-size: 18px;"></i>
               </button>
             </div>
@@ -262,13 +263,13 @@
               <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ v.type }}</span>
             </div>
             <div class="col-auto d-flex gap-3">
-              <button class="btn btn-link text-muted p-0" (click)="onView('verification', v.id)">
+              <button class="btn btn-link text-muted p-0" (click)="onAction('view', 'verification', v)">
                 <i class="bi bi-eye" style="font-size: 18px;"></i>
               </button>
-              <button class="btn btn-link text-primary p-0" (click)="onEdit('verification', v.id)">
+              <button class="btn btn-link text-primary p-0" (click)="onAction('edit', 'verification', v)">
                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
               </button>
-              <button class="btn btn-link text-danger p-0" (click)="onDelete('verification', v.id)">
+              <button class="btn btn-link text-danger p-0" (click)="onAction('delete', 'verification', v)">
                 <i class="bi bi-trash" style="font-size: 18px;"></i>
               </button>
             </div>
@@ -343,13 +344,13 @@
               <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ data.details }}</span>
             </div>
             <div class="col-auto d-flex gap-3">
-              <button class="btn btn-link text-muted p-0" (click)="onView('testData', data.id)">
+              <button class="btn btn-link text-muted p-0" (click)="onAction('view', 'testData', data)">
                 <i class="bi bi-eye" style="font-size: 18px;"></i>
               </button>
-              <button class="btn btn-link text-primary p-0" (click)="onEdit('testData', data.id)">
+              <button class="btn btn-link text-primary p-0" (click)="onAction('edit', 'testData', data)">
                 <i class="bi bi-pencil" style="font-size: 18px;"></i>
               </button>
-              <button class="btn btn-link text-danger p-0" (click)="onDelete('testData', data.id)">
+              <button class="btn btn-link text-danger p-0" (click)="onAction('delete', 'testData', data)">
                 <i class="bi bi-trash" style="font-size: 18px;"></i>
               </button>
             </div>

@@ -180,22 +180,47 @@ export class TestCaseDetailsComponent implements OnInit {
     return '';
   }
 
-  onView(type: string, id: any) {
-    console.log(`Viewing ${type} with id: ${id}`);
+  onAction(actionType: string, section: string, item: any) {
+    console.log(`${actionType} action on ${section} with id: ${item.id}`);
+
+    if (actionType === 'delete') {
+      this.onDelete(section, item.id);
+      return;
+    }
+
+    const mode = actionType === 'view' ? 'view' : 'edit';
+    const projectId = this.route.snapshot.queryParamMap.get('projectId') || '1';
+    const suiteId = this.route.snapshot.queryParamMap.get('suiteId') || '1';
+    const caseId = this.testCaseId || '1';
+
+    if (section === 'contract') {
+      // API CALL: GET /api/testcases/{id}/contracts/{id}
+      this.router.navigate(['/contracts/edit', item.id], { queryParams: { mode: mode } });
+    } else if (section === 'verification') {
+      // API CALL: GET /api/testcases/{id}/verifications/{id}
+      this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/edit/${item.id}`], { queryParams: { mode: mode } });
+    } else if (section === 'testData') {
+      // API CALL: GET /api/testcases/{id}/testdata/{id}
+      console.log(`${mode} test data with id: ${item.id}`);
+      // Logic for view/edit test data
+    }
   }
 
-  onEdit(type: string, id: any) {
-    console.log(`Editing ${type} with id: ${id}`);
-    if (type === 'contract') this.editContract(id);
-    else if (type === 'verification') this.editVerification(id);
-    else if (type === 'testData') this.editTestData(id);
-  }
+  onDelete(section: string, id: any) {
+    // UI: window.confirm('Are you sure you want to delete this ' + section + '?');
+    console.log(`Deleting ${section} with id: ${id}`);
 
-  onDelete(type: string, id: any) {
-    console.log(`Deleting ${type} with id: ${id}`);
-    if (type === 'contract') this.deleteContract(id);
-    else if (type === 'verification') this.deleteVerification(id);
-    else if (type === 'testData') this.deleteTestData(id);
+    // API CALL: DELETE /api/{section}/{id}
+
+    if (section === 'contract') {
+      this.contracts = this.contracts.filter(c => c.id !== id);
+    } else if (section === 'verification') {
+      this.verifications = this.verifications.filter(v => v.id !== id);
+    } else if (section === 'testData') {
+      this.testData = this.testData.filter(d => d.id !== id);
+    }
+
+    this.triggerAlert('success', `${section.charAt(0).toUpperCase() + section.slice(1)} deleted successfully!`);
   }
 
   setPage(type: string, page: number) {

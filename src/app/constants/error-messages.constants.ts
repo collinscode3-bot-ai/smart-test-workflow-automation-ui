@@ -14,6 +14,7 @@ export const ERROR_MESSAGES = {
   CONTRACT_DESCRIPTION_REQUIRED: 'Description is Mandatory.',
   CONTRACT_BASECONTRACT_REQUIRED: 'Base Contract is Mandatory.',
   MODAL_KEY_REQUIRED: 'Key is Mandatory.',
+  MODAL_FIELDDATATYPE_REQUIRED: 'Field Data Type is Mandatory.',
   MODAL_FIELDVALUETYPE_REQUIRED: 'Field Value Type is Mandatory.',
   MODAL_FIELDGENERATIONTYPE_REQUIRED: 'Field Generation Type is Mandatory.',
   MODAL_FIELDFORMAT_REQUIRED: 'Field Format is Mandatory.'

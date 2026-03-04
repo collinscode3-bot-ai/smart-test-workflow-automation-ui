@@ -48,13 +48,17 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="fieldDataType" class="modal-label">Field Data Type <span class="text-danger">*</span></label>
-              <select id="fieldDataType" formControlName="fieldDataType" class="form-select">
+              <select id="fieldDataType" formControlName="fieldDataType" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldDataType')?.invalid && (propertyForm.get('fieldDataType')?.dirty || propertyForm.get('fieldDataType')?.touched)}">
+                <option value="" disabled selected>Select</option>
                 <option value="String">String</option>
                 <option value="Number">Number</option>
                 <option value="Boolean">Boolean</option>
                 <option value="Object">Object</option>
                 <option value="Array">Array</option>
               </select>
+              <div *ngIf="propertyForm.get('fieldDataType')?.invalid && (propertyForm.get('fieldDataType')?.dirty || propertyForm.get('fieldDataType')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('FIELDDATATYPE', 'REQUIRED') }}
+              </div>
             </div>
           </div>
         </div>

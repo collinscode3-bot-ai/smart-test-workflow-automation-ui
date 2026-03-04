@@ -29,7 +29,7 @@ export class FieldPropertiesModalComponent implements OnInit {
   ) {
     this.propertyForm = this.fb.group({
       key: ['', Validators.required],
-      fieldDataType: ['String', Validators.required],
+      fieldDataType: ['', Validators.required],
       fieldValueType: ['', Validators.required],
       fieldGenerationType: ['', Validators.required],
       fieldFormat: [''],

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
 import { Location } from '@angular/common';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 interface VerificationParam {
   id: number;
@@ -53,16 +54,17 @@ export class VerificationDetailsComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private headerService: HeaderService,
-    private location: Location
+    private location: Location,
+    private errorMessageService: ErrorMessageService
   ) {
     this.verificationForm = this.fb.group({
-      appName: ['', Validators.required],
+      application: ['', Validators.required],
       serviceName: ['', Validators.required],
       sequenceNo: [{ value: 10, disabled: true }, Validators.required],
-      verificationParamType: ['', Validators.required],
+      verificationParamsType: ['', Validators.required],
       baseUrl: ['', Validators.required],
-      verifyIfPreviousSuccess: [true],
-      verificationKeyTypeIsComposite: [false],
+      executeIfPreviousSuccessful: [true],
+      isCompositeKey: [false],
       verificationKeyTypeDelimiter: [':']
     });
   }
@@ -110,6 +112,17 @@ export class VerificationDetailsComponent implements OnInit {
     if (this.mode === 'view') {
       this.verificationForm.disable();
     }
+
+    // Reset delimiter when isCompositeKey is false
+    this.verificationForm.get('isCompositeKey')?.valueChanges.subscribe((isComposite: boolean) => {
+      if (!isComposite) {
+        this.verificationForm.get('verificationKeyTypeDelimiter')?.setValue('');
+      }
+    });
+  }
+
+  getError(field: string, type: string): string {
+    return this.errorMessageService.getErrorMessage('VERIFY', field, type);
   }
 
   loadVerification(id: string) {
@@ -118,13 +131,13 @@ export class VerificationDetailsComponent implements OnInit {
 
     // Simulating API response
     const mockResponse = {
-      appName: 'Shipment Tracking',
+      application: 'Shipment Tracking',
       serviceName: 'TrackServiceV1',
       sequenceNo: 10,
-      verificationParamType: 'Query Param',
+      verificationParamsType: 'Query Param',
       baseUrl: 'https://api.fedex.com/track/v1',
-      verifyIfPreviousSuccess: true,
-      verificationKeyTypeIsComposite: false,
+      executeIfPreviousSuccessful: true,
+      isCompositeKey: false,
       verificationKeyTypeDelimiter: ':'
     };
     this.verificationForm.patchValue(mockResponse);

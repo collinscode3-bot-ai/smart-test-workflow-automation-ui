@@ -17,5 +17,10 @@ export const ERROR_MESSAGES = {
   MODAL_FIELDDATATYPE_REQUIRED: 'Field Data Type is Mandatory.',
   MODAL_FIELDVALUETYPE_REQUIRED: 'Field Value Type is Mandatory.',
   MODAL_FIELDGENERATIONTYPE_REQUIRED: 'Field Generation Type is Mandatory.',
-  MODAL_FIELDFORMAT_REQUIRED: 'Field Format is Mandatory.'
+  MODAL_FIELDFORMAT_REQUIRED: 'Field Format is Mandatory.',
+  VERIFY_APPLICATION_REQUIRED: 'Application is Mandatory.',
+  VERIFY_SERVICENAME_REQUIRED: 'Service Name is Mandatory.',
+  VERIFY_SEQUENCENO_REQUIRED: 'Sequence Number is Mandatory.',
+  VERIFY_VERIFICATIONPARAMSTYPE_REQUIRED: 'Params Type is Mandatory.',
+  VERIFY_BASEURL_REQUIRED: 'Base URL is Mandatory.'
 };

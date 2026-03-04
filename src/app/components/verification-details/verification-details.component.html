@@ -23,14 +23,24 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="appName" class="form-label">Application</label>
-            <input type="text" id="appName" formControlName="appName" class="form-control" placeholder="e.g. Shipment Tracking">
+            <label for="application" class="form-label">APPLICATION <span class="text-danger">*</span></label>
+            <input type="text" id="application" formControlName="application" class="form-control"
+                   [class.is-invalid]="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)"
+                   placeholder="e.g. Shipment Tracking">
+            <div class="invalid-feedback" *ngIf="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)">
+              {{ getError('APPLICATION', 'REQUIRED') }}
+            </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="serviceName" class="form-label">Service Name</label>
-            <input type="text" id="serviceName" formControlName="serviceName" class="form-control" placeholder="e.g. TrackServiceV1">
+            <label for="serviceName" class="form-label">SERVICE NAME <span class="text-danger">*</span></label>
+            <input type="text" id="serviceName" formControlName="serviceName" class="form-control"
+                   [class.is-invalid]="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)"
+                   placeholder="e.g. TrackServiceV1">
+            <div class="invalid-feedback" *ngIf="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)">
+              {{ getError('SERVICENAME', 'REQUIRED') }}
+            </div>
           </div>
         </div>
       </div>
@@ -39,18 +49,27 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="sequenceNo" class="form-label">Seq No</label>
-            <input type="number" id="sequenceNo" formControlName="sequenceNo" class="form-control" placeholder="10">
+            <label for="sequenceNo" class="form-label">SEQUENCE NUMBER <span class="text-danger">*</span></label>
+            <input type="number" id="sequenceNo" formControlName="sequenceNo" class="form-control"
+                   [class.is-invalid]="verificationForm.get('sequenceNo')?.invalid && (verificationForm.get('sequenceNo')?.dirty || verificationForm.get('sequenceNo')?.touched)"
+                   placeholder="10">
+            <div class="invalid-feedback" *ngIf="verificationForm.get('sequenceNo')?.invalid && (verificationForm.get('sequenceNo')?.dirty || verificationForm.get('sequenceNo')?.touched)">
+              {{ getError('SEQUENCENO', 'REQUIRED') }}
+            </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="verificationParamType" class="form-label">Verification Params Type</label>
-            <select id="verificationParamType" formControlName="verificationParamType" class="form-select">
+            <label for="verificationParamsType" class="form-label">PARAMS TYPE <span class="text-danger">*</span></label>
+            <select id="verificationParamsType" formControlName="verificationParamsType" class="form-select"
+                    [class.is-invalid]="verificationForm.get('verificationParamsType')?.invalid && (verificationForm.get('verificationParamsType')?.dirty || verificationForm.get('verificationParamsType')?.touched)">
               <option value="" disabled>Select Type</option>
               <option value="QUERY_PARAMS">Query Params</option>
               <option value="PATH_PARAMS">Path Params</option>
             </select>
+            <div class="invalid-feedback" *ngIf="verificationForm.get('verificationParamsType')?.invalid && (verificationForm.get('verificationParamsType')?.dirty || verificationForm.get('verificationParamsType')?.touched)">
+              {{ getError('VERIFICATIONPARAMSTYPE', 'REQUIRED') }}
+            </div>
           </div>
         </div>
       </div>
@@ -59,8 +78,13 @@
       <div class="row mb-4">
         <div class="col-md-11">
           <div class="form-group">
-            <label for="baseUrl" class="form-label">Base URL</label>
-            <input type="text" id="baseUrl" formControlName="baseUrl" class="form-control" placeholder="https://api.fedex.com/track/v1">
+            <label for="baseUrl" class="form-label">BASE URL <span class="text-danger">*</span></label>
+            <input type="text" id="baseUrl" formControlName="baseUrl" class="form-control"
+                   [class.is-invalid]="verificationForm.get('baseUrl')?.invalid && (verificationForm.get('baseUrl')?.dirty || verificationForm.get('baseUrl')?.touched)"
+                   placeholder="https://api.fedex.com/track/v1">
+            <div class="invalid-feedback" *ngIf="verificationForm.get('baseUrl')?.invalid && (verificationForm.get('baseUrl')?.dirty || verificationForm.get('baseUrl')?.touched)">
+              {{ getError('BASEURL', 'REQUIRED') }}
+            </div>
           </div>
         </div>
       </div>
@@ -69,29 +93,27 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label">Verify only if previous service verification is successful ?</label>
-            <div class="btn-group w-100" role="group">
-              <button type="button" class="btn" [class.btn-indigo]="verificationForm.get('verifyIfPreviousSuccess')?.value === true" [class.btn-outline-secondary]="verificationForm.get('verifyIfPreviousSuccess')?.value !== true" (click)="verificationForm.patchValue({verifyIfPreviousSuccess: true})">Yes</button>
-              <button type="button" class="btn" [class.btn-indigo]="verificationForm.get('verifyIfPreviousSuccess')?.value === false" [class.btn-outline-secondary]="verificationForm.get('verifyIfPreviousSuccess')?.value !== false" (click)="verificationForm.patchValue({verifyIfPreviousSuccess: false})">No</button>
+            <label class="form-label d-block">VERIFY ONLY IF PREVIOUS SERVICE VERIFICATION IS SUCCESSFUL?</label>
+            <div class="form-check form-switch custom-switch">
+              <input class="form-check-input" type="checkbox" id="executeIfPreviousSuccessful" formControlName="executeIfPreviousSuccessful">
             </div>
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label">Is verification key-type is composite ?</label>
-            <div class="btn-group w-100" role="group">
-              <button type="button" class="btn" [class.btn-indigo]="verificationForm.get('verificationKeyTypeIsComposite')?.value === true" [class.btn-outline-secondary]="verificationForm.get('verificationKeyTypeIsComposite')?.value !== true" (click)="verificationForm.patchValue({verificationKeyTypeIsComposite: true})">Yes</button>
-              <button type="button" class="btn" [class.btn-indigo]="verificationForm.get('verificationKeyTypeIsComposite')?.value === false" [class.btn-outline-secondary]="verificationForm.get('verificationKeyTypeIsComposite')?.value !== false" (click)="verificationForm.patchValue({verificationKeyTypeIsComposite: false})">No</button>
+            <label class="form-label d-block">IS VERIFICATION KEY-TYPE IS COMPOSITE?</label>
+            <div class="form-check form-switch custom-switch">
+              <input class="form-check-input" type="checkbox" id="isCompositeKey" formControlName="isCompositeKey">
             </div>
           </div>
         </div>
       </div>
 
       <!-- Row 5: Delimiter -->
-      <div class="row mb-5">
+      <div class="row mb-5" *ngIf="verificationForm.get('isCompositeKey')?.value">
         <div class="col-md-11">
           <div class="form-group">
-            <label for="verificationKeyTypeDelimiter" class="form-label">Verification key-type Delimiter</label>
+            <label for="verificationKeyTypeDelimiter" class="form-label">VERIFICATION KEY-TYPE DELIMITER</label>
             <input type="text" id="verificationKeyTypeDelimiter" formControlName="verificationKeyTypeDelimiter" class="form-control" placeholder=":">
           </div>
         </div>
@@ -213,11 +235,11 @@
 
       <!-- Footer Actions -->
       <div class="d-flex justify-content-end align-items-center gap-3">
-        <button *ngIf="mode !== 'view'" type="button" class="btn btn-outline-secondary" style="height: 50px; min-width: 120px;" (click)="onCancel()">Cancel</button>
-        <button *ngIf="mode !== 'view'" type="submit" class="btn btn-save-orange" style="height: 50px; min-width: 200px;" [disabled]="verificationForm.invalid">
+        <button *ngIf="mode !== 'view'" type="button" class="btn btn-outline-secondary cancel-btn" style="height: 50px; min-width: 160px;" (click)="onCancel()">Cancel</button>
+        <button *ngIf="mode !== 'view'" type="submit" class="btn btn-theme-orange" style="height: 50px; min-width: 200px;">
           {{ mode === 'edit' ? 'Update Verification' : 'Save Verification' }}
         </button>
-        <button *ngIf="mode === 'view'" type="button" class="btn btn-indigo" style="height: 50px; min-width: 200px;" (click)="onCancel()">
+        <button *ngIf="mode === 'view'" type="button" class="btn btn-theme-purple" style="height: 50px; min-width: 200px;" (click)="onCancel()">
           <i class="bi bi-arrow-left me-2"></i> Back to TestCase
         </button>
       </div>

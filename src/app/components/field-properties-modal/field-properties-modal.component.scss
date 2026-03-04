@@ -19,12 +19,12 @@
 
 .modal-label {
   font-weight: bold;
-  font-size: 12px;
-  color: #4B0082;
+  font-size: 16px;
+  color: #333;
   margin-bottom: 0.5rem;
   display: block;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .form-control, .form-select {
@@ -52,6 +52,40 @@
   background-color: #F8F9FA;
 }
 
+.btn-theme-orange {
+  background-color: #FF6200 !important;
+  color: white !important;
+  min-width: 160px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #E65800 !important;
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+.btn-outline-secondary {
+  color: #6c757d !important;
+  border-color: #ced4da !important;
+  min-width: 160px;
+  height: 50px;
+  border-radius: 8px;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #ced4da;
+    color: #6c757d !important;
+  }
+}
+
 /* Custom Toggle Switch Styling */
 .custom-switch {
   width: 3.5rem !important;
@@ -62,8 +96,8 @@
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='white'/%3e%3c/svg%3e") !important;
 
   &:checked {
-    background-color: #4B0082 !important;
-    border-color: #4B0082 !important;
+    background-color: #FF6200 !important;
+    border-color: #FF6200 !important;
   }
 }
 

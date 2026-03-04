@@ -1,13 +1,13 @@
 <div class="modal-backdrop-custom d-flex align-items-center justify-content-center">
   <div class="modal-container-custom shadow-lg">
     <!-- Header Section -->
-    <div class="px-5 pt-5 pb-4">
-      <h2 class="fw-bold mb-1" style="color: #4B0082; font-size: 2rem;">FIELD PROPERTIES</h2>
+    <div class="px-5 pt-5 pb-1">
+      <h2 class="fw-bold mb-1" style="color: #4B0082; font-size: 2rem;">Field Properties</h2>
       <p class="text-muted" style="font-size: 16px;">Manage rules for individual fields.</p>
     </div>
 
     <!-- Form Section -->
-    <div class="px-5 py-4 border-top">
+    <div class="px-5 py-4">
       <!-- Dynamic Alerts -->
       <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
         <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
@@ -107,7 +107,7 @@
         </div>
 
         <!-- Toggles Section -->
-        <div class="d-flex gap-5 mt-2 border-top pt-4">
+        <div class="d-flex gap-5 mt-2 pt-4">
           <div class="d-flex align-items-center gap-3">
             <div class="form-check form-switch p-0 m-0 d-flex align-items-center gap-2">
               <input class="form-check-input ms-0 custom-switch" type="checkbox" id="isMandatory" formControlName="isMandatory">
@@ -125,11 +125,11 @@
     </div>
 
     <!-- Footer Section -->
-    <div class="px-5 py-5 d-flex justify-content-center align-items-center gap-4 bg-light-gray rounded-bottom">
-      <button type="button" class="btn btn-theme-orange" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onSave()">
-        <span>{{ mode === 'edit' ? 'Update Project' : 'Add Property' }}</span>
-      </button>
+    <div class="px-5 py-5 d-flex justify-content-end align-items-center gap-3 bg-light-gray rounded-bottom">
       <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn btn-theme-orange" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onSave()">
+        <span>{{ mode === 'edit' ? 'Update Property' : 'Save Property' }}</span>
+      </button>
     </div>
   </div>
 </div>

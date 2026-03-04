@@ -13,9 +13,15 @@
         background-color: #f8f9fa !important;
         border-color: #4B0082 !important;
     }
+    &.is-invalid-border {
+        border-color: #DC3545 !important;
+    }
 }
 
 .json-editor-container {
+    &.is-invalid-border {
+        border-color: #DC3545 !important;
+    }
     pre {
         background-color: #1e1e1e !important;
         color: #d4d4d4 !important;
@@ -56,4 +62,16 @@
     &:hover {
         background-color: #3b0066 !important;
     }
+}
+
+.btn-outline-secondary {
+    &:hover {
+        background-color: #f8f9fa !important;
+        color: #4B0082 !important;
+        border-color: #DEE2E6 !important;
+    }
+}
+
+.is-invalid {
+    border-color: #DC3545 !important;
 }

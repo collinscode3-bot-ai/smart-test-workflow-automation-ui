@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 @Component({
   selector: 'app-contract-details',
@@ -12,6 +13,9 @@ export class ContractDetailsComponent implements OnInit {
   mode: 'new' | 'edit' | 'view' = 'new';
   contractId: string | null = null;
   contractForm: FormGroup;
+
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   // UI State
   schemaMode: 'upload' | 'editor' = 'upload';
@@ -51,12 +55,14 @@ export class ContractDetailsComponent implements OnInit {
     private headerService: HeaderService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private errorMessageService: ErrorMessageService
   ) {
     this.contractForm = this.fb.group({
       contractName: ['', Validators.required],
       contractType: ['', Validators.required],
-      contractDescription: ['']
+      description: ['', Validators.required],
+      baseContract: [JSON.stringify(this.sampleBaseContract, null, 2), Validators.required]
     });
   }
 
@@ -95,31 +101,57 @@ export class ContractDetailsComponent implements OnInit {
   }
 
   loadContract(id: string) {
-    // API CALL: GET /api/contracts/{id}
     console.log(`Fetching contract with id: ${id}`);
 
     // Simulating API response
     const mockResponse = {
       contractName: 'Auth Response Schema',
       contractType: 'Consumer',
-      contractDescription: 'Baseline schema for authentication response verification.'
+      description: 'Baseline schema for authentication response verification.',
+      baseContract: JSON.stringify(this.sampleBaseContract, null, 2)
     };
     this.contractForm.patchValue(mockResponse);
+  }
+
+  getError(field: string, type: string): string {
+    return this.errorMessageService.getErrorMessage('CONTRACT', field, type);
+  }
+
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
   }
 
   onSave() {
     if (this.contractForm.valid) {
       const formData = this.contractForm.value;
       if (this.mode === 'edit') {
-        // API CALL: PUT /api/contracts/{id}
         console.log('Updating contract', this.contractId, formData);
+        this.triggerAlert('success', 'Contract updated successfully!');
       } else {
-        // API CALL: POST /api/contracts
         console.log('Creating new contract', formData);
+        this.triggerAlert('success', 'Contract created successfully!');
       }
-      window.history.back();
+
+      setTimeout(() => {
+        window.history.back();
+      }, 2000);
     } else {
       this.contractForm.markAllAsTouched();
+      // Ensure fields are marked as dirty for validation styling
+      Object.keys(this.contractForm.controls).forEach(key => {
+        this.contractForm.get(key)?.markAsDirty();
+      });
     }
   }
 
@@ -127,12 +159,23 @@ export class ContractDetailsComponent implements OnInit {
     window.history.back();
   }
 
-  // LOGIC: File upload handler and JSON validation.
-  onFileUpload(event: any) {
+  onFileUpload(event: any, field: string) {
     const file = event.target.files[0];
     if (file) {
-      console.log('File uploaded:', file.name);
-      // Implement file reading and validation logic here
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const content = e.target.result;
+        if (this.validateJson(content)) {
+          if (field === 'baseContract') {
+            this.contractForm.get('baseContract')?.setValue(content);
+            this.contractForm.get('baseContract')?.markAsDirty();
+          }
+          // Handle schema file if needed, but for now we focus on baseContract validation
+        } else {
+          this.triggerAlert('error', 'Invalid JSON file.');
+        }
+      };
+      reader.readAsText(file);
     }
   }
 

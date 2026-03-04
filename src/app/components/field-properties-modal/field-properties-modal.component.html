@@ -26,7 +26,7 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="modalKey" class="modal-label" style="color: #4B0082; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Key <span class="text-danger">*</span></label>
+              <label for="modalKey" class="modal-label">Key <span class="text-danger">*</span></label>
               <mat-form-field appearance="fill" class="field-properties-autocomplete w-100" [ngClass]="{'mat-form-field-invalid': propertyForm.get('key')?.invalid && (propertyForm.get('key')?.dirty || propertyForm.get('key')?.touched)}">
                 <input type="text"
                        id="modalKey"
@@ -47,8 +47,8 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="fieldDataType" class="modal-label" style="color: #4B0082; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Field Data Type <span class="text-danger">*</span></label>
-              <select id="fieldDataType" formControlName="fieldDataType" class="form-select" style="height: 54px; border-radius: 8px;">
+              <label for="fieldDataType" class="modal-label">Field Data Type <span class="text-danger">*</span></label>
+              <select id="fieldDataType" formControlName="fieldDataType" class="form-select">
                 <option value="String">String</option>
                 <option value="Number">Number</option>
                 <option value="Boolean">Boolean</option>
@@ -63,8 +63,8 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="fieldValueType" class="modal-label" style="color: #4B0082; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Field Value Type <span class="text-danger">*</span></label>
-              <select id="fieldValueType" formControlName="fieldValueType" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldValueType')?.invalid && (propertyForm.get('fieldValueType')?.dirty || propertyForm.get('fieldValueType')?.touched)}" style="height: 54px; border-radius: 8px;">
+              <label for="fieldValueType" class="modal-label">Field Value Type <span class="text-danger">*</span></label>
+              <select id="fieldValueType" formControlName="fieldValueType" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldValueType')?.invalid && (propertyForm.get('fieldValueType')?.dirty || propertyForm.get('fieldValueType')?.touched)}">
                 <option value="" disabled selected>Select</option>
                 <option value="TDV">Test Data Value</option>
                 <option value="STATIC_VALUE">Static Value</option>
@@ -76,8 +76,8 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="fieldGenerationType" class="modal-label" style="color: #4B0082; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Field Generation Type <span class="text-danger">*</span></label>
-              <select id="fieldGenerationType" formControlName="fieldGenerationType" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldGenerationType')?.invalid && (propertyForm.get('fieldGenerationType')?.dirty || propertyForm.get('fieldGenerationType')?.touched)}" style="height: 54px; border-radius: 8px;">
+              <label for="fieldGenerationType" class="modal-label">Field Generation Type <span class="text-danger">*</span></label>
+              <select id="fieldGenerationType" formControlName="fieldGenerationType" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldGenerationType')?.invalid && (propertyForm.get('fieldGenerationType')?.dirty || propertyForm.get('fieldGenerationType')?.touched)}">
                 <option value="" disabled selected>Select</option>
                 <option value="UUID">UUID</option>
                 <option value="DATE_VARIATION$TODAY_DATE">Today Date</option>
@@ -93,8 +93,8 @@
         <div class="row mb-4" *ngIf="propertyForm.get('fieldGenerationType')?.value === 'DATE_VARIATION$TODAY_DATE'">
           <div class="col-12">
             <div class="form-group">
-              <label for="fieldFormat" class="modal-label" style="color: #4B0082; font-weight: bold; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Field Format <span class="text-danger">*</span></label>
-              <select id="fieldFormat" formControlName="fieldFormat" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldFormat')?.invalid && (propertyForm.get('fieldFormat')?.dirty || propertyForm.get('fieldFormat')?.touched)}" style="height: 54px; border-radius: 8px;">
+              <label for="fieldFormat" class="modal-label">Field Format <span class="text-danger">*</span></label>
+              <select id="fieldFormat" formControlName="fieldFormat" class="form-select" [ngClass]="{'is-invalid': propertyForm.get('fieldFormat')?.invalid && (propertyForm.get('fieldFormat')?.dirty || propertyForm.get('fieldFormat')?.touched)}">
                 <option value="" disabled selected>Select</option>
                 <option value="yyyy-MM-dd">yyyy-MM-dd</option>
                 <option value="dd-MM-yyyy">dd-MM-yyyy</option>
@@ -111,13 +111,13 @@
           <div class="d-flex align-items-center gap-3">
             <div class="form-check form-switch p-0 m-0 d-flex align-items-center gap-2">
               <input class="form-check-input ms-0 custom-switch" type="checkbox" id="isMandatory" formControlName="isMandatory">
-              <label class="form-check-label fw-bold text-uppercase mb-0" for="isMandatory" style="font-size: 12px; letter-spacing: 0.5px; color: #4B0082;">IS MANDATORY</label>
+              <label class="form-check-label modal-label mb-0" for="isMandatory">IS MANDATORY</label>
             </div>
           </div>
           <div class="d-flex align-items-center gap-3">
             <div class="form-check form-switch p-0 m-0 d-flex align-items-center gap-2">
               <input class="form-check-input ms-0 custom-switch" type="checkbox" id="autoGenerated" formControlName="autoGenerated">
-              <label class="form-check-label fw-bold text-uppercase mb-0" for="autoGenerated" style="font-size: 12px; letter-spacing: 0.5px; color: #4B0082;">AUTOGENERATED</label>
+              <label class="form-check-label modal-label mb-0" for="autoGenerated">AUTOGENERATED</label>
             </div>
           </div>
         </div>

@@ -51,12 +51,14 @@ export class FieldPropertiesModalComponent implements OnInit {
     const flattenedKeys = this.getFlattenedKeys();
 
     if (!searchTerm) {
-      return of(flattenedKeys);
+      return of(flattenedKeys.slice(0, 10));
     }
 
-    return of(flattenedKeys.filter(key =>
+    const filtered = flattenedKeys.filter(key =>
       key.toLowerCase().includes(searchTerm.toLowerCase())
-    ));
+    );
+
+    return of(filtered.slice(0, 10));
   }
 
   private getFlattenedKeys(): string[] {

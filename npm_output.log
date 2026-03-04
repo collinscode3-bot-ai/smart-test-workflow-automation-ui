@@ -53,3 +53,186 @@ runtime.js          | runtime |   6.50 kB |
 Build at: 2026-03-04T11:17:55.301Z - Hash: 040f23b6286badfa - Time: 1117ms
 
 ✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 552.96 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T11:56:04.052Z - Hash: 90368c004b6cd6a1 - Time: 7558ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 553.25 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T11:56:26.786Z - Hash: 8fd2a937d27eed22 - Time: 6206ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 553.35 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T11:56:44.682Z - Hash: 656bd1b60bb5adb1 - Time: 2146ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 551.87 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T11:56:51.279Z - Hash: 3e7483c2a8c3317d - Time: 2388ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 552.18 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T11:59:56.820Z - Hash: f6b0c6f5e89e6519 - Time: 1618ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 522.76 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T12:00:00.079Z - Hash: e920881284db1e80 - Time: 1038ms
+
+Error: src/app/app.module.ts:47:5 - error NG6001: The class 'FieldPropertiesModalComponent' is listed in the declarations of the NgModule 'AppModule', but is not a directive, a component, or a pipe. Either remove it from the NgModule's declarations, or add an appropriate Angular decorator.
+
+47     FieldPropertiesModalComponent,
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/components/field-properties-modal/field-properties-modal.component.ts:12:14
+    12 export class FieldPropertiesModalComponent implements OnInit {
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    'FieldPropertiesModalComponent' is declared here.
+
+
+Error: src/app/components/field-properties-modal/field-properties-modal.component.ts:25:48 - error NG2003: No suitable injection token for parameter 'errorMessageService' of class 'FieldPropertiesModalComponent'.
+  Consider using the @Inject decorator to specify an injection token.
+
+25   constructor(private fb: FormBuilder, private errorMessageService: ErrorMessageService) {
+                                                  ~~~~~~~~~~~~~~~~~~~
+
+  src/app/components/field-properties-modal/field-properties-modal.component.ts:25:69
+    25   constructor(private fb: FormBuilder, private errorMessageService: ErrorMessageService) {
+                                                                           ~~~~~~~~~~~~~~~~~~~
+    This type does not have a value, so it cannot be used as injection token.
+
+
+Error: src/app/components/field-properties-modal/field-properties-modal.component.ts:25:69 - error TS2304: Cannot find name 'ErrorMessageService'.
+
+25   constructor(private fb: FormBuilder, private errorMessageService: ErrorMessageService) {
+                                                                       ~~~~~~~~~~~~~~~~~~~
+
+
+
+
+✖ Failed to compile.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 522.86 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T12:00:02.593Z - Hash: 5fd52e76be9cf68e - Time: 665ms
+
+Error: src/app/app.module.ts:47:5 - error NG6001: The class 'FieldPropertiesModalComponent' is listed in the declarations of the NgModule 'AppModule', but is not a directive, a component, or a pipe. Either remove it from the NgModule's declarations, or add an appropriate Angular decorator.
+
+47     FieldPropertiesModalComponent,
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  src/app/components/field-properties-modal/field-properties-modal.component.ts:12:14
+    12 export class FieldPropertiesModalComponent implements OnInit {
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    'FieldPropertiesModalComponent' is declared here.
+
+
+Error: src/app/components/field-properties-modal/field-properties-modal.component.ts:25:48 - error NG2003: No suitable injection token for parameter 'errorMessageService' of class 'FieldPropertiesModalComponent'.
+  Consider using the @Inject decorator to specify an injection token.
+
+25   constructor(private fb: FormBuilder, private errorMessageService: ErrorMessageService) {
+                                                  ~~~~~~~~~~~~~~~~~~~
+
+  src/app/components/field-properties-modal/field-properties-modal.component.ts:25:69
+    25   constructor(private fb: FormBuilder, private errorMessageService: ErrorMessageService) {
+                                                                           ~~~~~~~~~~~~~~~~~~~
+    This type does not have a value, so it cannot be used as injection token.
+
+
+Error: src/app/components/field-properties-modal/field-properties-modal.component.ts:25:69 - error TS2304: Cannot find name 'ErrorMessageService'.
+
+25   constructor(private fb: FormBuilder, private errorMessageService: ErrorMessageService) {
+                                                                       ~~~~~~~~~~~~~~~~~~~
+
+
+
+
+✖ Failed to compile.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 561.16 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T12:01:54.870Z - Hash: 68cc2c3d2f69d133 - Time: 1455ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 560.97 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T12:04:02.964Z - Hash: 662f88976e5affbd - Time: 937ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 561.76 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T12:06:32.380Z - Hash: 16c116d055407441 - Time: 1347ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 562.64 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-04T12:06:56.172Z - Hash: 5f72de810982389d - Time: 1384ms
+
+✔ Compiled successfully.

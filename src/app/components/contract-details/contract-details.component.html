@@ -23,26 +23,26 @@
       <div class="row mb-4 mt-3">
         <div class="col-md-6 mb-4">
           <label for="contractName" class="form-label">Contract Name <span class="text-danger">*</span></label>
-          <input type="text" id="contractName" formControlName="contractName" class="form-control" placeholder="Enter contract name" style="height: 54px;" [class.is-invalid]="contractForm.get('contractName')?.invalid && (contractForm.get('contractName')?.dirty || contractForm.get('contractName')?.touched)">
-          <div *ngIf="contractForm.get('contractName')?.invalid && (contractForm.get('contractName')?.dirty || contractForm.get('contractName')?.touched)" class="text-danger small mt-1">
+          <input type="text" id="contractName" formControlName="contractName" class="form-control" placeholder="Enter contract name" style="height: 54px;" [class.is-invalid]="contractForm.get('contractName')?.invalid && contractForm.get('contractName')?.dirty">
+          <div *ngIf="contractForm.get('contractName')?.invalid && contractForm.get('contractName')?.dirty" class="text-danger small mt-1">
             {{ getError('NAME', 'REQUIRED') }}
           </div>
         </div>
         <div class="col-md-6 mb-4">
           <label for="contractType" class="form-label">Contract Type <span class="text-danger">*</span></label>
-          <select id="contractType" formControlName="contractType" class="form-select" style="height: 54px;" [class.is-invalid]="contractForm.get('contractType')?.invalid && (contractForm.get('contractType')?.dirty || contractForm.get('contractType')?.touched)">
+          <select id="contractType" formControlName="contractType" class="form-select" style="height: 54px;" [class.is-invalid]="contractForm.get('contractType')?.invalid && contractForm.get('contractType')?.dirty">
             <option value="" selected disabled>Select type</option>
             <option value="TRIG_CONTRACT">Contract for triggering this Test Case</option>
             <option value="NOT_A_TRIG_CONTRACT">Not a Contract for triggering this Test Case</option>
           </select>
-          <div *ngIf="contractForm.get('contractType')?.invalid && (contractForm.get('contractType')?.dirty || contractForm.get('contractType')?.touched)" class="text-danger small mt-1">
+          <div *ngIf="contractForm.get('contractType')?.invalid && contractForm.get('contractType')?.dirty" class="text-danger small mt-1">
             {{ getError('TYPE', 'REQUIRED') }}
           </div>
         </div>
         <div class="col-12 mb-4">
           <label for="description" class="form-label">Contract Description <span class="text-danger">*</span></label>
-          <textarea id="description" formControlName="description" class="form-control" placeholder="Enter contract description" style="min-height: 120px;" [class.is-invalid]="contractForm.get('description')?.invalid && (contractForm.get('description')?.dirty || contractForm.get('description')?.touched)"></textarea>
-          <div *ngIf="contractForm.get('description')?.invalid && (contractForm.get('description')?.dirty || contractForm.get('description')?.touched)" class="text-danger small mt-1">
+          <textarea id="description" formControlName="description" class="form-control" placeholder="Enter contract description" style="min-height: 120px;" [class.is-invalid]="contractForm.get('description')?.invalid && contractForm.get('description')?.dirty"></textarea>
+          <div *ngIf="contractForm.get('description')?.invalid && contractForm.get('description')?.dirty" class="text-danger small mt-1">
             {{ getError('DESCRIPTION', 'REQUIRED') }}
           </div>
         </div>
@@ -101,7 +101,7 @@
         </div>
 
         <!-- Upload Zone (Base) -->
-        <div *ngIf="baseContractMode === 'upload'" class="upload-zone border border-2 border-dashed rounded-3 p-5 text-center bg-white" [class.is-invalid-border]="contractForm.get('baseContract')?.invalid && (contractForm.get('baseContract')?.dirty || contractForm.get('baseContract')?.touched)" style="border-color: #DEE2E6 !important; cursor: pointer;" (click)="baseFileInput.click()">
+        <div *ngIf="baseContractMode === 'upload'" class="upload-zone border border-2 border-dashed rounded-3 p-5 text-center bg-white" [class.is-invalid-border]="contractForm.get('baseContract')?.invalid && contractForm.get('baseContract')?.dirty" style="border-color: #DEE2E6 !important; cursor: pointer;" (click)="baseFileInput.click()">
           <input type="file" #baseFileInput class="d-none" accept=".json" (change)="onFileUpload($event, 'baseContract')">
           <div class="mb-3">
             <i class="bi bi-cloud-arrow-up text-secondary opacity-50" style="font-size: 2.5rem;"></i>
@@ -111,7 +111,7 @@
         </div>
 
         <!-- JSON Editor Container (Base) -->
-        <div *ngIf="baseContractMode === 'editor'" class="json-editor-container rounded-3 overflow-hidden border" [class.is-invalid-border]="contractForm.get('baseContract')?.invalid && (contractForm.get('baseContract')?.dirty || contractForm.get('baseContract')?.touched)">
+        <div *ngIf="baseContractMode === 'editor'" class="json-editor-container rounded-3 overflow-hidden border" [class.is-invalid-border]="contractForm.get('baseContract')?.invalid && contractForm.get('baseContract')?.dirty">
           <div class="editor-header bg-light px-3 py-2 d-flex justify-content-between align-items-center border-bottom">
             <span class="text-uppercase fw-bold text-muted" style="font-size: 10px; letter-spacing: 0.8px;">JSON CONFIGURATION</span>
             <button type="button" class="btn btn-link btn-sm text-decoration-none p-0 text-primary" (click)="contractForm.get('baseContract')?.setValue('')">
@@ -120,7 +120,7 @@
           </div>
           <textarea formControlName="baseContract" class="form-control border-0 rounded-0 bg-dark text-light p-4" style="min-height: 200px; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6;" placeholder="Paste Base JSON here..."></textarea>
         </div>
-        <div *ngIf="contractForm.get('baseContract')?.invalid && (contractForm.get('baseContract')?.dirty || contractForm.get('baseContract')?.touched)" class="text-danger small mt-1">
+        <div *ngIf="contractForm.get('baseContract')?.invalid && contractForm.get('baseContract')?.dirty" class="text-danger small mt-1">
           {{ getError('BASECONTRACT', 'REQUIRED') }}
         </div>
       </div>
@@ -146,7 +146,8 @@
 
         <div>
           <button type="button" class="btn btn-theme-purple d-flex align-items-center justify-content-center" (click)="openAddPropertyModal()">
-            Add Field Properties
+            <i class="bi bi-plus-circle">&nbsp;</i>
+            <span>Add Field Properties</span>
           </button>
         </div>
       </div>

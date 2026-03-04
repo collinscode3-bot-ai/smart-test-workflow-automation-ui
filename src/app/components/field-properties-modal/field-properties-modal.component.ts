@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/operators';
+import { flatten } from 'flat';
 
 @Component({
   selector: 'app-field-properties-modal',
@@ -11,6 +12,7 @@ import { debounceTime, distinctUntilChanged, startWith, switchMap } from 'rxjs/o
 export class FieldPropertiesModalComponent implements OnInit {
   @Input() mode: 'add' | 'edit' = 'add';
   @Input() propertyData: any = null;
+  @Input() baseContractJson: any = null;
   @Output() save = new EventEmitter<any>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -34,7 +36,6 @@ export class FieldPropertiesModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.mode === 'edit' && this.propertyData) {
-      // API CALL: GET /api/contracts/fields/{id} (to fetch specific field metadata).
       this.propertyForm.patchValue(this.propertyData);
     }
 
@@ -47,15 +48,30 @@ export class FieldPropertiesModalComponent implements OnInit {
   }
 
   private fetchKeys(searchTerm: string): Observable<string[]> {
-    if (!searchTerm) {
-      return of([]);
-    }
-    // API CALL: GET /api/contracts/keys/lookup?query={searchTerm}.
-    // Sample Implementation:
-    // return this.http.get<string[]>(`/api/contracts/keys/lookup?query=${searchTerm}`);
+    const flattenedKeys = this.getFlattenedKeys();
 
-    const mockKeys = ['userId', 'userName', 'email', 'createdAt', 'updatedAt', 'status', 'roles', 'profile'];
-    return of(mockKeys.filter(key => key.toLowerCase().includes(searchTerm.toLowerCase())));
+    if (!searchTerm) {
+      return of(flattenedKeys.slice(0, 10));
+    }
+
+    const filtered = flattenedKeys.filter(key =>
+      key.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return of(filtered.slice(0, 10));
+  }
+
+  private getFlattenedKeys(): string[] {
+    if (!this.baseContractJson) {
+      return [];
+    }
+    try {
+      const flattened: any = flatten(this.baseContractJson);
+      return Object.keys(flattened);
+    } catch (e) {
+      console.error('Failed to flatten JSON in modal:', e);
+      return [];
+    }
   }
 
   private triggerAlert(type: 'success' | 'error', message: string) {
@@ -76,16 +92,11 @@ export class FieldPropertiesModalComponent implements OnInit {
   onSave(): void {
     if (this.propertyForm.valid) {
       const data = this.propertyForm.value;
-      // API CALL: POST /api/contracts/fields/validate (to check for duplicate keys).
-
       this.triggerAlert('success', 'Property saved successfully!');
-
-      // ERROR: Set errorMessage (Placeholder for API failures)
-      // this.triggerAlert('error', 'Failed to save property. Please try again.');
 
       setTimeout(() => {
         this.save.emit(data);
-      }, 5000);
+      }, 500); // Reduced delay for better UX in this context
     } else {
       this.propertyForm.markAllAsTouched();
     }

@@ -33,6 +33,8 @@ describe('ContractDetailsComponent', () => {
 
     form.controls['contractName'].setValue('Test Contract');
     form.controls['contractType'].setValue('Provider');
+    form.controls['description'].setValue('Test Description');
+    form.controls['baseContract'].setValue('{}');
     expect(form.valid).toBeTruthy();
   });
 });

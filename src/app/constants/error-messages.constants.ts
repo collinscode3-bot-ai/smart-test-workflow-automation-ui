@@ -8,5 +8,9 @@ export const ERROR_MESSAGES = {
   TESTCASE_SEQNO_REQUIRED: 'Sequence Number is Mandatory.',
   TESTCASE_ACTION_REQUIRED: 'Action is Mandatory.',
   TESTCASE_TRIGGERURL_REQUIRED: 'Trigger URL is Mandatory.',
-  TESTCASE_DESCRIPTION_REQUIRED: 'Description is Mandatory.'
+  TESTCASE_DESCRIPTION_REQUIRED: 'Description is Mandatory.',
+  CONTRACT_NAME_REQUIRED: 'Contract Name is Mandatory.',
+  CONTRACT_TYPE_REQUIRED: 'Contract Type is Mandatory.',
+  CONTRACT_DESCRIPTION_REQUIRED: 'Description is Mandatory.',
+  CONTRACT_BASECONTRACT_REQUIRED: 'Base Contract is Mandatory.'
 };

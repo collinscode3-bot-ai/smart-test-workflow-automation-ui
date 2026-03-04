@@ -47,22 +47,12 @@ export class FieldPropertiesModalComponent implements OnInit {
       switchMap(value => this.fetchKeys(value || ''))
     );
 
-    // Conditional State Management: Manage 'fieldFormat' visibility and validation
+    // Conditional State Management: Clear 'fieldFormat' if 'Today Date' is deselected
     this.propertyForm.get('fieldGenerationType')!.valueChanges.subscribe(value => {
-      const fieldFormatControl = this.propertyForm.get('fieldFormat')!;
-      if (value === 'DATE_VARIATION$TODAY_DATE') {
-        fieldFormatControl.setValidators([Validators.required]);
-      } else {
-        fieldFormatControl.clearValidators();
-        fieldFormatControl.setValue('');
+      if (value !== 'DATE_VARIATION$TODAY_DATE') {
+        this.propertyForm.get('fieldFormat')!.setValue('');
       }
-      fieldFormatControl.updateValueAndValidity();
     });
-
-    // Trigger initial check for edit mode
-    if (this.propertyForm.get('fieldGenerationType')!.value) {
-      this.propertyForm.get('fieldGenerationType')!.updateValueAndValidity({ emitEvent: true });
-    }
   }
 
   private fetchKeys(searchTerm: string): Observable<string[]> {

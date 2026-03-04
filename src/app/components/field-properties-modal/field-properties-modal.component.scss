@@ -61,31 +61,6 @@
   }
 }
 
-.btn-save-property {
-  height: 54px;
-  min-width: 200px;
-  background-color: #5C46E5; /* Adjusting to match the vibrant indigo in the reference */
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 16px;
-  transition: all 0.2s;
-
-  &:hover {
-    background-color: darken(#5C46E5, 5%);
-    box-shadow: 0 4px 12px rgba(92, 70, 229, 0.3);
-  }
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-
-  i {
-    font-size: 1.1rem;
-  }
-}
 
 ::ng-deep {
   .field-properties-autocomplete {
@@ -133,6 +108,12 @@
 
       &::placeholder {
         color: #adb5bd;
+      }
+    }
+
+    &.mat-form-field-invalid {
+      .mat-mdc-form-field-flex {
+        border-color: #DC3545 !important;
       }
     }
   }

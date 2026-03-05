@@ -11,6 +11,12 @@ interface ErrorMessage {
   errorMessage: string;
 }
 
+// Define the structure for your options
+interface ValidationOption {
+  key: string;
+  value: string;
+}
+
 @Component({
   selector: 'app-validation-configuration',
   templateUrl: './validation-configuration.component.html',
@@ -37,6 +43,8 @@ export class ValidationConfigurationComponent implements OnInit {
     { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
     { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
   ];
+
+validationNameOptions: ValidationOption[] = [];
 
   successMessage: string | null = null;
   errorMessage: string | null = null;
@@ -67,6 +75,13 @@ export class ValidationConfigurationComponent implements OnInit {
       'Configure validation rules and parameters for your test suite.'
     );
 
+       // Dynamic Validation Name Logic
+    this.validationForm.get('validationType')?.valueChanges.subscribe(type => {
+      console.log('Value Changed !!');
+      this.validationForm.get('validationName')?.setValue('');
+      this.updateValidationNameOptions(type);
+    });
+
     /*
     // API Integration Placeholder: Fetch existing validation details by ID
     const validationId = this.route.snapshot.paramMap.get('id');
@@ -79,6 +94,36 @@ export class ValidationConfigurationComponent implements OnInit {
     }
     */
   }
+  
+ updateValidationNameOptions(type: string) {
+  if (type === 'JSON_FIELD_VALIDATION') {
+    this.validationNameOptions = [
+      { key: 'NULL', value: 'Null' },
+      { key: 'NOT_NULL', value: 'Not Null' },
+      { key: 'EMPTY', value: 'Empty' },
+      { key: 'NOT_EMPTY', value: 'Not Empty' },
+      { key: 'EQUALS', value: 'Equals' },
+      { key: 'EQUALS_IGNORE_CASE', value: 'Equals Ignore Case' },
+      { key: 'IN', value: 'In' },
+      { key: 'NOT_IN', value: 'Not In' }
+    ];
+  } else if (type === 'JSON_VALIDATION') {
+    this.validationNameOptions = [
+      { key: 'STRICT_EQUALS', value: 'Strict Equals' },
+      { key: 'CHECK_IF_UPSTREAM_OUTPUT_MATCHES_INPT', value: 'Check If Upstream Output Matches Input' }
+    ];
+  } else if (type === 'DB_VALIDATION') {
+    this.validationNameOptions = [
+      { key: 'RECORD_CHECK', value: 'Record Check' }
+    ];
+  } else if (type === 'CUSTOM_VALIDATION') {
+    this.validationNameOptions = [
+      { key: 'API_CALL', value: 'Make API Call' }
+    ];
+  } else {
+    this.validationNameOptions = [];
+  }
+}
 
   getDynamicError(controlName: string, fieldName: string): string {
     return this.errorMessageService.getErrorMessage('VALIDATION', fieldName, 'REQUIRED');

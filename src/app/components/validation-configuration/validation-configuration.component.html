@@ -43,6 +43,8 @@
               <option value="" disabled>Select Type</option>
               <option value="JSON_FIELD_VALIDATION">JSON Field Validation</option>
               <option value="JSON_VALIDATION">Full JSON Validation</option>
+              <option value="DB_VALIDATION">Database Validation</option>
+              <option value="CUSTOM_VALIDATION">Custom Validation</option>
             </select>
             <div class="invalid-feedback"
               *ngIf="validationForm.get('validationType')?.invalid && (validationForm.get('validationType')?.dirty || validationForm.get('validationType')?.touched)">
@@ -53,9 +55,13 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="validationName" class="form-label">Validation Name <span class="text-danger">*</span></label>
-            <input type="text" id="validationName" formControlName="validationName" class="form-control"
-              [class.is-invalid]="validationForm.get('validationName')?.invalid && (validationForm.get('validationName')?.dirty || validationForm.get('validationName')?.touched)"
-              placeholder="e.g. User Status Check">
+            <select id="validationName" formControlName="validationName" class="form-select"
+              [class.is-invalid]="validationForm.get('validationName')?.invalid && (validationForm.get('validationName')?.dirty || validationForm.get('validationName')?.touched)">
+              <option value="" disabled selected>Select</option>
+              <option *ngFor="let option of validationNameOptions" [value]="option.key">
+                {{ option.value }}
+              </option>
+            </select>
             <div class="invalid-feedback"
               *ngIf="validationForm.get('validationName')?.invalid && (validationForm.get('validationName')?.dirty || validationForm.get('validationName')?.touched)">
               {{ getDynamicError('validationName', 'NAME') }}

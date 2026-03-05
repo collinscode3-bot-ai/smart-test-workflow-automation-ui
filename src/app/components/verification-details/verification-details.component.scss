@@ -1,39 +1,15 @@
 @import "../../../variables";
 
-.btn-indigo {
-    background-color: $primary-color;
+.btn-theme-purple, .btn-indigo {
+    background-color: #4B0082;
     color: white;
     border: none;
     border-radius: 8px;
     font-weight: 600;
 
     &:hover {
-        background-color: darken($primary-color, 10%);
+        background-color: darken(#4B0082, 10%);
         color: white;
-    }
-}
-
-.btn-group {
-    height: 54px;
-
-    .btn {
-        border-radius: 8px !important;
-        font-weight: 500;
-        font-size: 15px;
-    }
-
-    .btn-indigo {
-        z-index: 2;
-    }
-
-    .btn-outline-secondary {
-        border-color: #dee2e6;
-        color: #6C757D;
-
-        &:hover {
-            background-color: #f8f9fa;
-            color: #6C757D;
-        }
     }
 }
 
@@ -57,9 +33,27 @@
 
 label {
     margin-bottom: 0.75rem;
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
 }
 
-.btn-save-orange {
+.form-control, .form-select {
+    height: 54px;
+    border-radius: 8px;
+}
+
+.is-invalid {
+    border-color: #DC3545 !important;
+}
+
+.invalid-feedback {
+    color: #DC3545;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.btn-theme-orange, .btn-save-orange {
     background-color: #FF6200;
     color: white;
     border: none;
@@ -69,5 +63,33 @@ label {
     &:hover {
         background-color: darken(#FF6200, 10%);
         color: white;
+    }
+}
+
+.cancel-btn {
+    border: 1px solid #ced4da;
+    color: #4B0082;
+    background: transparent;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover {
+        background-color: #f8f9fa;
+        color: #4B0082;
+    }
+}
+
+.custom-switch .form-check-input {
+    width: 3rem;
+    height: 1.5rem;
+    cursor: pointer;
+
+    &:checked {
+    background-color: #4B0082 !important;
+    border-color: #4B0082 !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(255, 98, 0, 0.25);
     }
 }

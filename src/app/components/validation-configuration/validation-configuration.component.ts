@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
 import { ValidationParameter } from '../validation-parameter-modal/validation-parameter-modal.component';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 interface ErrorMessage {
   errorCode: string;
@@ -37,12 +38,16 @@ export class ValidationConfigurationComponent implements OnInit {
     { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
   ];
 
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private errorMessageService: ErrorMessageService
   ) {
     this.validationForm = this.fb.group({
       seqNo: [{ value: '001', disabled: true }, Validators.required],
@@ -75,7 +80,26 @@ export class ValidationConfigurationComponent implements OnInit {
     */
   }
 
-  onSubmit(): void {
+  getDynamicError(controlName: string, fieldName: string): string {
+    return this.errorMessageService.getErrorMessage('VALIDATION', fieldName, 'REQUIRED');
+  }
+
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
+  onSave(): void {
     if (this.validationForm.valid) {
       const formData = {
         ...this.validationForm.getRawValue(),
@@ -83,21 +107,25 @@ export class ValidationConfigurationComponent implements OnInit {
         errors: this.errorsList
       };
       console.log('Saving Validation Configuration:', formData);
+      this.triggerAlert('success', 'Validation configuration saved successfully!');
 
       /*
       // API Integration Placeholder: Save validation
       // this.validationService.saveValidation(formData).subscribe({
       //   next: (response) => {
       //     console.log('Success', response);
-      //     this.location.back();
+      //     setTimeout(() => this.location.back(), 5000);
       //   },
       //   error: (err) => {
       //     console.error('Error saving validation', err);
+      //     this.triggerAlert('error', 'Failed to save validation configuration.');
       //   }
       // });
       */
 
-      this.location.back();
+      setTimeout(() => {
+        this.location.back();
+      }, 5000);
     } else {
       this.validationForm.markAllAsTouched();
     }

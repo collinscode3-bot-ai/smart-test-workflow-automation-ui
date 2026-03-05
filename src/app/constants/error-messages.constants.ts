@@ -28,5 +28,12 @@ export const ERROR_MESSAGES = {
   VERIFY_PARAM_PARAMVALUEPATH_REQUIRED: 'Param Value Path is Mandatory.',
   VERIFY_PARAM_PARAMVALUESOURCE_REQUIRED: 'Param Value Source is Mandatory.',
   VERIFY_PARAM_VALUEDATATYPE_REQUIRED: 'Value Data Type is Mandatory.',
-  VERIFY_PARAM_PARAMVALUE_REQUIRED: 'Param Value is Mandatory.'
+  VERIFY_PARAM_PARAMVALUE_REQUIRED: 'Param Value is Mandatory.',
+  VALIDATION_SEQNO_REQUIRED: 'Sequence Number is Mandatory.',
+  VALIDATION_NAME_REQUIRED: 'Validation Name is Mandatory.',
+  VALIDATION_EXPECTEDOUTCOME_REQUIRED: 'Expected Outcome is Mandatory.',
+  VALIDATION_PAYLOADID_REQUIRED: 'Payload ID is Mandatory.',
+  VALIDATION_PAYLOADFORMAT_REQUIRED: 'Payload Format is Mandatory.',
+  VALIDATION_TYPE_REQUIRED: 'Validation Type is Mandatory.',
+  VALIDATION_SOURCEDATA_REQUIRED: 'Validation Source Data is Mandatory.'
 };

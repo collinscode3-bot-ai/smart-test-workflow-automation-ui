@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
 import { ValidationParameter } from '../validation-parameter-modal/validation-parameter-modal.component';
-import { ErrorMessageService } from '../../services/error-message.service';
 
 interface ErrorMessage {
   errorCode: string;
@@ -33,31 +32,25 @@ export class ValidationConfigurationComponent implements OnInit {
   errorModalMode: 'add' | 'edit' | 'view' = 'add';
   selectedError: ErrorMessage | null = null;
 
-  validationNameOptions: string[] = [];
-
   errorsList: ErrorMessage[] = [
     { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
     { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
   ];
-
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private headerService: HeaderService,
-    private errorMessageService: ErrorMessageService
+    private headerService: HeaderService
   ) {
     this.validationForm = this.fb.group({
       seqNo: [{ value: '001', disabled: true }, Validators.required],
-      validationName: ['', Validators.required],
+      validationName: ['User Status Check', Validators.required],
       expectedOutcome: ['Success', Validators.required],
       payloadId: ['REQ-2024-001', Validators.required],
       payloadFormat: ['JSON', Validators.required],
-      validationType: ['', Validators.required],
+      validationType: ['Field Validation', Validators.required],
       validationSourceData: ['Response Body', Validators.required]
     });
   }
@@ -68,12 +61,6 @@ export class ValidationConfigurationComponent implements OnInit {
       'Validations',
       'Configure validation rules and parameters for your test suite.'
     );
-
-    // Dynamic Validation Name Logic
-    this.validationForm.get('validationType')?.valueChanges.subscribe(type => {
-      this.validationForm.get('validationName')?.setValue('');
-      this.updateValidationNameOptions(type);
-    });
 
     /*
     // API Integration Placeholder: Fetch existing validation details by ID
@@ -88,36 +75,7 @@ export class ValidationConfigurationComponent implements OnInit {
     */
   }
 
-  updateValidationNameOptions(type: string) {
-    if (type === 'JSON_FIELD_VALIDATION') {
-      this.validationNameOptions = ['Not Null', 'Not Empty', 'null', 'Equals', 'equals ignore case', 'empty', 'in', 'not in'];
-    } else if (type === 'JSON_VALIDATION') {
-      this.validationNameOptions = ['Strict equals', 'check if upstream output matches input'];
-    } else {
-      this.validationNameOptions = [];
-    }
-  }
-
-  getDynamicError(controlName: string, fieldName: string): string {
-    return this.errorMessageService.getErrorMessage('VALIDATION', fieldName, 'REQUIRED');
-  }
-
-  private triggerAlert(type: 'success' | 'error', message: string) {
-    if (type === 'success') {
-      this.successMessage = message;
-      this.errorMessage = null;
-    } else {
-      this.errorMessage = message;
-      this.successMessage = null;
-    }
-
-    setTimeout(() => {
-      this.successMessage = null;
-      this.errorMessage = null;
-    }, 5000);
-  }
-
-  onSave(): void {
+  onSubmit(): void {
     if (this.validationForm.valid) {
       const formData = {
         ...this.validationForm.getRawValue(),
@@ -125,25 +83,21 @@ export class ValidationConfigurationComponent implements OnInit {
         errors: this.errorsList
       };
       console.log('Saving Validation Configuration:', formData);
-      this.triggerAlert('success', 'Validation configuration saved successfully!');
 
       /*
       // API Integration Placeholder: Save validation
       // this.validationService.saveValidation(formData).subscribe({
       //   next: (response) => {
       //     console.log('Success', response);
-      //     setTimeout(() => this.location.back(), 5000);
+      //     this.location.back();
       //   },
       //   error: (err) => {
       //     console.error('Error saving validation', err);
-      //     this.triggerAlert('error', 'Failed to save validation configuration.');
       //   }
       // });
       */
 
-      setTimeout(() => {
-        this.location.back();
-      }, 2000);
+      this.location.back();
     } else {
       this.validationForm.markAllAsTouched();
     }

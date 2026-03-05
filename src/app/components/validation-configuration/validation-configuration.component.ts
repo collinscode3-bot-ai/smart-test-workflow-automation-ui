@@ -33,6 +33,8 @@ export class ValidationConfigurationComponent implements OnInit {
   errorModalMode: 'add' | 'edit' | 'view' = 'add';
   selectedError: ErrorMessage | null = null;
 
+  validationNameOptions: string[] = [];
+
   errorsList: ErrorMessage[] = [
     { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
     { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
@@ -50,13 +52,13 @@ export class ValidationConfigurationComponent implements OnInit {
     private errorMessageService: ErrorMessageService
   ) {
     this.validationForm = this.fb.group({
-      seqNo: [{ value: '', disabled: true }, Validators.required],
+      seqNo: [{ value: '001', disabled: true }, Validators.required],
       validationName: ['', Validators.required],
-      expectedOutcome: ['', Validators.required],
-      payloadId: ['', Validators.required],
-      payloadFormat: ['', Validators.required],
+      expectedOutcome: ['Success', Validators.required],
+      payloadId: ['REQ-2024-001', Validators.required],
+      payloadFormat: ['JSON', Validators.required],
       validationType: ['', Validators.required],
-      validationSourceData: ['', Validators.required]
+      validationSourceData: ['Response Body', Validators.required]
     });
   }
 
@@ -66,6 +68,12 @@ export class ValidationConfigurationComponent implements OnInit {
       'Validations',
       'Configure validation rules and parameters for your test suite.'
     );
+
+    // Dynamic Validation Name Logic
+    this.validationForm.get('validationType')?.valueChanges.subscribe(type => {
+      this.validationForm.get('validationName')?.setValue('');
+      this.updateValidationNameOptions(type);
+    });
 
     /*
     // API Integration Placeholder: Fetch existing validation details by ID
@@ -78,6 +86,16 @@ export class ValidationConfigurationComponent implements OnInit {
       // });
     }
     */
+  }
+
+  updateValidationNameOptions(type: string) {
+    if (type === 'JSON_FIELD_VALIDATION') {
+      this.validationNameOptions = ['Not Null', 'Not Empty', 'null', 'Equals', 'equals ignore case', 'empty', 'in', 'not in'];
+    } else if (type === 'JSON_VALIDATION') {
+      this.validationNameOptions = ['Strict equals', 'check if upstream output matches input'];
+    } else {
+      this.validationNameOptions = [];
+    }
   }
 
   getDynamicError(controlName: string, fieldName: string): string {
@@ -125,7 +143,7 @@ export class ValidationConfigurationComponent implements OnInit {
 
       setTimeout(() => {
         this.location.back();
-      }, 5000);
+      }, 2000);
     } else {
       this.validationForm.markAllAsTouched();
     }

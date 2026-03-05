@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 @Component({
   selector: 'app-verification-parameter-modal',
@@ -14,7 +15,10 @@ export class VerificationParameterModalComponent implements OnInit {
 
   parameterForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private errorMessageService: ErrorMessageService
+  ) {
     this.parameterForm = this.fb.group({
       paramSequence: ['', Validators.required],
       paramKey: ['', Validators.required],
@@ -59,5 +63,15 @@ export class VerificationParameterModalComponent implements OnInit {
 
   get isDirty(): boolean {
     return this.parameterForm.dirty;
+  }
+
+  getDynamicError(controlName: string, fieldName: string): string {
+    const control = this.parameterForm.get(controlName);
+    if (control && control.errors) {
+      const firstErrorKey = Object.keys(control.errors)[0];
+      const dynamicKey = firstErrorKey.toUpperCase();
+      return this.errorMessageService.getErrorMessage('VERIFY_PARAM', fieldName, dynamicKey);
+    }
+    return '';
   }
 }

@@ -1,9 +1,9 @@
 <div class="modal-backdrop-custom d-flex align-items-start justify-content-center pt-5">
   <div class="modal-container-custom shadow-lg">
     <!-- Header Section -->
-    <div class="px-5 pb-4 border-bottom">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">Verification Parameter Configuration</h2>
-      <p class="text-muted" style="font-size: 14px;">Define the technical parameters for the selected verification step.</p>
+    <div class="px-5 pt-5">
+      <h2 class="fw-bold mb-2" style="color: #4B0082;">Verification Parameter Configuration</h2>
+      <p class="mb-4" style="font-size: 14px; color: #6C757D;">Define the technical parameters for the selected verification step.</p>
     </div>
 
     <!-- Form Section -->
@@ -13,7 +13,7 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">Param Sequence <span class="text-danger ms-1">*</span></label>
+              <label class="modal-label">Param Sequence <span class="text-danger" style="margin-left: 2px;">*</span></label>
               <input type="text" formControlName="paramSequence" class="form-control"
                      [class.is-invalid]="parameterForm.get('paramSequence')?.invalid && parameterForm.get('paramSequence')?.touched"
                      placeholder="e.g. 1">
@@ -24,7 +24,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">Param Key <span class="text-danger ms-1">*</span></label>
+              <label class="modal-label">Param Key <span class="text-danger" style="margin-left: 2px;">*</span></label>
               <input type="text" formControlName="paramKey" class="form-control"
                      [class.is-invalid]="parameterForm.get('paramKey')?.invalid && parameterForm.get('paramKey')?.touched"
                      placeholder="Enter key name">
@@ -39,7 +39,7 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">Param Value Path <span class="text-danger ms-1">*</span></label>
+              <label class="modal-label">Param Value Path <span class="text-danger" style="margin-left: 2px;">*</span></label>
               <input type="text" formControlName="paramValuePath" class="form-control"
                      [class.is-invalid]="parameterForm.get('paramValuePath')?.invalid && parameterForm.get('paramValuePath')?.touched"
                      placeholder="Enter value path">
@@ -50,7 +50,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">Param Value Source <span class="text-danger ms-1">*</span></label>
+              <label class="modal-label">Param Value Source <span class="text-danger" style="margin-left: 2px;">*</span></label>
               <input type="text" formControlName="paramValueSource" class="form-control"
                      [class.is-invalid]="parameterForm.get('paramValueSource')?.invalid && parameterForm.get('paramValueSource')?.touched"
                      placeholder="Enter source">
@@ -65,7 +65,7 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">Value Data Type <span class="text-danger ms-1">*</span></label>
+              <label class="modal-label">Value Data Type <span class="text-danger" style="margin-left: 2px;">*</span></label>
               <select formControlName="valueDataType" class="form-select"
                       [class.is-invalid]="parameterForm.get('valueDataType')?.invalid && parameterForm.get('valueDataType')?.touched">
                 <option value="" disabled>Select data type</option>
@@ -81,7 +81,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">Param Value <span class="text-danger ms-1">*</span></label>
+              <label class="modal-label">Param Value <span class="text-danger" style="margin-left: 2px;">*</span></label>
               <input type="text" formControlName="paramValue" class="form-control"
                      [class.is-invalid]="parameterForm.get('paramValue')?.invalid && parameterForm.get('paramValue')?.touched"
                      placeholder="Enter value">

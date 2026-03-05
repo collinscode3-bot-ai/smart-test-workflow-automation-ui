@@ -1,9 +1,10 @@
 <div class="modal-backdrop-custom d-flex align-items-start justify-content-center pt-5">
   <div class="modal-container-custom shadow-lg">
     <!-- Header Section -->
-    <div class="px-5 pb-4 border-bottom">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">Verification Parameter Configuration</h2>
-      <p class="text-muted" style="font-size: 14px;">Define the technical parameters for the selected verification step.</p>
+    <div class="px-5 pt-5">
+      <h2 class="fw-bold mb-2" style="color: #4B0082;">Verification Parameter Configuration</h2>
+      <p class="mb-4" style="font-size: 14px; color: #6C757D;">Define the technical parameters for the selected
+        verification step.</p>
     </div>
 
     <!-- Form Section -->
@@ -13,14 +14,26 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM SEQUENCE</label>
-              <input type="text" formControlName="paramSequence" class="form-control" placeholder="e.g. 1">
+              <label class="modal-label">Seq No <span class="text-danger" style="margin-left: 2px;">*</span></label>
+              <input type="text" formControlName="paramSequence" class="form-control"
+                [class.is-invalid]="parameterForm.get('paramSequence')?.invalid && parameterForm.get('paramSequence')?.touched"
+                placeholder="e.g. 1">
+              <div class="error-message"
+                *ngIf="parameterForm.get('paramSequence')?.invalid && parameterForm.get('paramSequence')?.touched">
+                {{ getDynamicError('paramSequence', 'PARAMSEQUENCE') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM KEY</label>
-              <input type="text" formControlName="paramKey" class="form-control" placeholder="Enter key name">
+              <label class="modal-label">Param Key <span class="text-danger" style="margin-left: 2px;">*</span></label>
+              <input type="text" formControlName="paramKey" class="form-control"
+                [class.is-invalid]="parameterForm.get('paramKey')?.invalid && parameterForm.get('paramKey')?.touched"
+                placeholder="Enter key name">
+              <div class="error-message"
+                *ngIf="parameterForm.get('paramKey')?.invalid && parameterForm.get('paramKey')?.touched">
+                {{ getDynamicError('paramKey', 'PARAMKEY') }}
+              </div>
             </div>
           </div>
         </div>
@@ -29,14 +42,37 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM VALUE PATH</label>
-              <input type="text" formControlName="paramValuePath" class="form-control" placeholder="Enter value path">
+            <label class="modal-label">Param Value Source <span class="text-danger"
+                  style="margin-left: 2px;">*</span></label>
+              <select formControlName="paramValueSource" class="form-select"
+                [class.is-invalid]="parameterForm.get('paramValueSource')?.invalid && parameterForm.get('paramValueSource')?.touched">
+                <option value="" disabled>Select Param Source</option>
+                <option value="TDV">Test Data Value</option>
+                <option value="STATIC_VALUE">Static Value</option>
+                <option value="HEADER_KEY">Header Key</option>
+              </select>
+              <div class="error-message"
+                *ngIf="parameterForm.get('paramValueSource')?.invalid && parameterForm.get('paramValueSource')?.touched">
+                {{ getDynamicError('paramValueSource', 'PARAMVALUESOURCE') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM VALUE SOURCE</label>
-              <input type="text" formControlName="paramValueSource" class="form-control" placeholder="Enter source">
+              <label class="modal-label">Value Data Type <span class="text-danger"
+                  style="margin-left: 2px;">*</span></label>
+              <select formControlName="valueDataType" class="form-select"
+                [class.is-invalid]="parameterForm.get('valueDataType')?.invalid && parameterForm.get('valueDataType')?.touched">
+                <option value="" disabled>Select data type</option>
+                <option value="String">String</option>
+                <option value="Number">Number</option>
+                <option value="Boolean">Boolean</option>
+                <option value="JSON">JSON</option>
+              </select>
+              <div class="error-message"
+                *ngIf="parameterForm.get('valueDataType')?.invalid && parameterForm.get('valueDataType')?.touched">
+                {{ getDynamicError('valueDataType', 'VALUEDATATYPE') }}
+              </div>
             </div>
           </div>
         </div>
@@ -45,20 +81,28 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">VALUE DATA TYPE</label>
-              <select formControlName="valueDataType" class="form-select">
-                <option value="" disabled>Select data type</option>
-                <option value="String">String</option>
-                <option value="Number">Number</option>
-                <option value="Boolean">Boolean</option>
-                <option value="JSON">JSON</option>
-              </select>
+              <label class="modal-label">Param Value Path <span class="text-danger"
+                  style="margin-left: 2px;">*</span></label>
+              <input type="text" formControlName="paramValuePath" class="form-control"
+                [class.is-invalid]="parameterForm.get('paramValuePath')?.invalid && parameterForm.get('paramValuePath')?.touched"
+                placeholder="Enter value path">
+              <div class="error-message"
+                *ngIf="parameterForm.get('paramValuePath')?.invalid && parameterForm.get('paramValuePath')?.touched">
+                {{ getDynamicError('paramValuePath', 'PARAMVALUEPATH') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM VALUE</label>
-              <input type="text" formControlName="paramValue" class="form-control" placeholder="Enter value">
+              <label class="modal-label">Param Value <span class="text-danger"
+                  style="margin-left: 2px;">*</span></label>
+              <input type="text" formControlName="paramValue" class="form-control"
+                [class.is-invalid]="parameterForm.get('paramValue')?.invalid && parameterForm.get('paramValue')?.touched"
+                placeholder="Enter value">
+              <div class="error-message"
+                *ngIf="parameterForm.get('paramValue')?.invalid && parameterForm.get('paramValue')?.touched">
+                {{ getDynamicError('paramValue', 'PARAMVALUE') }}
+              </div>
             </div>
           </div>
         </div>
@@ -69,11 +113,12 @@
     <div class="px-5 pb-5 pt-3 d-flex justify-content-end align-items-center gap-3">
       <ng-container *ngIf="mode !== 'view'">
         <button type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Cancel</button>
-        <button type="button" class="btn btn-save-parameter-custom" (click)="onSave()" [disabled]="parameterForm.invalid">
+        <button type="button" class="btn btn-theme-purple" (click)="onSave()">
           Save Parameter
         </button>
       </ng-container>
-      <button *ngIf="mode === 'view'" type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Close</button>
+      <button *ngIf="mode === 'view'" type="button" class="btn btn-outline-secondary btn-cancel-custom"
+        (click)="onCancel()">Close</button>
     </div>
   </div>
 </div>

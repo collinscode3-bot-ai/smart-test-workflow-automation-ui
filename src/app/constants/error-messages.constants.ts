@@ -22,5 +22,11 @@ export const ERROR_MESSAGES = {
   VERIFY_SERVICENAME_REQUIRED: 'Service Name is Mandatory.',
   VERIFY_SEQUENCENO_REQUIRED: 'Sequence Number is Mandatory.',
   VERIFY_VERIFICATIONPARAMSTYPE_REQUIRED: 'Params Type is Mandatory.',
-  VERIFY_BASEURL_REQUIRED: 'Base URL is Mandatory.'
+  VERIFY_BASEURL_REQUIRED: 'Base URL is Mandatory.',
+  VERIFY_PARAM_PARAMSEQUENCE_REQUIRED: 'Param Sequence is Mandatory.',
+  VERIFY_PARAM_PARAMKEY_REQUIRED: 'Param Key is Mandatory.',
+  VERIFY_PARAM_PARAMVALUEPATH_REQUIRED: 'Param Value Path is Mandatory.',
+  VERIFY_PARAM_PARAMVALUESOURCE_REQUIRED: 'Param Value Source is Mandatory.',
+  VERIFY_PARAM_VALUEDATATYPE_REQUIRED: 'Value Data Type is Mandatory.',
+  VERIFY_PARAM_PARAMVALUE_REQUIRED: 'Param Value is Mandatory.'
 };

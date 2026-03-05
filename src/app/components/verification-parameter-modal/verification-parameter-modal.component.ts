@@ -25,7 +25,7 @@ export class VerificationParameterModalComponent implements OnInit {
       paramValuePath: ['', Validators.required],
       paramValueSource: ['', Validators.required],
       valueDataType: ['', Validators.required],
-      paramValue: ['', Validators.required]
+      paramValue: ['']
     });
   }
 

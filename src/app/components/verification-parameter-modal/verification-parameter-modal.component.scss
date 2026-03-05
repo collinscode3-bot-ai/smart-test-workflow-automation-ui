@@ -20,11 +20,13 @@
 }
 
 .modal-label {
-  font-weight: 600;
-  font-size: 14px;
-  color: #344054;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
   margin-bottom: 0.5rem;
   display: block;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .breadcrumb {

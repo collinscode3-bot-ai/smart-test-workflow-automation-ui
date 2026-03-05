@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ErrorMessageService } from 'src/app/services/error-message.service';
 
 @Component({
   selector: 'app-verification-parameter-modal',
@@ -13,8 +14,14 @@ export class VerificationParameterModalComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   parameterForm: FormGroup;
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
+  isSaving: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private errorMessageService: ErrorMessageService
+  ) {
     this.parameterForm = this.fb.group({
       paramSequence: ['', Validators.required],
       paramKey: ['', Validators.required],
@@ -36,13 +43,36 @@ export class VerificationParameterModalComponent implements OnInit {
     }
   }
 
-  onSave(): void {
-    if (this.parameterForm.valid) {
-      const data = this.parameterForm.getRawValue();
-      // POST /api/verification-params (For Add mode placeholder)
-      // PUT /api/verification-params/{id} (For Update placeholder)
-      this.save.emit(data);
+  getErrorMessage(field: string, type: string): string {
+    return this.errorMessageService.getErrorMessage('VERIFY_PARAM', field, type);
+  }
+
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
     } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
+  onSave(): void {
+    if (this.parameterForm.valid && !this.isSaving) {
+      this.isSaving = true;
+      const data = this.parameterForm.getRawValue();
+      this.triggerAlert('success', `Parameter ${this.mode === 'edit' ? 'updated' : 'saved'} successfully!`);
+
+      setTimeout(() => {
+        this.save.emit(data);
+        this.isSaving = false;
+      }, 500);
+    } else if (this.parameterForm.invalid) {
       this.parameterForm.markAllAsTouched();
     }
   }

@@ -1,26 +1,45 @@
-<div class="modal-backdrop-custom d-flex align-items-start justify-content-center pt-5">
+<div class="modal-backdrop-custom d-flex align-items-center justify-content-center">
   <div class="modal-container-custom shadow-lg">
     <!-- Header Section -->
-    <div class="px-5 pb-4 border-bottom">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">Verification Parameter Configuration</h2>
-      <p class="text-muted" style="font-size: 14px;">Define the technical parameters for the selected verification step.</p>
+    <div class="px-5 pt-5 pb-1">
+      <h2 class="fw-bold mb-1" style="color: #4B0082; font-size: 2rem;">Verification Parameter Configuration</h2>
+      <p class="text-muted" style="font-size: 16px;">Define the technical parameters for the selected verification step.</p>
     </div>
 
     <!-- Form Section -->
     <div class="px-5 py-4">
+      <!-- Dynamic Alerts -->
+      <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+        <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+        <div>{{ successMessage }}</div>
+        <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+        <i class="bi bi-x-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+        <div>{{ errorMessage }}</div>
+        <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+      </div>
+
       <form [formGroup]="parameterForm">
         <!-- Row 1 -->
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM SEQUENCE</label>
-              <input type="text" formControlName="paramSequence" class="form-control" placeholder="e.g. 1">
+              <label for="paramSequence" class="modal-label">Param Sequence <span class="text-danger">*</span></label>
+              <input type="text" id="paramSequence" formControlName="paramSequence" class="form-control" placeholder="e.g. 1" [ngClass]="{'is-invalid': parameterForm.get('paramSequence')?.invalid && (parameterForm.get('paramSequence')?.dirty || parameterForm.get('paramSequence')?.touched)}">
+              <div *ngIf="parameterForm.get('paramSequence')?.invalid && (parameterForm.get('paramSequence')?.dirty || parameterForm.get('paramSequence')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('PARAMSEQUENCE', 'REQUIRED') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM KEY</label>
-              <input type="text" formControlName="paramKey" class="form-control" placeholder="Enter key name">
+              <label for="paramKey" class="modal-label">Param Key <span class="text-danger">*</span></label>
+              <input type="text" id="paramKey" formControlName="paramKey" class="form-control" placeholder="Enter key name" [ngClass]="{'is-invalid': parameterForm.get('paramKey')?.invalid && (parameterForm.get('paramKey')?.dirty || parameterForm.get('paramKey')?.touched)}">
+              <div *ngIf="parameterForm.get('paramKey')?.invalid && (parameterForm.get('paramKey')?.dirty || parameterForm.get('paramKey')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('PARAMKEY', 'REQUIRED') }}
+              </div>
             </div>
           </div>
         </div>
@@ -29,14 +48,20 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM VALUE PATH</label>
-              <input type="text" formControlName="paramValuePath" class="form-control" placeholder="Enter value path">
+              <label for="paramValuePath" class="modal-label">Param Value Path <span class="text-danger">*</span></label>
+              <input type="text" id="paramValuePath" formControlName="paramValuePath" class="form-control" placeholder="Enter value path" [ngClass]="{'is-invalid': parameterForm.get('paramValuePath')?.invalid && (parameterForm.get('paramValuePath')?.dirty || parameterForm.get('paramValuePath')?.touched)}">
+              <div *ngIf="parameterForm.get('paramValuePath')?.invalid && (parameterForm.get('paramValuePath')?.dirty || parameterForm.get('paramValuePath')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('PARAMVALUEPATH', 'REQUIRED') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM VALUE SOURCE</label>
-              <input type="text" formControlName="paramValueSource" class="form-control" placeholder="Enter source">
+              <label for="paramValueSource" class="modal-label">Param Value Source <span class="text-danger">*</span></label>
+              <input type="text" id="paramValueSource" formControlName="paramValueSource" class="form-control" placeholder="Enter source" [ngClass]="{'is-invalid': parameterForm.get('paramValueSource')?.invalid && (parameterForm.get('paramValueSource')?.dirty || parameterForm.get('paramValueSource')?.touched)}">
+              <div *ngIf="parameterForm.get('paramValueSource')?.invalid && (parameterForm.get('paramValueSource')?.dirty || parameterForm.get('paramValueSource')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('PARAMVALUESOURCE', 'REQUIRED') }}
+              </div>
             </div>
           </div>
         </div>
@@ -45,20 +70,26 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">VALUE DATA TYPE</label>
-              <select formControlName="valueDataType" class="form-select">
-                <option value="" disabled>Select data type</option>
+              <label for="valueDataType" class="modal-label">Value Data Type <span class="text-danger">*</span></label>
+              <select id="valueDataType" formControlName="valueDataType" class="form-select" [ngClass]="{'is-invalid': parameterForm.get('valueDataType')?.invalid && (parameterForm.get('valueDataType')?.dirty || parameterForm.get('valueDataType')?.touched)}">
+                <option value="" disabled selected>Select</option>
                 <option value="String">String</option>
                 <option value="Number">Number</option>
                 <option value="Boolean">Boolean</option>
                 <option value="JSON">JSON</option>
               </select>
+              <div *ngIf="parameterForm.get('valueDataType')?.invalid && (parameterForm.get('valueDataType')?.dirty || parameterForm.get('valueDataType')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('VALUEDATATYPE', 'REQUIRED') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label class="modal-label">PARAM VALUE</label>
-              <input type="text" formControlName="paramValue" class="form-control" placeholder="Enter value">
+              <label for="paramValue" class="modal-label">Param Value <span class="text-danger">*</span></label>
+              <input type="text" id="paramValue" formControlName="paramValue" class="form-control" placeholder="Enter value" [ngClass]="{'is-invalid': parameterForm.get('paramValue')?.invalid && (parameterForm.get('paramValue')?.dirty || parameterForm.get('paramValue')?.touched)}">
+              <div *ngIf="parameterForm.get('paramValue')?.invalid && (parameterForm.get('paramValue')?.dirty || parameterForm.get('paramValue')?.touched)" class="text-danger small mt-1">
+                {{ getErrorMessage('PARAMVALUE', 'REQUIRED') }}
+              </div>
             </div>
           </div>
         </div>
@@ -66,14 +97,14 @@
     </div>
 
     <!-- Footer Section -->
-    <div class="px-5 pb-5 pt-3 d-flex justify-content-end align-items-center gap-3">
+    <div class="px-5 py-5 d-flex justify-content-end align-items-center gap-3 bg-light-gray rounded-bottom">
       <ng-container *ngIf="mode !== 'view'">
-        <button type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Cancel</button>
-        <button type="button" class="btn btn-save-parameter-custom" (click)="onSave()" [disabled]="parameterForm.invalid">
-          Save Parameter
+        <button type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onCancel()" [disabled]="isSaving">Cancel</button>
+        <button type="button" class="btn btn-theme-purple" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onSave()" [disabled]="isSaving">
+          <span>{{ mode === 'edit' ? 'Update Parameter' : 'Save Parameter' }}</span>
         </button>
       </ng-container>
-      <button *ngIf="mode === 'view'" type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Close</button>
+      <button *ngIf="mode === 'view'" type="button" class="btn btn-outline-secondary" style="min-width: 160px; height: 50px; border-radius: 8px;" (click)="onCancel()">Close</button>
     </div>
   </div>
 </div>

@@ -23,7 +23,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="application" class="form-label">APPLICATION <span class="text-danger">*</span></label>
+            <label for="application" class="form-label">Application <span class="text-danger">*</span></label>
             <input type="text" id="application" formControlName="application" class="form-control"
                    [class.is-invalid]="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)"
                    placeholder="e.g. Shipment Tracking">
@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="serviceName" class="form-label">SERVICE NAME <span class="text-danger">*</span></label>
+            <label for="serviceName" class="form-label">Service Name <span class="text-danger">*</span></label>
             <input type="text" id="serviceName" formControlName="serviceName" class="form-control"
                    [class.is-invalid]="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)"
                    placeholder="e.g. TrackServiceV1">
@@ -49,7 +49,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="sequenceNo" class="form-label">SEQUENCE NUMBER <span class="text-danger">*</span></label>
+            <label for="sequenceNo" class="form-label">Sequence Number <span class="text-danger">*</span></label>
             <input type="number" id="sequenceNo" formControlName="sequenceNo" class="form-control"
                    [class.is-invalid]="verificationForm.get('sequenceNo')?.invalid && (verificationForm.get('sequenceNo')?.dirty || verificationForm.get('sequenceNo')?.touched)"
                    placeholder="10">
@@ -60,7 +60,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="verificationParamsType" class="form-label">PARAMS TYPE <span class="text-danger">*</span></label>
+            <label for="verificationParamsType" class="form-label">Params Type <span class="text-danger">*</span></label>
             <select id="verificationParamsType" formControlName="verificationParamsType" class="form-select"
                     [class.is-invalid]="verificationForm.get('verificationParamsType')?.invalid && (verificationForm.get('verificationParamsType')?.dirty || verificationForm.get('verificationParamsType')?.touched)">
               <option value="" disabled>Select Type</option>
@@ -78,7 +78,7 @@
       <div class="row mb-4">
         <div class="col-md-11">
           <div class="form-group">
-            <label for="baseUrl" class="form-label">BASE URL <span class="text-danger">*</span></label>
+            <label for="baseUrl" class="form-label">Base URL <span class="text-danger">*</span></label>
             <input type="text" id="baseUrl" formControlName="baseUrl" class="form-control"
                    [class.is-invalid]="verificationForm.get('baseUrl')?.invalid && (verificationForm.get('baseUrl')?.dirty || verificationForm.get('baseUrl')?.touched)"
                    placeholder="https://api.fedex.com/track/v1">
@@ -93,7 +93,7 @@
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label d-block">VERIFY ONLY IF PREVIOUS SERVICE VERIFICATION IS SUCCESSFUL?</label>
+            <label class="form-label d-block">Verify only if previous service verification is successful?</label>
             <div class="form-check form-switch custom-switch">
               <input class="form-check-input" type="checkbox" id="executeIfPreviousSuccessful" formControlName="executeIfPreviousSuccessful">
             </div>
@@ -101,7 +101,7 @@
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label class="form-label d-block">IS VERIFICATION KEY-TYPE IS COMPOSITE?</label>
+            <label class="form-label d-block">Is verification key-type is composite?</label>
             <div class="form-check form-switch custom-switch">
               <input class="form-check-input" type="checkbox" id="isCompositeKey" formControlName="isCompositeKey">
             </div>
@@ -113,7 +113,7 @@
       <div class="row mb-5" *ngIf="verificationForm.get('isCompositeKey')?.value">
         <div class="col-md-11">
           <div class="form-group">
-            <label for="verificationKeyTypeDelimiter" class="form-label">VERIFICATION KEY-TYPE DELIMITER</label>
+            <label for="verificationKeyTypeDelimiter" class="form-label">Verification key-type Delimiter</label>
             <input type="text" id="verificationKeyTypeDelimiter" formControlName="verificationKeyTypeDelimiter" class="form-control" placeholder=":">
           </div>
         </div>

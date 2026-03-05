@@ -1,19 +1,6 @@
 @import "../../../variables";
 
-.btn-theme-purple {
-    background-color: #4B0082;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-
-    &:hover {
-        background-color: darken(#4B0082, 10%);
-        color: white;
-    }
-}
-
-.btn-indigo {
+.btn-theme-purple, .btn-indigo {
     background-color: #4B0082;
     color: white;
     border: none;
@@ -47,9 +34,8 @@
 label {
     margin-bottom: 0.75rem;
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 12px;
-    color: #4B0082;
+    font-size: 16px;
+    color: #333;
 }
 
 .form-control, .form-select {
@@ -67,20 +53,7 @@ label {
     margin-top: 4px;
 }
 
-.btn-theme-orange {
-    background-color: #FF6200;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-
-    &:hover {
-        background-color: darken(#FF6200, 10%);
-        color: white;
-    }
-}
-
-.btn-save-orange {
+.btn-theme-orange, .btn-save-orange {
     background-color: #FF6200;
     color: white;
     border: none;

@@ -1,18 +1,5 @@
 <div class="modal-backdrop-custom d-flex align-items-start justify-content-center pt-5">
   <div class="modal-container-custom shadow-lg">
-    <!-- Breadcrumbs Section -->
-    <div class="modal-breadcrumbs px-5 pt-4 pb-2">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0">
-          <li class="breadcrumb-item">Projects</li>
-          <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Test Suite</li>
-          <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Verifications</li>
-          <li class="breadcrumb-item"><i class="bi bi-chevron-right mx-2"></i>Verification Details</li>
-          <li class="breadcrumb-item active"><i class="bi bi-chevron-right mx-2"></i>{{ mode === 'edit' ? 'Edit' : mode === 'view' ? 'View' : 'Add' }} Parameter</li>
-        </ol>
-      </nav>
-    </div>
-
     <!-- Header Section -->
     <div class="px-5 pb-4 border-bottom">
       <h2 class="fw-bold mb-1" style="color: #4B0082;">Verification Parameter Configuration</h2>
@@ -87,11 +74,6 @@
         </button>
       </ng-container>
       <button *ngIf="mode === 'view'" type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">Close</button>
-    </div>
-
-    <!-- Copyright Section -->
-    <div class="text-center pb-4">
-      <p class="text-muted mb-0" style="font-size: 12px;">© 2024 Technical Verification Platform. All rights reserved.</p>
     </div>
   </div>
 </div>

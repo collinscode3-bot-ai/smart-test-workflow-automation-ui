@@ -1,7 +1,7 @@
 <div class="col-12 col-lg-10 mx-auto py-4">
   <div class="card border-0 shadow-sm p-5 mb-5">
     <div class="mb-4">
-      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ isEditMode ? 'Edit Validation Configuration' : 'Add Validation Configuration' }}</h2>
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ isEditMode ? 'Edit Validation' : 'Add Validation' }}</h2>
       <p class="text-muted" style="font-size: 14px;">Configure validation rules and parameters for your test suite.</p>
     </div>
 
@@ -271,7 +271,7 @@
         <button type="button" class="btn btn-outline-secondary cancel-btn" style="height: 50px; min-width: 160px;"
           (click)="onCancel()">Cancel</button>
         <button type="submit" class="btn btn-theme-orange" style="height: 50px; min-width: 200px;">
-          {{ isEditMode ? 'Update' : 'Save' }}
+          {{ isEditMode ? 'Update Validation' : 'Save Validation' }}
         </button>
       </div>
     </form>

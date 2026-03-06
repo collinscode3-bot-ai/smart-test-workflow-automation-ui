@@ -33,10 +33,10 @@ export class ValidationParameterModalComponent implements OnInit {
   ) {
     this.parameterForm = this.fb.group({
       parameterId: ['', Validators.required],
-      parameterType: ['Header', Validators.required],
+      parameterType: ['', Validators.required],
       parameterValue: ['', Validators.required],
-      parameterSeqNo: [1, [Validators.required, Validators.min(1), Validators.max(100)]],
-      dataType: ['String', Validators.required]
+      parameterSeqNo: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+      dataType: ['', Validators.required]
     });
   }
 

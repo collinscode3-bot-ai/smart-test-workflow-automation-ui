@@ -10,6 +10,11 @@ export interface ValidationParameter {
   dataType: string;
 }
 
+export interface ValidationContext {
+  type: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-validation-parameter-modal',
   templateUrl: './validation-parameter-modal.component.html',
@@ -18,10 +23,12 @@ export interface ValidationParameter {
 export class ValidationParameterModalComponent implements OnInit {
   @Input() mode: 'add' | 'edit' | 'view' = 'add';
   @Input() parameterData: ValidationParameter | null = null;
+  @Input() context: ValidationContext | null = null;
   @Output() save = new EventEmitter<ValidationParameter>();
   @Output() cancel = new EventEmitter<void>();
 
   parameterForm: FormGroup;
+  parameterOptions: { key: string; value: string }[] = [];
   seqNumbers: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
 
   successMessage: string | null = null;
@@ -41,6 +48,8 @@ export class ValidationParameterModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadFilteredOptions();
+
     if ((this.mode === 'edit' || this.mode === 'view') && this.parameterData) {
       // API CALL: GET /api/validations/parameters/{id} (to fetch data for Edit mode).
       this.parameterForm.patchValue(this.parameterData);
@@ -48,6 +57,55 @@ export class ValidationParameterModalComponent implements OnInit {
 
     if (this.mode === 'view') {
       this.parameterForm.disable();
+    }
+  }
+
+  loadFilteredOptions(): void {
+    if (!this.context) {
+      this.parameterOptions = [];
+      return;
+    }
+
+    const { type, name } = this.context;
+
+    // Logic Pattern: Use a conditional switch or a lookup map to populate the modal's dropdown array based on this.context.type and this.context.name
+    if (type === 'JSON_FIELD_VALIDATION') {
+      switch (name) {
+        case 'EQUALS':
+        case 'EQUALS_IGNORE_CASE':
+          this.parameterOptions = [
+            { key: 'EXPECTED_VALUE', value: 'Expected Value' },
+            { key: 'PATH', value: 'JSON Path' }
+          ];
+          break;
+        case 'IN':
+        case 'NOT_IN':
+          this.parameterOptions = [
+            { key: 'VALUE_LIST', value: 'Value List' },
+            { key: 'DELIMITER', value: 'Delimiter' }
+          ];
+          break;
+        default:
+          this.parameterOptions = [
+            { key: 'FIELD_PATH', value: 'Field Path' }
+          ];
+      }
+    } else if (type === 'JSON_VALIDATION') {
+      this.parameterOptions = [
+        { key: 'EXCLUDE_FIELDS', value: 'Exclude Fields' },
+        { key: 'IGNORE_ORDER', value: 'Ignore Order' }
+      ];
+    } else if (type === 'DB_VALIDATION') {
+      this.parameterOptions = [
+        { key: 'SQL_QUERY', value: 'SQL Query' },
+        { key: 'COLUMN_NAME', value: 'Column Name' }
+      ];
+    } else if (type === 'CUSTOM_VALIDATION') {
+      this.parameterOptions = [
+        { key: 'CUSTOM_PARAM', value: 'Custom Parameter' }
+      ];
+    } else {
+      this.parameterOptions = [];
     }
   }
 

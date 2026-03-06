@@ -280,7 +280,7 @@
 
 <!-- Validation Parameter Modal -->
 <app-validation-parameter-modal *ngIf="isModalOpen" [mode]="modalMode" [parameterData]="selectedParam"
-  (save)="handleParamSave($event)" (cancel)="handleParamCancel()">
+  [context]="modalContext" (save)="handleParamSave($event)" (cancel)="handleParamCancel()">
 </app-validation-parameter-modal>
 
 <!-- Error Message Modal -->

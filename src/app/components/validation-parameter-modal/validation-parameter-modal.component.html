@@ -43,6 +43,7 @@
               <select id="parameterType" formControlName="parameterType" class="form-select"
                 [class.is-invalid]="parameterForm.get('parameterType')?.invalid && parameterForm.get('parameterType')?.touched">
                <option value="" disabled>Select Param Type</option>
+               <option *ngFor="let option of parameterOptions" [value]="option.key">{{ option.value }}</option>
               </select>
               <div class="invalid-feedback" *ngIf="parameterForm.get('parameterType')?.invalid && parameterForm.get('parameterType')?.touched">
                 {{ getDynamicError('parameterType', 'PARAMTYPE') }}

@@ -3,7 +3,7 @@
     <!-- Header Section -->
     <div class="px-5 pt-5">
       <h2 class="fw-bold mb-2 title-purple">
-        Validation Parameter Configuration
+        {{ mode === 'add' ? 'Add' : mode === 'edit' ? 'Edit' : 'View' }} Validation Parameter Configuration
       </h2>
       <p class="subtitle-grey">Define the technical parameters for the selected validation step.</p>
     </div>
@@ -85,7 +85,7 @@
         {{ mode === 'view' ? 'Close' : 'Cancel' }}
       </button>
       <button *ngIf="mode !== 'view'" type="button" class="btn btn-save-parameter" (click)="onSave()" [disabled]="parameterForm.invalid">
-        <span>Save Parameter</span>
+        <span>{{ mode === 'edit' ? 'Update Parameter' : 'Save Parameter' }}</span>
       </button>
     </div>
   </div>

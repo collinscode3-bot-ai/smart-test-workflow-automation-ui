@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
-import { ValidationParameter } from '../validation-parameter-modal/validation-parameter-modal.component';
+import { ValidationParameter, ValidationContext } from '../validation-parameter-modal/validation-parameter-modal.component';
 import { ErrorMessageService } from '../../services/error-message.service';
 
 interface ErrorMessage {
@@ -32,6 +32,7 @@ export class ValidationConfigurationComponent implements OnInit {
   isModalOpen = false;
   modalMode: 'add' | 'edit' | 'view' = 'add';
   selectedParam: ValidationParameter | null = null;
+  modalContext: ValidationContext | null = null;
 
   // Modal State for Error Messages
   isErrorModalOpen = false;
@@ -224,12 +225,14 @@ validationNameOptions: ValidationOption[] = [];
   addParameter(): void {
     this.modalMode = 'add';
     this.selectedParam = null;
+    this.updateModalContext();
     this.isModalOpen = true;
   }
 
   editParameter(param: ValidationParameter): void {
     this.modalMode = 'edit';
     this.selectedParam = { ...param };
+    this.updateModalContext();
     this.isModalOpen = true;
   }
 
@@ -240,7 +243,15 @@ validationNameOptions: ValidationOption[] = [];
   viewParameter(param: ValidationParameter): void {
     this.modalMode = 'view';
     this.selectedParam = { ...param };
+    this.updateModalContext();
     this.isModalOpen = true;
+  }
+
+  private updateModalContext(): void {
+    this.modalContext = {
+      type: this.validationForm.get('validationType')?.value,
+      name: this.validationForm.get('validationName')?.value
+    };
   }
 
   handleParamSave(data: ValidationParameter): void {

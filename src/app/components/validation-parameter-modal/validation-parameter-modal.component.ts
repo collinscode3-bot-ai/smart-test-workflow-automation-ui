@@ -79,7 +79,7 @@ export class ValidationParameterModalComponent implements OnInit {
 
       setTimeout(() => {
         this.save.emit(data);
-      }, 5000);
+      }, 500);
     } else {
       this.parameterForm.markAllAsTouched();
     }

@@ -5,7 +5,8 @@ export interface ValidationParameter {
   parameterId: string;
   parameterType: string;
   parameterValue: string;
-  parameterSeqNo: number;
+  parameterSeqNo: string | number;
+  parameterValuePath: string;
   dataType: string;
 }
 
@@ -29,10 +30,11 @@ export class ValidationParameterModalComponent implements OnInit {
   constructor(private fb: FormBuilder) {
     this.parameterForm = this.fb.group({
       parameterId: ['', Validators.required],
-      parameterType: ['Header', Validators.required],
+      parameterType: ['', Validators.required],
       parameterValue: ['', Validators.required],
-      parameterSeqNo: [1, [Validators.required, Validators.min(1), Validators.max(100)]],
-      dataType: ['String', Validators.required]
+      parameterSeqNo: ['', Validators.required],
+      parameterValuePath: ['', Validators.required],
+      dataType: ['', Validators.required]
     });
   }
 

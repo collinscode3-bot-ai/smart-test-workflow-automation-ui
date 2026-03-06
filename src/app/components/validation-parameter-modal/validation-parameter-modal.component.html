@@ -3,9 +3,9 @@
     <!-- Header Section -->
     <div class="px-5 pt-5 pb-4">
       <h2 class="fw-bold mb-1" style="color: #4B0082; font-size: 2rem;">
-        {{ mode === 'add' ? 'Add' : mode === 'edit' ? 'Edit' : 'View' }} Validation Parameter
+        Verification Parameter Configuration
       </h2>
-      <p class="text-muted" style="font-size: 16px;">Configure technical parameters for data validation.</p>
+      <p class="text-muted" style="font-size: 16px;">Define the technical parameters for the selected verification step.</p>
     </div>
 
     <!-- Form Section -->
@@ -28,18 +28,14 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="parameterId" class="modal-label">PARAMETER ID</label>
-              <input type="text" id="parameterId" formControlName="parameterId" class="form-control" placeholder="e.g. param_001">
+              <label for="parameterSeqNo" class="modal-label">Seq No <span class="text-danger">*</span></label>
+              <input type="text" id="parameterSeqNo" formControlName="parameterSeqNo" class="form-control" placeholder="e.g. 1">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="parameterType" class="modal-label">PARAMETER TYPE</label>
-              <select id="parameterType" formControlName="parameterType" class="form-select">
-                <option value="Header">Header</option>
-                <option value="Body">Body</option>
-                <option value="Cookie">Cookie</option>
-              </select>
+              <label for="parameterId" class="modal-label">Param Key <span class="text-danger">*</span></label>
+              <input type="text" id="parameterId" formControlName="parameterId" class="form-control" placeholder="Enter key name">
             </div>
           </div>
         </div>
@@ -48,15 +44,24 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="parameterValue" class="modal-label">PARAMETER VALUE</label>
-              <input type="text" id="parameterValue" formControlName="parameterValue" class="form-control" placeholder="e.g. application/json">
+              <label for="parameterType" class="modal-label">Param Value Source <span class="text-danger">*</span></label>
+              <select id="parameterType" formControlName="parameterType" class="form-select">
+                <option value="" disabled selected>Select Param Source</option>
+                <option value="TDV">Test Data Value</option>
+                <option value="STATIC_VALUE">Static Value</option>
+                <option value="HEADER_KEY">Header Key</option>
+              </select>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="parameterSeqNo" class="modal-label">PARAMETER SEQ NO</label>
-              <select id="parameterSeqNo" formControlName="parameterSeqNo" class="form-select">
-                <option *ngFor="let n of seqNumbers" [value]="n">{{ n }}</option>
+              <label for="dataType" class="modal-label">Value Data Type <span class="text-danger">*</span></label>
+              <select id="dataType" formControlName="dataType" class="form-select">
+                <option value="" disabled selected>Select data type</option>
+                <option value="String">String</option>
+                <option value="Number">Number</option>
+                <option value="Boolean">Boolean</option>
+                <option value="JSON">JSON</option>
               </select>
             </div>
           </div>
@@ -66,13 +71,14 @@
         <div class="row mb-4">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="dataType" class="modal-label">DATA TYPE</label>
-              <select id="dataType" formControlName="dataType" class="form-select">
-                <option value="String">String</option>
-                <option value="Integer">Integer</option>
-                <option value="Boolean">Boolean</option>
-                <option value="Object">Object</option>
-              </select>
+              <label for="parameterValuePath" class="modal-label">Param Value Path <span class="text-danger">*</span></label>
+              <input type="text" id="parameterValuePath" formControlName="parameterValuePath" class="form-control" placeholder="Enter value path">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="parameterValue" class="modal-label">Param Value <span class="text-danger">*</span></label>
+              <input type="text" id="parameterValue" formControlName="parameterValue" class="form-control" placeholder="Enter value">
             </div>
           </div>
         </div>
@@ -85,7 +91,6 @@
         {{ mode === 'view' ? 'Close' : 'Cancel' }}
       </button>
       <button *ngIf="mode !== 'view'" type="button" class="btn btn-save-parameter d-flex align-items-center justify-content-center gap-2" (click)="onSave()" [disabled]="parameterForm.invalid">
-        <i class="bi bi-save-fill"></i>
         <span>Save Parameter</span>
       </button>
     </div>

@@ -35,5 +35,10 @@ export const ERROR_MESSAGES = {
   VALIDATION_PAYLOADID_REQUIRED: 'Payload ID is Mandatory.',
   VALIDATION_PAYLOADFORMAT_REQUIRED: 'Payload Format is Mandatory.',
   VALIDATION_TYPE_REQUIRED: 'Validation Type is Mandatory.',
-  VALIDATION_SOURCEDATA_REQUIRED: 'Validation Source Data is Mandatory.'
+  VALIDATION_SOURCEDATA_REQUIRED: 'Validation Source Data is Mandatory.',
+  VALIDATION_PARAM_SEQNO_REQUIRED: 'Sequence Number is Mandatory.',
+  VALIDATION_PARAM_PARAMKEY_REQUIRED: 'Parameter Key is Mandatory.',
+  VALIDATION_PARAM_PARAMTYPE_REQUIRED: 'Parameter Type is Mandatory.',
+  VALIDATION_PARAM_DATATYPE_REQUIRED: 'Data Type is Mandatory.',
+  VALIDATION_PARAM_PARAMVALUE_REQUIRED: 'Parameter Value is Mandatory.'
 };

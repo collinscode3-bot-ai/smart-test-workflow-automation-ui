@@ -29,15 +29,23 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="parameterSeqNo" class="modal-label">Seq No <span class="text-danger">*</span></label>
-              <select id="parameterSeqNo" formControlName="parameterSeqNo" class="form-select">
+              <select id="parameterSeqNo" formControlName="parameterSeqNo" class="form-select"
+                [class.is-invalid]="parameterForm.get('parameterSeqNo')?.invalid && parameterForm.get('parameterSeqNo')?.touched">
                 <option *ngFor="let n of seqNumbers" [value]="n">{{ n }}</option>
               </select>
+              <div class="invalid-feedback" *ngIf="parameterForm.get('parameterSeqNo')?.invalid && parameterForm.get('parameterSeqNo')?.touched">
+                {{ getDynamicError('parameterSeqNo', 'SEQNO') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="parameterId" class="modal-label">Param Key <span class="text-danger">*</span></label>
-              <input type="text" id="parameterId" formControlName="parameterId" class="form-control" placeholder="Enter key name">
+              <input type="text" id="parameterId" formControlName="parameterId" class="form-control" placeholder="Enter key name"
+                [class.is-invalid]="parameterForm.get('parameterId')?.invalid && parameterForm.get('parameterId')?.touched">
+              <div class="invalid-feedback" *ngIf="parameterForm.get('parameterId')?.invalid && parameterForm.get('parameterId')?.touched">
+                {{ getDynamicError('parameterId', 'PARAMKEY') }}
+              </div>
             </div>
           </div>
         </div>
@@ -47,22 +55,30 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="parameterType" class="modal-label">Param Type <span class="text-danger">*</span></label>
-              <select id="parameterType" formControlName="parameterType" class="form-select">
+              <select id="parameterType" formControlName="parameterType" class="form-select"
+                [class.is-invalid]="parameterForm.get('parameterType')?.invalid && parameterForm.get('parameterType')?.touched">
                 <option value="Header">Header</option>
                 <option value="Body">Body</option>
                 <option value="Cookie">Cookie</option>
               </select>
+              <div class="invalid-feedback" *ngIf="parameterForm.get('parameterType')?.invalid && parameterForm.get('parameterType')?.touched">
+                {{ getDynamicError('parameterType', 'PARAMTYPE') }}
+              </div>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="dataType" class="modal-label">Value Data Type <span class="text-danger">*</span></label>
-              <select id="dataType" formControlName="dataType" class="form-select">
+              <select id="dataType" formControlName="dataType" class="form-select"
+                [class.is-invalid]="parameterForm.get('dataType')?.invalid && parameterForm.get('dataType')?.touched">
                 <option value="String">String</option>
                 <option value="Integer">Integer</option>
                 <option value="Boolean">Boolean</option>
                 <option value="Object">Object</option>
               </select>
+              <div class="invalid-feedback" *ngIf="parameterForm.get('dataType')?.invalid && parameterForm.get('dataType')?.touched">
+                {{ getDynamicError('dataType', 'DATATYPE') }}
+              </div>
             </div>
           </div>
         </div>
@@ -72,7 +88,11 @@
           <div class="col-md-6">
             <div class="form-group">
               <label for="parameterValue" class="modal-label">Param Value <span class="text-danger">*</span></label>
-              <input type="text" id="parameterValue" formControlName="parameterValue" class="form-control" placeholder="Enter value">
+              <input type="text" id="parameterValue" formControlName="parameterValue" class="form-control" placeholder="Enter value"
+                [class.is-invalid]="parameterForm.get('parameterValue')?.invalid && parameterForm.get('parameterValue')?.touched">
+              <div class="invalid-feedback" *ngIf="parameterForm.get('parameterValue')?.invalid && parameterForm.get('parameterValue')?.touched">
+                {{ getDynamicError('parameterValue', 'PARAMVALUE') }}
+              </div>
             </div>
           </div>
         </div>
@@ -84,7 +104,7 @@
       <button type="button" class="btn btn-outline-secondary btn-cancel-custom" (click)="onCancel()">
         {{ mode === 'view' ? 'Close' : 'Cancel' }}
       </button>
-      <button *ngIf="mode !== 'view'" type="button" class="btn btn-save-parameter" (click)="onSave()" [disabled]="parameterForm.invalid">
+      <button *ngIf="mode !== 'view'" type="button" class="btn btn-save-parameter" (click)="onSave()">
         <span>{{ mode === 'edit' ? 'Update Parameter' : 'Save Parameter' }}</span>
       </button>
     </div>

@@ -19,12 +19,10 @@
 
 .modal-label {
   font-weight: bold;
-  font-size: 12px;
-  text-transform: uppercase;
-  color: #6C757D;
+  font-size: 16px;
+  color: #333;
   margin-bottom: 0.5rem;
   display: block;
-  letter-spacing: 0.5px;
 }
 
 .form-control, .form-select {
@@ -51,7 +49,7 @@
 .btn-save-parameter {
   height: 54px;
   min-width: 200px;
-  background-color: #4B0082; /* Indigo #4B0082 */
+  background-color: #4B0082; /* Deep Purple */
   color: white;
   border: none;
   border-radius: 8px;
@@ -68,8 +66,18 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+}
 
-  i {
-    font-size: 1.1rem;
+.btn-outline-secondary {
+  height: 54px;
+  min-width: 160px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #6c757d;
+  border-color: #dee2e6;
+
+  &:hover {
+    background-color: #f8f9fa;
+    color: #495057;
   }
 }

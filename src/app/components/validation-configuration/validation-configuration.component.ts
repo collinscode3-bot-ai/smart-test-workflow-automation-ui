@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
 import { ValidationParameter } from '../validation-parameter-modal/validation-parameter-modal.component';
-import { ErrorMessageService } from '../../services/error-message.service';
 
 interface ErrorMessage {
   errorCode: string;
@@ -42,25 +41,21 @@ export class ValidationConfigurationComponent implements OnInit {
 
 validationNameOptions: ValidationOption[] = [];
 
-  successMessage: string | null = null;
-  errorMessage: string | null = null;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private headerService: HeaderService,
-    private errorMessageService: ErrorMessageService
+    private headerService: HeaderService
   ) {
     this.validationForm = this.fb.group({
-      seqNo: [{ value: '', disabled: true }, Validators.required],
-      validationName: ['', Validators.required],
-      expectedOutcome: ['', Validators.required],
-      payloadId: ['', Validators.required],
-      payloadFormat: ['', Validators.required],
-      validationType: ['', Validators.required],
-      validationSourceData: ['', Validators.required]
+      seqNo: [{ value: '001', disabled: true }, Validators.required],
+      validationName: ['User Status Check', Validators.required],
+      expectedOutcome: ['Success', Validators.required],
+      payloadId: ['REQ-2024-001', Validators.required],
+      payloadFormat: ['JSON', Validators.required],
+      validationType: ['Field Validation', Validators.required],
+      validationSourceData: ['Response Body', Validators.required]
     });
   }
 
@@ -162,26 +157,7 @@ validationNameOptions: ValidationOption[] = [];
   }
 }
 
-  getDynamicError(controlName: string, fieldName: string): string {
-    return this.errorMessageService.getErrorMessage('VALIDATION', fieldName, 'REQUIRED');
-  }
-
-  private triggerAlert(type: 'success' | 'error', message: string) {
-    if (type === 'success') {
-      this.successMessage = message;
-      this.errorMessage = null;
-    } else {
-      this.errorMessage = message;
-      this.successMessage = null;
-    }
-
-    setTimeout(() => {
-      this.successMessage = null;
-      this.errorMessage = null;
-    }, 5000);
-  }
-
-  onSave(): void {
+  onSubmit(): void {
     if (this.validationForm.valid) {
       const formData = {
         ...this.validationForm.getRawValue(),
@@ -209,9 +185,7 @@ validationNameOptions: ValidationOption[] = [];
         */
       }
 
-      setTimeout(() => {
-        this.location.back();
-      }, 5000);
+      this.location.back();
     } else {
       this.validationForm.markAllAsTouched();
     }

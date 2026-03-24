@@ -90,9 +90,13 @@ export class ValidationConfigurationComponent implements OnInit {
 
   updateValidationNameOptions(type: string) {
     if (type === 'JSON_FIELD_VALIDATION') {
-      this.validationNameOptions = ['Not Null', 'Not Empty', 'null', 'Equals', 'equals ignore case', 'empty', 'in', 'not in'];
+      this.validationNameOptions = ['Null', 'Not Null', 'Empty', 'Not Empty',  'Equals', 'Equals Ignorecase',  'In', 'Not In'];
     } else if (type === 'JSON_VALIDATION') {
-      this.validationNameOptions = ['Strict equals', 'check if upstream output matches input'];
+      this.validationNameOptions = ['Strict Equals', 'Check If Upstream Output Matches Input'];
+    } else if (type === 'DB_VALIDATION') {
+      this.validationNameOptions = ['Record Check'];
+    } else if (type === 'CUSTOM_VALIDATION') {
+      this.validationNameOptions = ['HTTP POST API CALL'];
     } else {
       this.validationNameOptions = [];
     }

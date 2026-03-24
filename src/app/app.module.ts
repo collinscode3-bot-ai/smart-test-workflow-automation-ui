@@ -25,6 +25,7 @@ import { ValidationConfigurationComponent } from './components/validation-config
 import { FieldPropertiesModalComponent } from './components/field-properties-modal/field-properties-modal.component';
 import { ValidationParameterModalComponent } from './components/validation-parameter-modal/validation-parameter-modal.component';
 import { ErrorMessageModalComponent } from './components/error-message-modal/error-message-modal.component';
+import { TestDataManagementComponent } from './components/test-data-management/test-data-management.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { ErrorMessageModalComponent } from './components/error-message-modal/err
     ValidationConfigurationComponent,
     FieldPropertiesModalComponent,
     ValidationParameterModalComponent,
-    ErrorMessageModalComponent
+    ErrorMessageModalComponent,
+    TestDataManagementComponent
   ],
   imports: [
     BrowserModule,

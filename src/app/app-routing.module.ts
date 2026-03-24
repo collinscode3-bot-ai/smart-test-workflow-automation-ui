@@ -9,6 +9,7 @@ import { TestCaseDetailsComponent } from './components/test-case-details/test-ca
 import { ContractDetailsComponent } from './components/contract-details/contract-details.component';
 import { VerificationDetailsComponent } from './components/verification-details/verification-details.component';
 import { ValidationConfigurationComponent } from './components/validation-configuration/validation-configuration.component';
+import { TestDataManagementComponent } from './components/test-data-management/test-data-management.component';
 import { ModalGuard } from './guards/modal-guard.guard';
 
 const routes: Routes = [
@@ -29,7 +30,7 @@ const routes: Routes = [
   { path: 'projects/:projectId/suites/:suiteId/testcases/:caseId/verifications/:verificationId/validations/edit/:validationId', component: ValidationConfigurationComponent, data: { mode: 'edit' } },
   { path: 'contracts/list', component: ProjectFormComponent },
   { path: 'contracts/upload', component: ProjectFormComponent },
-  { path: 'test-data/datasets', component: ProjectFormComponent },
+  { path: 'test-data/datasets', component: TestDataManagementComponent },
   { path: 'test-data/variables', component: ProjectFormComponent },
   { path: 'test-execution/runs', component: ProjectFormComponent },
   { path: 'test-execution/reports', component: ProjectFormComponent },

@@ -15,6 +15,23 @@ export class TestDataManagementComponent implements OnInit {
   isSaving = false;
   isDragging = false;
 
+  // Mock data for table
+  tableHeaders: string[] = ['ID', 'Dataset Name', 'Records', 'Status'];
+  mockDatasets: any[] = [
+    { id: 'DS-001', name: 'Order_Processing_Test_Data', records: 1250, status: 'Active' },
+    { id: 'DS-002', name: 'User_Profile_Baseline', records: 850, status: 'Active' },
+    { id: 'DS-003', name: 'Inventory_Sync_Mock', records: 2100, status: 'Deprecated' },
+    { id: 'DS-004', name: 'Payment_Gateway_Scenarios', records: 450, status: 'Active' },
+    { id: 'DS-005', name: 'Shipping_Rate_Calculations', records: 300, status: 'Active' },
+    { id: 'DS-006', name: 'Notification_Trigger_Events', records: 150, status: 'Active' }
+  ];
+
+  // Pagination properties
+  paginatedDatasets: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 4;
+  totalItems: number = 0;
+
   constructor(
     private fb: FormBuilder,
     private errorMessageService: ErrorMessageService
@@ -24,6 +41,8 @@ export class TestDataManagementComponent implements OnInit {
     this.testDataForm = this.fb.group({
       file: [null, Validators.required]
     });
+    this.totalItems = this.mockDatasets.length;
+    this.updatePagination();
   }
 
   onDragOver(event: DragEvent): void {
@@ -111,5 +130,37 @@ export class TestDataManagementComponent implements OnInit {
 
   getError(field: string, type: string): string {
     return this.errorMessageService.getErrorMessage('TESTDATA', field, type);
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedDatasets = this.mockDatasets.slice(startIndex, endIndex);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  }
+
+  setPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagination();
+    }
+  }
+
+  deleteRow(id: string): void {
+    if (confirm('Are you sure you want to delete this dataset?')) {
+      this.mockDatasets = this.mockDatasets.filter(d => d.id !== id);
+      this.totalItems = this.mockDatasets.length;
+      if (this.currentPage > this.totalPages && this.currentPage > 1) {
+        this.currentPage--;
+      }
+      this.updatePagination();
+    }
   }
 }

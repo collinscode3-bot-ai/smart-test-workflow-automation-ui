@@ -1,19 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderService } from '../../services/header.service';
 import { ValidationParameter } from '../validation-parameter-modal/validation-parameter-modal.component';
+import { ErrorMessageService } from '../../services/error-message.service';
 
 interface ErrorMessage {
   errorCode: string;
   errorMessage: string;
-}
-
-// Define the structure for your options
-interface ValidationOption {
-  key: string;
-  value: string;
 }
 
 @Component({
@@ -22,10 +17,11 @@ interface ValidationOption {
   styleUrls: ['./validation-configuration.component.scss']
 })
 export class ValidationConfigurationComponent implements OnInit {
-  @Input() editData: any;
-  isEditMode: boolean = false;
   validationForm: FormGroup;
-  parametersList: ValidationParameter[] = [];
+  parametersList: ValidationParameter[] = [
+    { parameterSeqNo: 1, parameterType: 'Header', parameterValue: 'application/json', parameterId: 'Content-Type', dataType: 'String' },
+    { parameterSeqNo: 2, parameterType: 'Body', parameterValue: 'Success', parameterId: 'message', dataType: 'String' }
+  ];
 
   // Modal State for Validation Parameters
   isModalOpen = false;
@@ -37,155 +33,117 @@ export class ValidationConfigurationComponent implements OnInit {
   errorModalMode: 'add' | 'edit' | 'view' = 'add';
   selectedError: ErrorMessage | null = null;
 
-  errorsList: ErrorMessage[] = [];
+  validationNameOptions: string[] = [];
 
-validationNameOptions: ValidationOption[] = [];
+  errorsList: ErrorMessage[] = [
+    { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
+    { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
+  ];
+
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private errorMessageService: ErrorMessageService
   ) {
     this.validationForm = this.fb.group({
       seqNo: [{ value: '001', disabled: true }, Validators.required],
-      validationName: ['User Status Check', Validators.required],
+      validationName: ['', Validators.required],
       expectedOutcome: ['Success', Validators.required],
       payloadId: ['REQ-2024-001', Validators.required],
       payloadFormat: ['JSON', Validators.required],
-      validationType: ['Field Validation', Validators.required],
+      validationType: ['', Validators.required],
       validationSourceData: ['Response Body', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    // Mode Detection
-    this.isEditMode = this.route.snapshot.data['mode'] === 'edit' || !!this.editData;
-    const validationId = this.route.snapshot.paramMap.get('validationId');
-    if (validationId) {
-      this.isEditMode = true;
-    }
-
     // Set Header Data
-    const headerTitle = this.isEditMode ? 'Edit Validation Configuration' : 'Add Validation Configuration';
     this.headerService.setHeaderData(
-      headerTitle,
+      'Validations',
       'Configure validation rules and parameters for your test suite.'
     );
 
     // Dynamic Validation Name Logic
     this.validationForm.get('validationType')?.valueChanges.subscribe(type => {
-      console.log('Value Changed !!');
       this.validationForm.get('validationName')?.setValue('');
       this.updateValidationNameOptions(type);
     });
 
-    // Data Initialization
-    if (this.isEditMode) {
-      if (this.editData) {
-        this.patchValidationData(this.editData);
-      } else if (validationId) {
-        // API Integration Placeholder: Fetch existing validation details by ID
-        this.loadValidationData(validationId);
-      }
-    }
-  }
-
-  private patchValidationData(data: any) {
-    this.updateValidationNameOptions(data.validationType);
-    this.validationForm.patchValue(data);
-    this.parametersList = data.parameters || [];
-    this.errorsList = data.errors || [];
-
-    // Ensure validationName is set after patch because valueChanges on validationType might have cleared it
-    if (data.validationName) {
-      this.validationForm.get('validationName')?.setValue(data.validationName);
-    }
-  }
-
-  private loadValidationData(id: string) {
-    // Simulating API call
-    console.log('Fetching validation details for ID:', id);
-    const mockData = {
-      seqNo: '001',
-      validationType: 'JSON_FIELD_VALIDATION',
-      validationName: 'NOT_NULL',
-      payloadId: 'REQ-2024-001',
-      payloadFormat: 'JSON',
-      expectedOutcome: 'Success',
-      validationSourceData: 'ENTRY_PAYLOAD',
-      parameters: [],
-      errors: []
-    };
-    this.patchValidationData(mockData);
-
     /*
-    this.validationService.getValidation(id).subscribe(data => {
-      this.patchValidationData(data);
-    });
+    // API Integration Placeholder: Fetch existing validation details by ID
+    const validationId = this.route.snapshot.paramMap.get('id');
+    if (validationId) {
+      // this.validationService.getValidation(validationId).subscribe(data => {
+      //   this.validationForm.patchValue(data);
+      //   this.parametersList = data.parameters;
+      //   this.errorsList = data.errors;
+      // });
+    }
     */
   }
-  
- updateValidationNameOptions(type: string) {
-  if (type === 'JSON_FIELD_VALIDATION') {
-    this.validationNameOptions = [
-      { key: 'NULL', value: 'Null' },
-      { key: 'NOT_NULL', value: 'Not Null' },
-      { key: 'EMPTY', value: 'Empty' },
-      { key: 'NOT_EMPTY', value: 'Not Empty' },
-      { key: 'EQUALS', value: 'Equals' },
-      { key: 'EQUALS_IGNORE_CASE', value: 'Equals Ignore Case' },
-      { key: 'IN', value: 'In' },
-      { key: 'NOT_IN', value: 'Not In' }
-    ];
-  } else if (type === 'JSON_VALIDATION') {
-    this.validationNameOptions = [
-      { key: 'STRICT_EQUALS', value: 'Strict Equals' },
-      { key: 'CHECK_IF_UPSTREAM_OUTPUT_MATCHES_INPT', value: 'Check If Upstream Output Matches Input' }
-    ];
-  } else if (type === 'DB_VALIDATION') {
-    this.validationNameOptions = [
-      { key: 'RECORD_CHECK', value: 'Record Check' }
-    ];
-  } else if (type === 'CUSTOM_VALIDATION') {
-    this.validationNameOptions = [
-      { key: 'API_CALL', value: 'Make API Call' }
-    ];
-  } else {
-    this.validationNameOptions = [];
-  }
-}
 
-  onSubmit(): void {
+  updateValidationNameOptions(type: string) {
+    if (type === 'JSON_FIELD_VALIDATION') {
+      this.validationNameOptions = ['Not Null', 'Not Empty', 'null', 'Equals', 'equals ignore case', 'empty', 'in', 'not in'];
+    } else if (type === 'JSON_VALIDATION') {
+      this.validationNameOptions = ['Strict equals', 'check if upstream output matches input'];
+    } else {
+      this.validationNameOptions = [];
+    }
+  }
+
+  getDynamicError(controlName: string, fieldName: string): string {
+    return this.errorMessageService.getErrorMessage('VALIDATION', fieldName, 'REQUIRED');
+  }
+
+  private triggerAlert(type: 'success' | 'error', message: string) {
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = null;
+    } else {
+      this.errorMessage = message;
+      this.successMessage = null;
+    }
+
+    setTimeout(() => {
+      this.successMessage = null;
+      this.errorMessage = null;
+    }, 5000);
+  }
+
+  onSave(): void {
     if (this.validationForm.valid) {
       const formData = {
         ...this.validationForm.getRawValue(),
         parameters: this.parametersList,
         errors: this.errorsList
       };
+      console.log('Saving Validation Configuration:', formData);
+      this.triggerAlert('success', 'Validation configuration saved successfully!');
 
-      if (this.isEditMode) {
-        console.log('Updating Validation Configuration:', formData);
-        this.triggerAlert('success', 'Validation configuration updated successfully!');
-        /*
-        this.validationService.updateValidation(formData).subscribe({
-          next: () => setTimeout(() => this.location.back(), 5000),
-          error: () => this.triggerAlert('error', 'Failed to update validation configuration.')
-        });
-        */
-      } else {
-        console.log('Saving Validation Configuration:', formData);
-        this.triggerAlert('success', 'Validation configuration saved successfully!');
-        /*
-        this.validationService.saveValidation(formData).subscribe({
-          next: () => setTimeout(() => this.location.back(), 5000),
-          error: () => this.triggerAlert('error', 'Failed to save validation configuration.')
-        });
-        */
-      }
+      /*
+      // API Integration Placeholder: Save validation
+      // this.validationService.saveValidation(formData).subscribe({
+      //   next: (response) => {
+      //     console.log('Success', response);
+      //     setTimeout(() => this.location.back(), 5000);
+      //   },
+      //   error: (err) => {
+      //     console.error('Error saving validation', err);
+      //     this.triggerAlert('error', 'Failed to save validation configuration.');
+      //   }
+      // });
+      */
 
-      this.location.back();
+      setTimeout(() => {
+        this.location.back();
+      }, 2000);
     } else {
       this.validationForm.markAllAsTouched();
     }

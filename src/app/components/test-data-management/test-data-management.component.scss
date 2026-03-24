@@ -1,0 +1,131 @@
+@import "../../../variables";
+
+.card {
+  border-radius: 8px;
+  background-color: #F9FAFB;
+}
+
+.header-section {
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.download-section {
+  background-color: #F2F4F7;
+  border-radius: 12px;
+
+  .icon-box {
+    width: 48px;
+    height: 48px;
+    background: #E0E2FF;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 24px;
+      color: $primary-color;
+    }
+  }
+
+  .btn-download {
+    background-color: #E0E2FF;
+    color: $primary-color;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    height: 48px;
+    padding: 0 20px;
+    border: none;
+
+    &:hover {
+      background-color: darken(#E0E2FF, 5%);
+    }
+  }
+}
+
+.form-label {
+  font-weight: 700;
+  font-size: 14px;
+  color: #344054;
+}
+
+.upload-container {
+  border: 1px dotted #D0D5DD;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  transition: all 0.2s ease-in-out;
+
+  &.is-invalid {
+    border: 1.5px solid #DC3545 !important;
+    border-style: solid !important;
+  }
+
+  &.dragging {
+    border-color: $primary-color;
+    background-color: rgba($primary-color, 0.05);
+  }
+
+  .upload-zone {
+    cursor: pointer;
+
+    .upload-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      background: #F2F4F7;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+
+      i {
+        font-size: 24px;
+        color: $primary-color;
+      }
+    }
+
+    .browse-btn {
+      height: 40px;
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 0 18px;
+      border: 1px solid #D0D5DD;
+      background: white;
+      color: #344054;
+
+      &:hover {
+        background: #F9FAFB;
+      }
+    }
+  }
+}
+
+.staged-file-item {
+  background-color: #FFFFFF;
+  border: 1px solid #E4E7EC !important;
+
+  .btn-close {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.footer-actions {
+  .btn-theme-purple {
+    height: 54px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    min-width: 180px;
+  }
+}
+
+.alert {
+  border-radius: 8px;
+}

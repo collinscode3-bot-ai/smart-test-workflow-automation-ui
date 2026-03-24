@@ -43,7 +43,7 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
     icon: 'bi-database',
     isExpanded: false,
     subLinks: [
-      { label: 'Datasets', path: '/test-data/datasets' },
+      { label: 'Test Data Management', path: '/test-data/datasets' },
       { label: 'Variables', path: '/test-data/variables' }
     ]
   },

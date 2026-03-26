@@ -17,17 +17,27 @@ export class TemplateService {
     // API CALL: GET /api/templates/generate-excel?id={id}
     const url = `/api/templates/generate-excel?id=${id}`;
 
-    // Logic for Blob handling would go here in a real implementation:
+    console.log(`Triggering Excel template download for ID: ${id} from ${url}`);
+
+    // Real implementation with Blob handling:
     // this.http.get(url, { responseType: 'blob' }).subscribe((blob: Blob) => {
-    //   const fileName = `Template_TC_${id}.xlsx`;
-    //   const objectUrl = URL.createObjectURL(blob);
-    //   const a = document.createElement('a');
-    //   a.href = objectUrl;
-    //   a.download = fileName;
-    //   a.click();
-    //   URL.revokeObjectURL(objectUrl);
+    //   this.triggerBrowserDownload(blob, `Template_TC_${id}.xlsx`);
     // });
 
-    console.log(`Triggering Excel template download for ID: ${id} from ${url}`);
+    // Mocking the download for demo purposes
+    const mockBlob = new Blob(['Mock data for Excel template'], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    this.triggerBrowserDownload(mockBlob, `Template_TC_${id}.xlsx`);
+  }
+
+  private triggerBrowserDownload(blob: Blob, fileName: string): void {
+    const objectUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = objectUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(objectUrl);
   }
 }

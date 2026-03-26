@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ErrorMessageService } from '../../services/error-message.service';
+import { TemplateService } from '../../services/template.service';
 
 @Component({
   selector: 'app-test-data-management',
@@ -14,17 +16,12 @@ export class TestDataManagementComponent implements OnInit {
   errorMessage: string | null = null;
   isSaving = false;
   isDragging = false;
+  testCaseId: string | null = null;
+  schemaHeaders: string[] = [];
 
   // Mock data for table
   tableHeaders: string[] = ['ID', 'Dataset Name', 'Records', 'Status'];
-  mockDatasets: any[] = [
-    { id: 'DS-001', name: 'Order_Processing_Test_Data', records: 1250, status: 'Active' },
-    { id: 'DS-002', name: 'User_Profile_Baseline', records: 850, status: 'Active' },
-    { id: 'DS-003', name: 'Inventory_Sync_Mock', records: 2100, status: 'Deprecated' },
-    { id: 'DS-004', name: 'Payment_Gateway_Scenarios', records: 450, status: 'Active' },
-    { id: 'DS-005', name: 'Shipping_Rate_Calculations', records: 300, status: 'Active' },
-    { id: 'DS-006', name: 'Notification_Trigger_Events', records: 150, status: 'Active' }
-  ];
+  datasets: any[] = [];
 
   // Pagination properties
   paginatedDatasets: any[] = [];
@@ -34,14 +31,45 @@ export class TestDataManagementComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private errorMessageService: ErrorMessageService
+    private route: ActivatedRoute,
+    private errorMessageService: ErrorMessageService,
+    private templateService: TemplateService
   ) {}
 
   ngOnInit(): void {
     this.testDataForm = this.fb.group({
-      file: [null, Validators.required]
+      file: [null, Validators.required],
+      payloadHeaders: this.fb.array([])
     });
-    this.totalItems = this.mockDatasets.length;
+
+    this.route.paramMap.subscribe(params => {
+      this.testCaseId = params.get('id') || '1'; // Defaulting to '1' for demo purposes if not in route
+      this.fetchDatasetsInfo();
+    });
+  }
+
+  private fetchDatasetsInfo(): void {
+    // API Placeholder: Implementation of synchronization logic
+    // this.testDataService.getDatasets(this.testCaseId).subscribe(data => {
+    //   this.datasets = data;
+    //   this.totalItems = this.datasets.length;
+    //   this.updatePagination();
+    // });
+
+    // Simulated response to populate the "Ready to sync" list view
+    this.datasets = [
+      { id: 'DS-001', name: 'Order_Processing_Test_Data', records: 1250, status: 'Active' },
+      { id: 'DS-002', name: 'User_Profile_Baseline', records: 850, status: 'Active' },
+      { id: 'DS-003', name: 'Inventory_Sync_Mock', records: 2100, status: 'Deprecated' },
+      { id: 'DS-004', name: 'Payment_Gateway_Scenarios', records: 450, status: 'Active' },
+      { id: 'DS-005', name: 'Shipping_Rate_Calculations', records: 300, status: 'Active' },
+      { id: 'DS-006', name: 'Notification_Trigger_Events', records: 150, status: 'Active' }
+    ];
+
+    // Mock schema headers for verification logic
+    this.schemaHeaders = ['ID', 'Dataset Name', 'Records', 'Status'];
+
+    this.totalItems = this.datasets.length;
     this.updatePagination();
   }
 
@@ -101,14 +129,57 @@ export class TestDataManagementComponent implements OnInit {
     }
   }
 
+  get payloadHeaders() {
+    return this.testDataForm.get('payloadHeaders') as FormArray;
+  }
+
+  addHeader() {
+    const headerGroup = this.fb.group({
+      seqNo: [{ value: this.payloadHeaders.length + 1, disabled: true }],
+      headerType: ['', Validators.required],
+      headerName: ['', Validators.required],
+      headerValue: ['', Validators.required],
+      dataType: ['', Validators.required]
+    });
+    this.payloadHeaders.push(headerGroup);
+  }
+
+  removeHeader(index: number) {
+    this.payloadHeaders.removeAt(index);
+    this.updateSeqNumbers();
+  }
+
+  private updateSeqNumbers() {
+    this.payloadHeaders.controls.forEach((control, index) => {
+      control.get('seqNo')?.setValue(index + 1);
+    });
+  }
+
   downloadTemplate(): void {
-    // API CALL: GET /api/templates/download
-    console.log('Downloading template...');
+    this.errorMessage = null;
+    this.successMessage = null;
+
+    // Header Verification: check if "Data Table Headers" (schema) are available
+    if (this.schemaHeaders && this.schemaHeaders.length > 0) {
+      // Success Path: trigger download via TemplateService
+      if (this.testCaseId) {
+        // API CALL: GET /api/templates/generate-excel?id={id}
+        this.templateService.downloadExcelTemplate(this.testCaseId, this.schemaHeaders);
+      } else {
+        console.warn('No testCaseId available for template download');
+      }
+    } else {
+      // Error Path (Validation): populate common error display area
+      this.errorMessage = this.errorMessageService.getErrorMessage('TESTDATA', 'TEMPLATE', 'FAILED');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   onSubmit(): void {
     if (this.testDataForm.invalid) {
       this.testDataForm.markAllAsTouched();
+      this.errorMessage = 'Please complete all mandatory fields in Payload Headers and File Upload.';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
@@ -135,7 +206,7 @@ export class TestDataManagementComponent implements OnInit {
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.paginatedDatasets = this.mockDatasets.slice(startIndex, endIndex);
+    this.paginatedDatasets = this.datasets.slice(startIndex, endIndex);
   }
 
   get totalPages(): number {
@@ -155,8 +226,8 @@ export class TestDataManagementComponent implements OnInit {
 
   deleteRow(id: string): void {
     if (confirm('Are you sure you want to delete this dataset?')) {
-      this.mockDatasets = this.mockDatasets.filter(d => d.id !== id);
-      this.totalItems = this.mockDatasets.length;
+      this.datasets = this.datasets.filter(d => d.id !== id);
+      this.totalItems = this.datasets.length;
       if (this.currentPage > this.totalPages && this.currentPage > 1) {
         this.currentPage--;
       }
@@ -165,7 +236,7 @@ export class TestDataManagementComponent implements OnInit {
   }
 
   onSaveDatasets(): void {
-    console.log('Final dataset list saved:', this.mockDatasets);
+    console.log('Final dataset list saved:', this.datasets);
     this.successMessage = 'All datasets saved successfully!';
     this.errorMessage = null;
     window.scrollTo({ top: 0, behavior: 'smooth' });

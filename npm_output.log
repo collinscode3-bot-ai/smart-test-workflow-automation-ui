@@ -64,3 +64,58 @@ runtime.js          | runtime |   6.50 kB |
 Build at: 2026-03-26T05:59:48.522Z - Hash: 09a6601c332a09a0 - Time: 1497ms
 
 ✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 703.05 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-26T06:05:50.070Z - Hash: af84a18e04fb4acb - Time: 2815ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 702.96 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-26T06:05:52.847Z - Hash: 4e776683d05d0f69 - Time: 1301ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 703.05 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-26T06:08:48.951Z - Hash: 63b2ecf104055789 - Time: 2056ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 703.32 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-26T06:08:52.909Z - Hash: 8857f78580e6fd8e - Time: 974ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 703.31 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-26T06:08:56.166Z - Hash: 0a01bda04388204d - Time: 1449ms
+
+✔ Compiled successfully.

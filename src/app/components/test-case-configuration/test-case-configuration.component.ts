@@ -107,8 +107,8 @@ export class TestCaseConfigurationComponent implements OnInit {
         console.log('Creating new test case:', formData);
         this.triggerAlert('success', 'Test Case saved successfully!');
       }
-      // Optional: Navigation after success
-      // setTimeout(() => this.router.navigate(['/test-suites/list']), 2000);
+      // Navigation after success
+      setTimeout(() => this.router.navigate(['/test-suites/list']), 2000);
     } else {
       this.triggerAlert('error', 'Please fill all mandatory fields correctly.');
     }

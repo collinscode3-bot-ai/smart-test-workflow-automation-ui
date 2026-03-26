@@ -7,7 +7,7 @@
         <p class="text-muted mb-0" style="font-size: 14px;">Define execution parameters and management modules for your automation suite.</p>
       </div>
       <div class="d-flex gap-3">
-        <button type="button" class="btn btn-outline-secondary btn-indigo-outline" (click)="onDiscard()">Discard</button>
+        <button type="button" class="btn btn-outline-secondary btn-indigo-outline" (click)="onDiscard()">Cancel</button>
         <button type="button" class="btn btn-theme-orange" (click)="onSave()">Save Test Case</button>
       </div>
     </div>
@@ -158,7 +158,7 @@
                   <p class="text-muted mb-0" style="font-size: 12px;">2 active contracts linked</p>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-secondary btn-management w-100" (click)="onAction('contract')">
+              <button type="button" class="btn btn-management w-100" (click)="onAction('contract')">
                 <i class="bi bi-pencil-square me-2"></i> Configure Contract
               </button>
             </div>
@@ -176,7 +176,7 @@
                   <p class="text-muted mb-0" style="font-size: 12px;">SQL Mock Dataset v4</p>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-secondary btn-management w-100" (click)="onAction('testdata')">
+              <button type="button" class="btn btn-management w-100" (click)="onAction('testdata')">
                 <i class="bi bi-bullseye me-2"></i> Map Test Data
               </button>
             </div>
@@ -194,18 +194,12 @@
                   <p class="text-muted mb-0" style="font-size: 12px;">5 assertions defined</p>
                 </div>
               </div>
-              <button type="button" class="btn btn-outline-secondary btn-management w-100" (click)="onAction('verification')">
+              <button type="button" class="btn btn-management w-100" (click)="onAction('verification')">
                 <i class="bi bi-plus-lg me-2"></i> Add Verification
               </button>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Bottom Actions -->
-      <div class="d-flex justify-content-end align-items-center gap-3 mt-5 pt-3">
-        <button type="button" class="btn btn-outline-secondary btn-indigo-outline" (click)="onDiscard()">Discard</button>
-        <button type="button" class="btn btn-theme-orange" (click)="onSave()">Save Test Case</button>
       </div>
     </form>
   </div>

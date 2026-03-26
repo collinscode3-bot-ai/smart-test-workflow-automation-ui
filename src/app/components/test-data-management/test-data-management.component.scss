@@ -129,3 +129,33 @@
 .alert {
   border-radius: 8px;
 }
+
+.btn-indigo {
+  background-color: #4B0082;
+  color: #FFFFFF;
+  height: 54px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  min-width: 180px;
+
+  &:hover {
+    background-color: darken(#4B0082, 5%);
+    color: #FFFFFF;
+  }
+}
+
+.btn-pumpkin {
+  background-color: #FF6200;
+  color: #FFFFFF;
+  height: 54px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  min-width: 220px;
+
+  &:hover {
+    background-color: darken(#FF6200, 5%);
+    color: #FFFFFF;
+  }
+}

@@ -22,10 +22,10 @@ describe('SidebarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have 5 main menu items', () => {
+  it('should have 6 main menu items', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const menuItems = compiled.querySelectorAll('.menu-item');
-    expect(menuItems.length).toBe(5);
+    expect(menuItems.length).toBe(6);
   });
 
   it('should toggle section expansion', () => {

@@ -1,0 +1,212 @@
+<div class="col-12 col-lg-11 mx-auto py-4">
+  <div class="card border-0 shadow-sm p-5 mb-5">
+    <!-- Dynamic Header and Header Actions -->
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <h2 class="fw-bold mb-1" style="color: #4B0082;">{{ isEditMode ? 'Edit Test Case' : 'Add Test Case' }}</h2>
+        <p class="text-muted mb-0" style="font-size: 14px;">Define execution parameters and management modules for your automation suite.</p>
+      </div>
+      <div class="d-flex gap-3">
+        <button type="button" class="btn btn-outline-secondary btn-indigo-outline" (click)="onDiscard()">Discard</button>
+        <button type="button" class="btn btn-theme-orange" (click)="onSave()">Save Test Case</button>
+      </div>
+    </div>
+
+    <!-- Dynamic Alerts -->
+    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-check-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ successMessage }}</div>
+      <button type="button" class="btn-close" (click)="successMessage = null" aria-label="Close"></button>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center alert-dismissible fade show mb-4" role="alert" style="border-radius: 8px;">
+      <i class="bi bi-x-circle-fill me-2 fw-bold" style="font-size: 1.2rem;"></i>
+      <div>{{ errorMessage }}</div>
+      <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
+    </div>
+
+    <form [formGroup]="testCaseForm">
+      <!-- Row 1: Test Case Name and Seq No -->
+      <div class="row mb-4">
+        <div class="col-md-9">
+          <div class="form-group">
+            <label for="testCaseName" class="form-label">Test Case Name <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              id="testCaseName"
+              formControlName="testCaseName"
+              class="form-control"
+              [ngClass]="{'is-invalid-custom': testCaseForm.get('testCaseName')?.invalid && (testCaseForm.get('testCaseName')?.dirty || testCaseForm.get('testCaseName')?.touched)}"
+              placeholder="User_Authentication_Flow_v2">
+            <div *ngIf="testCaseForm.get('testCaseName')?.invalid && (testCaseForm.get('testCaseName')?.dirty || testCaseForm.get('testCaseName')?.touched)" class="text-danger small mt-1">
+              {{ getDynamicError('testCaseName', 'NAME') }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="sequenceNo" class="form-label">Seq No <span class="text-danger">*</span></label>
+            <input
+              type="text"
+              id="sequenceNo"
+              formControlName="sequenceNo"
+              class="form-control"
+              [ngClass]="{'is-invalid-custom': testCaseForm.get('sequenceNo')?.invalid && (testCaseForm.get('sequenceNo')?.dirty || testCaseForm.get('sequenceNo')?.touched)}"
+              placeholder="105">
+            <div *ngIf="testCaseForm.get('sequenceNo')?.invalid && (testCaseForm.get('sequenceNo')?.dirty || testCaseForm.get('sequenceNo')?.touched)" class="text-danger small mt-1">
+              {{ getDynamicError('sequenceNo', 'SEQNO') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Action and Input Payload Format -->
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="action" class="form-label">Action <span class="text-danger">*</span></label>
+            <select
+              id="action"
+              formControlName="action"
+              class="form-select"
+              [ngClass]="{'is-invalid-custom': testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)}">
+              <option value="" disabled>Select Action</option>
+              <option *ngFor="let act of actions" [value]="act">{{ act }}</option>
+            </select>
+            <div *ngIf="testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)" class="text-danger small mt-1">
+              {{ getDynamicError('action', 'ACTION') }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group">
+            <label class="form-label">Input Payload Format <span class="text-danger">*</span></label>
+            <div class="d-flex gap-2">
+              <button
+                type="button"
+                *ngFor="let format of payloadFormats"
+                class="chip-button"
+                [class.active]="testCaseForm.get('inputPayloadFormat')?.value === format"
+                (click)="setPayloadFormat(format)">
+                {{ format }}
+              </button>
+            </div>
+            <div *ngIf="testCaseForm.get('inputPayloadFormat')?.invalid && (testCaseForm.get('inputPayloadFormat')?.dirty || testCaseForm.get('inputPayloadFormat')?.touched)" class="text-danger small mt-1">
+              {{ getDynamicError('inputPayloadFormat', 'PAYLOADFORMAT') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Trigger URL -->
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="triggerUrl" class="form-label">Trigger URL <span class="text-danger">*</span></label>
+            <div class="input-group" [ngClass]="{'is-invalid-group-wrapper': testCaseForm.get('triggerUrl')?.invalid && (testCaseForm.get('triggerUrl')?.dirty || testCaseForm.get('triggerUrl')?.touched)}">
+              <span class="input-group-text bg-light border-end-0" style="border-radius: 8px 0 0 8px; height: 54px;">
+                <i class="bi bi-link-45deg fs-5"></i>
+              </span>
+              <input
+                type="text"
+                id="triggerUrl"
+                formControlName="triggerUrl"
+                class="form-control border-start-0 ps-0"
+                placeholder="https://api.gateway.internal/v2/auth/verify"
+                style="height: 54px; border-radius: 0 8px 8px 0;">
+            </div>
+            <div *ngIf="testCaseForm.get('triggerUrl')?.invalid && (testCaseForm.get('triggerUrl')?.dirty || testCaseForm.get('triggerUrl')?.touched)" class="text-danger small mt-1">
+              {{ getDynamicError('triggerUrl', 'TRIGGERURL') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: Description -->
+      <div class="row mb-5">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              id="description"
+              formControlName="description"
+              class="form-control"
+              rows="3"
+              placeholder="Describe the test case..."
+              style="border-radius: 8px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Management Modules -->
+      <div class="management-modules-section mt-5 pt-3">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 class="fw-bold mb-0">MANAGEMENT MODULES</h5>
+          <span class="badge rounded-pill" style="background-color: #F3F0FF; color: #4B0082; padding: 8px 16px; font-weight: 600; font-size: 11px; text-transform: uppercase;">Active Configuration</span>
+        </div>
+
+        <div class="row g-4">
+          <!-- Contract Management -->
+          <div class="col-md-4">
+            <div class="card module-card h-100 p-4 border-0 shadow-sm" style="background-color: #FFFFFF; border-radius: 12px;">
+              <div class="d-flex align-items-center mb-3">
+                <div class="module-icon-wrapper rounded-3 bg-light d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                  <i class="bi bi-file-earmark-text fs-4" style="color: #4B0082;"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-0" style="font-size: 16px;">Contract Management</h6>
+                  <p class="text-muted mb-0" style="font-size: 12px;">2 active contracts linked</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-secondary btn-management w-100" (click)="onAction('contract')">
+                <i class="bi bi-pencil-square me-2"></i> Configure Contract
+              </button>
+            </div>
+          </div>
+
+          <!-- Data Management -->
+          <div class="col-md-4">
+            <div class="card module-card h-100 p-4 border-0 shadow-sm" style="background-color: #FFFFFF; border-radius: 12px;">
+              <div class="d-flex align-items-center mb-3">
+                <div class="module-icon-wrapper rounded-3 bg-light d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                  <i class="bi bi-database fs-4" style="color: #4B0082;"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-0" style="font-size: 16px;">Data Management</h6>
+                  <p class="text-muted mb-0" style="font-size: 12px;">SQL Mock Dataset v4</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-secondary btn-management w-100" (click)="onAction('testdata')">
+                <i class="bi bi-bullseye me-2"></i> Map Test Data
+              </button>
+            </div>
+          </div>
+
+          <!-- Verifications -->
+          <div class="col-md-4">
+            <div class="card module-card h-100 p-4 border-0 shadow-sm" style="background-color: #FFFFFF; border-radius: 12px;">
+              <div class="d-flex align-items-center mb-3">
+                <div class="module-icon-wrapper rounded-3 bg-light d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                  <i class="bi bi-check2-square fs-4" style="color: #4B0082;"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-0" style="font-size: 16px;">Verifications</h6>
+                  <p class="text-muted mb-0" style="font-size: 12px;">5 assertions defined</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-secondary btn-management w-100" (click)="onAction('verification')">
+                <i class="bi bi-plus-lg me-2"></i> Add Verification
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Actions -->
+      <div class="d-flex justify-content-end align-items-center gap-3 mt-5 pt-3">
+        <button type="button" class="btn btn-outline-secondary btn-indigo-outline" (click)="onDiscard()">Discard</button>
+        <button type="button" class="btn btn-theme-orange" (click)="onSave()">Save Test Case</button>
+      </div>
+    </form>
+  </div>
+</div>

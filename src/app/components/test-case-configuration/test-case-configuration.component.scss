@@ -86,9 +86,9 @@
 }
 
 .btn-indigo-outline {
-  background-color: transparent !important;
-  border: 1px solid #4B0082 !important;
-  color: #4B0082 !important;
+  background-color: transparent;
+  border: 1px solid #4B0082;
+  color: #4B0082;
   border-radius: 8px;
   height: 50px;
   min-width: 160px;
@@ -96,15 +96,15 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: #F3F0FF !important;
-    color: #4B0082 !important;
+    background-color: #F3F0FF;
+    color: #4B0082;
   }
 }
 
 .btn-management {
-  background-color: #4B0082 !important;
-  color: white !important;
-  border: none !important;
+  background-color: #4B0082;
+  color: white;
+  border: none;
   font-weight: 600;
   height: 50px;
   font-size: 14px;
@@ -112,8 +112,8 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: darken(#4B0082, 5%) !important;
-    color: white !important;
+    background-color: darken(#4B0082, 5%);
+    color: white;
   }
 
   i {

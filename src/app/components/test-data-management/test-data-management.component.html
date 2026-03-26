@@ -20,80 +20,8 @@
     <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
   </div>
 
-  <!-- Download Section -->
-  <div class="download-section p-4 mb-4 d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-      <div class="icon-box me-3">
-        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-      </div>
-      <div>
-        <h6 class="mb-1 fw-bold" style="color: #101828;">Download Excel Template</h6>
-        <p class="mb-0 text-muted small">Get the latest schema version (v2.4.0) to ensure data validation passes.</p>
-      </div>
-    </div>
-    <button class="btn btn-download d-flex align-items-center gap-2" (click)="downloadTemplate()">
-      <i class="bi bi-download"></i>
-      Download Excel Template
-    </button>
-  </div>
-
-  <form [formGroup]="testDataForm" (ngSubmit)="onSubmit()">
-    <!-- Upload Section -->
-    <div class="mb-4">
-      <label class="form-label mb-1">Upload Excel File <span class="text-danger">*</span></label>
-      <p class="text-muted mb-3" style="font-size: 14px;">Upload your completed template here. Supports .xlsx and .csv formats.</p>
-
-      <div class="upload-container"
-           [class.is-invalid]="testDataForm.get('file')?.invalid && testDataForm.get('file')?.touched"
-           [class.dragging]="isDragging"
-           (dragover)="onDragOver($event)"
-           (dragleave)="onDragLeave($event)"
-           (drop)="onFileDropped($event)">
-        <div class="upload-zone p-5 text-center d-flex flex-column align-items-center justify-content-center" (click)="fileInput.click()">
-          <div class="upload-icon-wrapper mb-3">
-            <i class="bi bi-cloud-upload"></i>
-          </div>
-          <p class="mb-1 fw-bold" style="font-size: 16px; color: #101828;">Click to upload or drag and drop</p>
-          <p class="text-muted small mb-3">Max file size: 25MB</p>
-          <button type="button" class="btn btn-outline-secondary browse-btn">Browse Files</button>
-          <input #fileInput type="file" class="d-none" (change)="onFileSelected($event)" multiple accept=".xlsx,.csv">
-        </div>
-      </div>
-      <div *ngIf="testDataForm.get('file')?.invalid && testDataForm.get('file')?.touched" class="text-danger small mt-2">
-        {{ getError('FILE', 'REQUIRED') }}
-      </div>
-    </div>
-
-    <!-- Staged Files List -->
-    <div class="staged-files-list mb-4" *ngIf="stagedFiles.length > 0">
-      <div *ngFor="let file of stagedFiles; let i = index" class="staged-file-item p-3 mb-2 d-flex align-items-center justify-content-between border rounded-3">
-        <div class="d-flex align-items-center">
-          <i class="bi bi-file-earmark-excel me-3" style="font-size: 1.5rem; color: #FF7518;"></i>
-          <div>
-            <div class="fw-bold mb-0" style="color: #101828;">{{ file.name }}</div>
-            <div class="text-muted small">{{ (file.size / (1024 * 1024)) | number:'1.1-1' }} MB • Ready to sync</div>
-          </div>
-        </div>
-        <button type="button" class="btn-close" (click)="removeFile(i)" aria-label="Remove file" style="font-size: 0.75rem;"></button>
-      </div>
-    </div>
-
-    <div class="footer-actions d-flex align-items-center justify-content-between mt-5">
-      <div class="info-notice d-flex align-items-center text-muted small">
-        <i class="bi bi-info-circle me-2"></i>
-        Data will be validated against current environment rules.
-      </div>
-      <button type="submit" class="btn btn-theme-purple d-flex align-items-center justify-content-center gap-2" [disabled]="isSaving">
-        <span *ngIf="!isSaving">Submit Data</span>
-        <span *ngIf="isSaving">Uploading...</span>
-        <i class="bi bi-send-fill" *ngIf="!isSaving"></i>
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isSaving"></span>
-      </button>
-    </div>
-  </form>
-
   <!-- Uploaded Data Table Section -->
-  <div class="mt-5 pt-4 border-top">
+  <div class="mb-5 pb-4 border-bottom">
     <div class="d-flex align-items-center mb-4">
       <i class="bi bi-database-check me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
       <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase;">UPLOADED DATASETS</h5>
@@ -167,6 +95,88 @@
         </li>
       </ul>
     </nav>
+  </div>
+
+  <!-- Download Section -->
+  <div class="download-section p-4 mb-4 d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <div class="icon-box me-3">
+        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+      </div>
+      <div>
+        <h6 class="mb-1 fw-bold" style="color: #101828;">Download Excel Template</h6>
+        <p class="mb-0 text-muted small">Get the latest schema version (v2.4.0) to ensure data validation passes.</p>
+      </div>
+    </div>
+    <button class="btn btn-download d-flex align-items-center gap-2" (click)="downloadTemplate()">
+      <i class="bi bi-download"></i>
+      Download Excel Template
+    </button>
+  </div>
+
+  <form [formGroup]="testDataForm" (ngSubmit)="onSubmit()">
+    <!-- Upload Section -->
+    <div class="mb-4">
+      <label class="form-label mb-1">Upload Excel File <span class="text-danger">*</span></label>
+      <p class="text-muted mb-3" style="font-size: 14px;">Upload your completed template here. Supports .xlsx and .csv formats.</p>
+
+      <div class="upload-container"
+           [class.is-invalid]="testDataForm.get('file')?.invalid && testDataForm.get('file')?.touched"
+           [class.dragging]="isDragging"
+           (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave($event)"
+           (drop)="onFileDropped($event)">
+        <div class="upload-zone p-5 text-center d-flex flex-column align-items-center justify-content-center" (click)="fileInput.click()">
+          <div class="upload-icon-wrapper mb-3">
+            <i class="bi bi-cloud-upload"></i>
+          </div>
+          <p class="mb-1 fw-bold" style="font-size: 16px; color: #101828;">Click to upload or drag and drop</p>
+          <p class="text-muted small mb-3">Max file size: 25MB</p>
+          <button type="button" class="btn btn-outline-secondary browse-btn">Browse Files</button>
+          <input #fileInput type="file" class="d-none" (change)="onFileSelected($event)" multiple accept=".xlsx,.csv">
+        </div>
+      </div>
+      <div *ngIf="testDataForm.get('file')?.invalid && testDataForm.get('file')?.touched" class="text-danger small mt-2">
+        {{ getError('FILE', 'REQUIRED') }}
+      </div>
+    </div>
+
+    <!-- Staged Files List -->
+    <div class="staged-files-list mb-4" *ngIf="stagedFiles.length > 0">
+      <div *ngFor="let file of stagedFiles; let i = index" class="staged-file-item p-3 mb-2 d-flex align-items-center justify-content-between border rounded-3">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-file-earmark-excel me-3" style="font-size: 1.5rem; color: #FF7518;"></i>
+          <div>
+            <div class="fw-bold mb-0" style="color: #101828;">{{ file.name }}</div>
+            <div class="text-muted small">{{ (file.size / (1024 * 1024)) | number:'1.1-1' }} MB • Ready to sync</div>
+          </div>
+        </div>
+        <button type="button" class="btn-close" (click)="removeFile(i)" aria-label="Remove file" style="font-size: 0.75rem;"></button>
+      </div>
+    </div>
+
+    <div class="footer-actions d-flex align-items-center justify-content-between mt-5">
+      <div class="info-notice d-flex align-items-center text-muted small">
+        <i class="bi bi-info-circle me-2"></i>
+        Data will be validated against current environment rules.
+      </div>
+      <button type="submit" class="btn btn-theme-purple d-flex align-items-center justify-content-center gap-2" [disabled]="isSaving">
+        <span *ngIf="!isSaving">Submit Data</span>
+        <span *ngIf="isSaving">Uploading...</span>
+        <i class="bi bi-send-fill" *ngIf="!isSaving"></i>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isSaving"></span>
+      </button>
+    </div>
+  </form>
+
+  <!-- Footer Buttons -->
+  <div class="d-flex justify-content-start gap-3 mt-5 pt-3 border-top">
+    <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center px-4" (click)="onSaveDatasets()">
+      Save Datasets
+    </button>
+    <button type="button" class="btn btn-pumpkin d-flex align-items-center justify-content-center px-4" (click)="onBack()">
+      Back To Test Case
+    </button>
   </div>
 </div>
 </div>

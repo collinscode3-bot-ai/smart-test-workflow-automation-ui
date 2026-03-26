@@ -163,4 +163,15 @@ export class TestDataManagementComponent implements OnInit {
       this.updatePagination();
     }
   }
+
+  onSaveDatasets(): void {
+    console.log('Final dataset list saved:', this.mockDatasets);
+    this.successMessage = 'All datasets saved successfully!';
+    this.errorMessage = null;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  onBack(): void {
+    window.history.back();
+  }
 }

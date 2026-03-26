@@ -57,3 +57,11 @@
         background-color: #3b0066 !important;
     }
 }
+
+.is-invalid-border {
+  border-color: #DC3545 !important;
+}
+
+.form-control.is-invalid, .form-select.is-invalid {
+  border: 1px solid #DC3545 !important;
+}

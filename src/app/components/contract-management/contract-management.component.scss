@@ -1,0 +1,95 @@
+@import "../../../variables";
+
+.contract-card {
+  border-radius: 8px;
+  background-color: #FFFFFF;
+  transition: transform 0.2s ease-in-out;
+  border: 1px solid #E4E7EC !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: #F2F4F7;
+    border-radius: 8px;
+
+    i {
+      font-size: 24px;
+      color: #4B0082;
+    }
+  }
+
+  .action-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}
+
+.btn-indigo {
+  background-color: #4B0082;
+  color: #FFFFFF;
+  height: 54px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  min-width: 180px;
+
+  &:hover {
+    background-color: darken(#4B0082, 5%);
+    color: #FFFFFF;
+  }
+}
+
+.btn-pumpkin {
+  background-color: #FF6200;
+  color: #FFFFFF;
+  height: 54px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  min-width: 220px;
+
+  &:hover {
+    background-color: darken(#FF6200, 5%);
+    color: #FFFFFF;
+  }
+}
+
+.pagination {
+  .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50% !important;
+    margin: 0 4px;
+    font-size: 14px;
+    padding: 0;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.text-pumpkin {
+  color: #FF6200;
+}
+
+.text-indigo {
+  color: #4B0082;
+}

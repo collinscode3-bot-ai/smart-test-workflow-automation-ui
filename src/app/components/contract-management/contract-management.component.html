@@ -1,0 +1,86 @@
+<div class="col-lg-10 mx-auto py-4">
+  <div class="card border-0 shadow-sm p-5 mb-5" *ngIf="!isFormVisible">
+    <div class="mb-3">
+      <h2 class="fw-bold mb-1" style="color: #4B0082;">Contract List</h2>
+      <p class="text-muted" style="font-size: 14px;">Review and manage the structural baseline data for your test suites.</p>
+    </div>
+
+    <!-- Contract Cards -->
+    <div class="contract-list">
+      <div *ngFor="let contract of paginatedContracts"
+        class="card border-0 shadow-sm mb-3 px-4 py-3 d-flex flex-row align-items-center justify-content-between contract-card">
+
+        <div class="d-flex align-items-center">
+          <div class="icon-wrapper me-3 d-flex align-items-center justify-content-center">
+            <i class="bi bi-file-earmark-text"></i>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="fw-bold text-dark me-2">{{ contract.contractName }}</span>
+            <span class="text-muted border-start ps-3 ms-1" style="font-size: 14px;">{{ contract.contractType }}</span>
+          </div>
+        </div>
+
+        <div class="actions d-flex gap-4 align-items-center">
+          <i class="bi bi-eye text-muted cursor-pointer action-icon" (click)="toggleForm('view', contract)" title="View"></i>
+          <i class="bi bi-pencil text-primary cursor-pointer action-icon" (click)="toggleForm('edit', contract)" title="Edit"></i>
+          <i class="bi bi-trash text-danger cursor-pointer action-icon" (click)="deleteContract(contract.id)" title="Delete"></i>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="mockContracts.length === 0" class="text-center py-5 text-muted italic">
+        No contracts available. Please register a new one.
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav *ngIf="totalPages > 1" class="mt-5">
+      <ul class="pagination justify-content-center border-0 mb-0">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage - 1)" style="cursor: pointer;">
+            <i class="bi bi-chevron-left"></i>
+          </a>
+        </li>
+        <li class="page-item mx-1" *ngFor="let page of pages">
+          <a
+            class="page-link border-0 d-flex align-items-center justify-content-center"
+            (click)="setPage(page)"
+            [style.background-color]="currentPage === page ? '#4B0082' : 'transparent'"
+            [style.color]="currentPage === page ? 'white' : '#6C757D'"
+            style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;"
+          >
+            {{ page }}
+          </a>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage + 1)" style="cursor: pointer;">
+            <i class="bi bi-chevron-right"></i>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Footer Buttons -->
+    <div class="d-flex justify-content-start gap-3 mt-5 pt-3">
+      <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center px-4" (click)="toggleForm('new')">
+        Register a New Contract
+      </button>
+      <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center px-4" (click)="saveAllContracts()">
+        Save Contracts
+      </button>
+      <button type="button" class="btn btn-pumpkin d-flex align-items-center justify-content-center px-4" (click)="onBack()">
+        Back to Test Case Navigation
+      </button>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div *ngIf="isFormVisible">
+    <app-contract-details
+      [forcedMode]="formMode"
+      [editData]="selectedContract"
+      (saveSuccess)="handleSaveSuccess($event)"
+      (cancelAction)="handleCancel()">
+    </app-contract-details>
+  </div>
+</div>

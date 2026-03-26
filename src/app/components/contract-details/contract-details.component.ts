@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
@@ -11,6 +11,11 @@ import { flatten } from 'flat';
   styleUrls: ['./contract-details.component.scss']
 })
 export class ContractDetailsComponent implements OnInit {
+  @Input() editData: any = null;
+  @Input() forcedMode: 'new' | 'edit' | 'view' | null = null;
+  @Output() saveSuccess = new EventEmitter<any>();
+  @Output() cancelAction = new EventEmitter<void>();
+
   mode: 'new' | 'edit' | 'view' = 'new';
   contractId: string | null = null;
   contractForm: FormGroup;
@@ -66,37 +71,47 @@ export class ContractDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Mode Detection
-    this.route.data.subscribe(data => {
-      this.mode = data['mode'] === 'edit' ? 'edit' : 'new';
-    });
-
-    this.route.queryParamMap.subscribe(params => {
-      const modeParam = params.get('mode');
-      if (modeParam === 'view') {
-        this.mode = 'view';
-      } else if (modeParam === 'edit') {
-        this.mode = 'edit';
+    if (this.forcedMode) {
+      this.mode = this.forcedMode;
+      if (this.editData) {
+        this.contractForm.patchValue(this.editData);
+        if (this.editData.id) this.contractId = this.editData.id.toString();
       }
-    });
+    } else {
+      // Mode Detection from Route
+      this.route.data.subscribe(data => {
+        this.mode = data['mode'] === 'edit' ? 'edit' : 'new';
+      });
 
-    this.route.paramMap.subscribe(params => {
-      this.contractId = params.get('id');
-      if ((this.mode === 'edit' || this.mode === 'view') && this.contractId) {
-        this.loadContract(this.contractId);
-      }
-    });
+      this.route.queryParamMap.subscribe(params => {
+        const modeParam = params.get('mode');
+        if (modeParam === 'view') {
+          this.mode = 'view';
+        } else if (modeParam === 'edit') {
+          this.mode = 'edit';
+        }
+      });
+
+      this.route.paramMap.subscribe(params => {
+        this.contractId = params.get('id');
+        if ((this.mode === 'edit' || this.mode === 'view') && this.contractId) {
+          this.loadContract(this.contractId);
+        }
+      });
+    }
 
     if (this.mode === 'view') {
       this.contractForm.disable();
     }
 
-    // Header Service Integration
-    const title = this.mode === 'view' ? 'View Contract' : (this.mode === 'edit' ? 'Edit Contract' : 'Contract Details');
-    this.headerService.setHeaderData(
-      title,
-      'Define the structural and baseline data for your test suites by providing schema definitions.'
-    );
+    // Header Service Integration - only if not in embedded mode (forcedMode)
+    if (!this.forcedMode) {
+      const title = this.mode === 'view' ? 'View Contract' : (this.mode === 'edit' ? 'Edit Contract' : 'Contract Details');
+      this.headerService.setHeaderData(
+        title,
+        'Define the structural and baseline data for your test suites by providing schema definitions.'
+      );
+    }
   }
 
   loadContract(id: string) {
@@ -135,6 +150,7 @@ export class ContractDetailsComponent implements OnInit {
   onSave() {
     if (this.contractForm.valid) {
       const formData = this.contractForm.value;
+      if (this.contractId) formData.id = this.contractId;
 
       // API CALL: POST /api/contracts/validate-json (to verify JSON structure before saving).
       console.log('Validating JSON structure...');
@@ -147,9 +163,15 @@ export class ContractDetailsComponent implements OnInit {
         this.triggerAlert('success', 'Contract created successfully!');
       }
 
-      setTimeout(() => {
-        window.history.back();
-      }, 2000);
+      if (this.forcedMode) {
+        setTimeout(() => {
+          this.saveSuccess.emit(formData);
+        }, 1000);
+      } else {
+        setTimeout(() => {
+          window.history.back();
+        }, 2000);
+      }
     } else {
       this.contractForm.markAllAsTouched();
       // Ensure fields are marked as dirty for validation styling
@@ -160,7 +182,11 @@ export class ContractDetailsComponent implements OnInit {
   }
 
   onCancel() {
-    window.history.back();
+    if (this.forcedMode) {
+      this.cancelAction.emit();
+    } else {
+      window.history.back();
+    }
   }
 
   onFileUpload(event: any, field: string) {

@@ -20,100 +20,6 @@
     <button type="button" class="btn-close" (click)="errorMessage = null" aria-label="Close"></button>
   </div>
 
-  <!-- Uploaded Data Table Section -->
-  <div class="mb-5 pb-4 border-bottom">
-    <div class="d-flex align-items-center mb-4">
-      <i class="bi bi-database-check me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
-      <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase;">UPLOADED DATASETS</h5>
-    </div>
-
-    <!-- Empty State for Table -->
-    <div *ngIf="datasets.length === 0"
-      class="d-flex flex-column align-items-center justify-content-center py-5 mb-3"
-      style="border: 2px dashed #E5E7EB; border-radius: 12px; background-color: #fcfcfc;">
-      <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
-        style="width: 56px; height: 56px; background-color: #F3F0FF;">
-        <i class="bi bi-database-exclamation" style="font-size: 24px; color: #4B0082;"></i>
-      </div>
-      <h6 class="fw-bold mb-1" style="color: #000;">No datasets found</h6>
-      <p class="text-muted mb-0" style="font-size: 14px;">Upload an Excel template to see your data displayed here.</p>
-    </div>
-
-    <div class="table-responsive" *ngIf="datasets.length > 0">
-      <table class="table table-borderless align-middle">
-        <thead class="text-muted">
-          <tr>
-            <th *ngFor="let header of tableHeaders" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">{{ header }}</th>
-            <th class="text-end" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">ACTIONS</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let dataset of paginatedDatasets" class="border-top">
-            <td style="font-size: 14px;">{{ dataset.id }}</td>
-            <td style="font-size: 14px; font-weight: 500;">{{ dataset.name }}</td>
-            <td style="font-size: 14px;">{{ dataset.records | number }}</td>
-            <td style="font-size: 14px;">
-              <span class="badge rounded-pill"
-                [style.background-color]="dataset.status === 'Active' ? '#ECFDF3' : '#FEF3F2'"
-                [style.color]="dataset.status === 'Active' ? '#027A48' : '#B42318'">
-                {{ dataset.status }}
-              </span>
-            </td>
-            <td class="text-end">
-              <button type="button" class="btn btn-link text-danger p-0" (click)="deleteRow(dataset.id)">
-                <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination for Table -->
-    <nav *ngIf="totalPages > 1" class="mt-4">
-      <ul class="pagination justify-content-center border-0 mb-0">
-        <li class="page-item" [class.disabled]="currentPage === 1">
-          <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage - 1)" style="cursor: pointer;">
-            <i class="bi bi-chevron-left"></i>
-          </a>
-        </li>
-        <li class="page-item mx-1" *ngFor="let page of pages">
-          <a
-            class="page-link border-0 d-flex align-items-center justify-content-center"
-            (click)="setPage(page)"
-            [style.background-color]="currentPage === page ? '#4B0082' : 'transparent'"
-            [style.color]="currentPage === page ? 'white' : '#6C757D'"
-            style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;"
-          >
-            {{ page }}
-          </a>
-        </li>
-        <li class="page-item" [class.disabled]="currentPage === totalPages">
-          <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage + 1)" style="cursor: pointer;">
-            <i class="bi bi-chevron-right"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-
-  <!-- Download Section -->
-  <div class="download-section p-4 mb-4 d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-      <div class="icon-box me-3">
-        <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-      </div>
-      <div>
-        <h6 class="mb-1 fw-bold" style="color: #101828;">Download Excel Template</h6>
-        <p class="mb-0 text-muted small">Get the latest schema version (v2.4.0) to ensure data validation passes.</p>
-      </div>
-    </div>
-    <button type="button" class="btn btn-download d-flex align-items-center gap-2" (click)="downloadTemplate()">
-      <i class="bi bi-download"></i>
-      Download Excel Template
-    </button>
-  </div>
-
   <form [formGroup]="testDataForm" (ngSubmit)="onSubmit()">
     <!-- Payload Headers Section -->
     <div class="payload-headers-section p-4 mb-5">
@@ -164,6 +70,100 @@
       <div *ngIf="payloadHeaders.length === 0" class="text-center py-4 text-muted border rounded-3" style="border-style: dashed !important; font-size: 14px;">
         No payload headers added. Click "Add Header" to start.
       </div>
+    </div>
+
+    <!-- Uploaded Data Table Section -->
+    <div class="mb-5 pb-4 border-bottom">
+      <div class="d-flex align-items-center mb-4">
+        <i class="bi bi-database-check me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
+        <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase;">UPLOADED DATASETS</h5>
+      </div>
+
+      <!-- Empty State for Table -->
+      <div *ngIf="datasets.length === 0"
+        class="d-flex flex-column align-items-center justify-content-center py-5 mb-3"
+        style="border: 2px dashed #E5E7EB; border-radius: 12px; background-color: #fcfcfc;">
+        <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
+          style="width: 56px; height: 56px; background-color: #F3F0FF;">
+          <i class="bi bi-database-exclamation" style="font-size: 24px; color: #4B0082;"></i>
+        </div>
+        <h6 class="fw-bold mb-1" style="color: #000;">No datasets found</h6>
+        <p class="text-muted mb-0" style="font-size: 14px;">Upload an Excel template to see your data displayed here.</p>
+      </div>
+
+      <div class="table-responsive" *ngIf="datasets.length > 0">
+        <table class="table table-borderless align-middle">
+          <thead class="text-muted">
+            <tr>
+              <th *ngFor="let header of tableHeaders" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">{{ header }}</th>
+              <th class="text-end" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let dataset of paginatedDatasets" class="border-top">
+              <td style="font-size: 14px;">{{ dataset.id }}</td>
+              <td style="font-size: 14px; font-weight: 500;">{{ dataset.name }}</td>
+              <td style="font-size: 14px;">{{ dataset.records | number }}</td>
+              <td style="font-size: 14px;">
+                <span class="badge rounded-pill"
+                  [style.background-color]="dataset.status === 'Active' ? '#ECFDF3' : '#FEF3F2'"
+                  [style.color]="dataset.status === 'Active' ? '#027A48' : '#B42318'">
+                  {{ dataset.status }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button type="button" class="btn btn-link text-danger p-0" (click)="deleteRow(dataset.id)">
+                  <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination for Table -->
+      <nav *ngIf="totalPages > 1" class="mt-4">
+        <ul class="pagination justify-content-center border-0 mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage - 1)" style="cursor: pointer;">
+              <i class="bi bi-chevron-left"></i>
+            </a>
+          </li>
+          <li class="page-item mx-1" *ngFor="let page of pages">
+            <a
+              class="page-link border-0 d-flex align-items-center justify-content-center"
+              (click)="setPage(page)"
+              [style.background-color]="currentPage === page ? '#4B0082' : 'transparent'"
+              [style.color]="currentPage === page ? 'white' : '#6C757D'"
+              style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;"
+            >
+              {{ page }}
+            </a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link border-0 bg-transparent text-muted" (click)="setPage(currentPage + 1)" style="cursor: pointer;">
+              <i class="bi bi-chevron-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Download Section -->
+    <div class="download-section p-4 mb-4 d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        <div class="icon-box me-3">
+          <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+        </div>
+        <div>
+          <h6 class="mb-1 fw-bold" style="color: #101828;">Download Excel Template</h6>
+          <p class="mb-0 text-muted small">Get the latest schema version (v2.4.0) to ensure data validation passes.</p>
+        </div>
+      </div>
+      <button type="button" class="btn btn-download d-flex align-items-center gap-2" (click)="downloadTemplate()">
+        <i class="bi bi-download"></i>
+        Download Excel Template
+      </button>
     </div>
 
     <!-- Upload Section -->

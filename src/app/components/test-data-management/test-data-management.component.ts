@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ErrorMessageService } from '../../services/error-message.service';
 import { TemplateService } from '../../services/template.service';
 
@@ -38,7 +38,8 @@ export class TestDataManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.testDataForm = this.fb.group({
-      file: [null, Validators.required]
+      file: [null, Validators.required],
+      payloadHeaders: this.fb.array([])
     });
 
     this.route.paramMap.subscribe(params => {
@@ -128,6 +129,31 @@ export class TestDataManagementComponent implements OnInit {
     }
   }
 
+  get payloadHeaders() {
+    return this.testDataForm.get('payloadHeaders') as FormArray;
+  }
+
+  addHeader() {
+    const headerGroup = this.fb.group({
+      seqNo: [{ value: this.payloadHeaders.length + 1, disabled: true }],
+      headerKey: ['', Validators.required],
+      headerValue: ['', Validators.required],
+      dataType: ['']
+    });
+    this.payloadHeaders.push(headerGroup);
+  }
+
+  removeHeader(index: number) {
+    this.payloadHeaders.removeAt(index);
+    this.updateSeqNumbers();
+  }
+
+  private updateSeqNumbers() {
+    this.payloadHeaders.controls.forEach((control, index) => {
+      control.get('seqNo')?.setValue(index + 1);
+    });
+  }
+
   downloadTemplate(): void {
     this.errorMessage = null;
     this.successMessage = null;
@@ -151,6 +177,8 @@ export class TestDataManagementComponent implements OnInit {
   onSubmit(): void {
     if (this.testDataForm.invalid) {
       this.testDataForm.markAllAsTouched();
+      this.errorMessage = 'Please complete all mandatory fields in Payload Headers and File Upload.';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 

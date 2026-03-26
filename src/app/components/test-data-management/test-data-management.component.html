@@ -115,6 +115,57 @@
   </div>
 
   <form [formGroup]="testDataForm" (ngSubmit)="onSubmit()">
+    <!-- Payload Headers Section -->
+    <div class="payload-headers-section p-4 mb-5">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 12px; letter-spacing: 0.5px; text-transform: uppercase;">PAYLOAD HEADERS</h5>
+        <button type="button" class="btn btn-add-header d-flex align-items-center gap-2" (click)="addHeader()">
+          <i class="bi bi-plus-lg"></i>
+          Add Header
+        </button>
+      </div>
+
+      <div formArrayName="payloadHeaders">
+        <div *ngFor="let header of payloadHeaders.controls; let i = index" [formGroupName]="i" class="row align-items-end mb-3 gx-2">
+          <div class="col-md-1">
+            <label class="form-label" *ngIf="i === 0">Seq No</label>
+            <input type="text" formControlName="seqNo" class="form-control" style="height: 54px; border-radius: 8px; background-color: #f9fafb;" readonly>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" *ngIf="i === 0">Header Key <span class="text-danger">*</span></label>
+            <input type="text" formControlName="headerKey" class="form-control"
+                   [class.is-invalid]="header.get('headerKey')?.invalid && header.get('headerKey')?.touched"
+                   placeholder="e.g. Content-Type" style="height: 54px; border-radius: 8px;">
+            <div class="invalid-feedback" *ngIf="header.get('headerKey')?.invalid && header.get('headerKey')?.touched">
+              {{ getError('HEADERKEY', 'REQUIRED') }}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label" *ngIf="i === 0">Header Value <span class="text-danger">*</span></label>
+            <input type="text" formControlName="headerValue" class="form-control"
+                   [class.is-invalid]="header.get('headerValue')?.invalid && header.get('headerValue')?.touched"
+                   placeholder="Value string" style="height: 54px; border-radius: 8px;">
+            <div class="invalid-feedback" *ngIf="header.get('headerValue')?.invalid && header.get('headerValue')?.touched">
+              {{ getError('HEADERVALUE', 'REQUIRED') }}
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label" *ngIf="i === 0">Data Type</label>
+            <input type="text" formControlName="dataType" class="form-control" placeholder="String, Int, Bool" style="height: 54px; border-radius: 8px;">
+          </div>
+          <div class="col-md-1 d-flex justify-content-center align-items-center" [style.margin-top]="i === 0 ? '30px' : '0'">
+            <button type="button" class="btn btn-link text-danger p-0" (click)="removeHeader(i)">
+              <i class="bi bi-trash" style="font-size: 1.2rem;"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="payloadHeaders.length === 0" class="text-center py-4 text-muted border rounded-3" style="border-style: dashed !important; font-size: 14px;">
+        No payload headers added. Click "Add Header" to start.
+      </div>
+    </div>
+
     <!-- Upload Section -->
     <div class="mb-4">
       <label class="form-label mb-1">Upload Excel File <span class="text-danger">*</span></label>

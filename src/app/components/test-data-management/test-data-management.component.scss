@@ -117,6 +117,27 @@
   }
 }
 
+.payload-headers-section {
+  background-color: #fcfcfc;
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+
+  .btn-add-header {
+    background-color: #4B0082;
+    color: #FFFFFF;
+    height: 40px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0 16px;
+    border: none;
+
+    &:hover {
+      background-color: darken(#4B0082, 5%);
+    }
+  }
+}
+
 .footer-actions {
   .btn-theme-purple {
     height: 54px;

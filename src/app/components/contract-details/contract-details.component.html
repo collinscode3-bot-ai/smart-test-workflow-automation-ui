@@ -125,31 +125,35 @@
         </div>
       </div>
 
-      <hr class="my-5" *ngIf="mode !== 'view'">
+      <ng-container *ngIf="mode !== 'view' && contractForm.get('contractType')?.value === 'TRIGGER_CONTRACT'">
+        <hr class="my-5" style="border-top: 1px solid #DEE2E6; opacity: 1;">
 
-      <!-- Field Properties -->
-      <div class="mb-4" *ngIf="mode !== 'view' && contractForm.get('contractType')?.value !== 'NOT_A_TRIG_CONTRACT'">
+        <!-- Field Properties -->
         <div class="mb-4">
-          <h5 class="fw-bold mb-1" style="color: #4B0082; font-size: 18px;">FIELD PROPERTIES</h5>
-          <p class="text-muted small">Configure specific validation and generation rules for individual fields.</p>
-        </div>
+          <div class="mb-4">
+            <h5 class="fw-bold mb-1" style="color: #4B0082; font-size: 18px;">FIELD PROPERTIES</h5>
+            <p class="text-muted small">Configure specific validation and generation rules for individual fields.</p>
+          </div>
 
-        <div class="mb-4">
-          <div class="d-flex flex-wrap gap-3">
-            <span *ngFor="let prop of configuredFieldProperties; let i = index" class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center" style="cursor: pointer;" (click)="openEditPropertyModal(prop, i)">
-              <span class="me-2" [class.text-success]="prop.isMandatory" [class.text-muted]="!prop.isMandatory">●</span> {{ prop.key }} <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;" (click)="removeProperty(i); $event.stopPropagation()"></button>
-            </span>
-            <div *ngIf="configuredFieldProperties.length === 0" class="text-muted small italic">No field properties configured.</div>
+          
+
+          <div class="mb-4">
+            <div class="d-flex flex-wrap gap-3">
+              <span *ngFor="let prop of configuredFieldProperties; let i = index" class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center" style="cursor: pointer;" (click)="openEditPropertyModal(prop, i)">
+                <span class="me-2" [class.text-success]="prop.isMandatory" [class.text-muted]="!prop.isMandatory">●</span> {{ prop.key }} <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;" (click)="removeProperty(i); $event.stopPropagation()"></button>
+              </span>
+              <div *ngIf="configuredFieldProperties.length === 0" class="text-muted small italic">No field properties configured.</div>
+            </div>
+          </div>
+
+          <div>
+            <button type="button" class="btn btn-theme-purple d-flex align-items-center justify-content-center" (click)="openAddPropertyModal()">
+              <i class="bi bi-plus-circle">&nbsp;</i>
+              <span>Add Field Properties</span>
+            </button>
           </div>
         </div>
-
-        <div>
-          <button type="button" class="btn btn-theme-purple d-flex align-items-center justify-content-center" (click)="openAddPropertyModal()">
-            <i class="bi bi-plus-circle">&nbsp;</i>
-            <span>Add Field Properties</span>
-          </button>
-        </div>
-      </div>
+      </ng-container>
 
       <!-- Footer Actions -->
       <div class="d-flex justify-content-end align-items-center gap-3 mt-5">

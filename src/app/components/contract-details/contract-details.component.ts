@@ -66,11 +66,17 @@ export class ContractDetailsComponent implements OnInit {
       contractType: ['', Validators.required],
       description: ['', Validators.required],
       baseContract: [JSON.stringify(this.sampleBaseContract, null, 2), Validators.required],
-      schemaContract: [JSON.stringify(this.sampleSchema, null, 2)]
+      schemaContract: [JSON.stringify(this.sampleSchema, null, 2)],
+      propertyName: [''],
+      propertyDescription: ['']
     });
   }
 
   ngOnInit(): void {
+    this.contractForm.get('contractType')?.valueChanges.subscribe(() => {
+      this.onContractTypeChange();
+    });
+
     if (this.forcedMode) {
       this.mode = this.forcedMode;
       if (this.editData) {
@@ -126,6 +132,27 @@ export class ContractDetailsComponent implements OnInit {
       schemaContract: JSON.stringify(this.sampleSchema, null, 2)
     };
     this.contractForm.patchValue(mockResponse);
+  }
+
+  onContractTypeChange() {
+    const type = this.contractForm.get('contractType')?.value;
+    const propNameControl = this.contractForm.get('propertyName');
+    const propDescControl = this.contractForm.get('propertyDescription');
+
+    if (type === 'TRIGGER_CONTRACT') {
+      propNameControl?.setValidators([Validators.required]);
+      propDescControl?.setValidators([Validators.required]);
+    } else {
+      propNameControl?.clearValidators();
+      propDescControl?.clearValidators();
+      if (this.mode !== 'view') {
+        propNameControl?.setValue('');
+        propDescControl?.setValue('');
+        this.configuredFieldProperties = [];
+      }
+    }
+    propNameControl?.updateValueAndValidity();
+    propDescControl?.updateValueAndValidity();
   }
 
   getError(field: string, type: string): string {

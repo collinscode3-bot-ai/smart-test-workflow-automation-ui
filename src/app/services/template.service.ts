@@ -10,23 +10,28 @@ export class TemplateService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Triggers the download of an Excel template for the given test case ID.
+   * Triggers the download of a template for the given test case ID.
    * @param id The test case ID.
+   * @param headers Optional array of header strings to include in the CSV.
    */
-  downloadExcelTemplate(id: string): void {
+  downloadExcelTemplate(id: string, headers: string[] = []): void {
     // API CALL: GET /api/templates/generate-excel?id={id}
     const url = `/api/templates/generate-excel?id=${id}`;
 
-    console.log(`Triggering Excel template download for ID: ${id} from ${url}`);
+    console.log(`Triggering template download for ID: ${id} from ${url}`);
 
-    // Real implementation with Blob handling:
-    // this.http.get(url, { responseType: 'blob' }).subscribe((blob: Blob) => {
-    //   this.triggerBrowserDownload(blob, `Template_TC_${id}.xlsx`);
-    // });
+    // Mocking the download as a CSV file to avoid "file format or extension is not valid" errors
+    // during frontend-only development since we are generating a raw Blob.
+    const csvContent = headers.length > 0 ? headers.join(',') : 'ID,Dataset Name,Records,Status';
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    this.triggerBrowserDownload(blob, `Template_TC_${id}.csv`);
 
-    // Mocking the download for demo purposes
-    const mockBlob = new Blob(['Mock data for Excel template'], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    this.triggerBrowserDownload(mockBlob, `Template_TC_${id}.xlsx`);
+    // In a real production environment, the backend would generate a valid .xlsx file:
+    /*
+    this.http.get(url, { responseType: 'blob' }).subscribe((blob: Blob) => {
+      this.triggerBrowserDownload(blob, `Template_TC_${id}.xlsx`);
+    });
+    */
   }
 
   private triggerBrowserDownload(blob: Blob, fileName: string): void {

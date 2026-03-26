@@ -137,7 +137,7 @@ export class TestDataManagementComponent implements OnInit {
       // Success Path: trigger download via TemplateService
       if (this.testCaseId) {
         // API CALL: GET /api/templates/generate-excel?id={id}
-        this.templateService.downloadExcelTemplate(this.testCaseId);
+        this.templateService.downloadExcelTemplate(this.testCaseId, this.schemaHeaders);
       } else {
         console.warn('No testCaseId available for template download');
       }

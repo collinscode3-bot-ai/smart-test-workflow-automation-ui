@@ -119,7 +119,15 @@ export class TestCaseConfigurationComponent implements OnInit {
   }
 
   onAction(module: string) {
-    console.log(`Action for module: ${module}`);
-    // Navigation logic for management modules
+    if (module === 'contract') {
+      this.router.navigate(['/contracts/create']);
+    } else if (module === 'testdata') {
+      this.router.navigate(['/test-data/datasets']);
+    } else if (module === 'verification') {
+      const projectId = '1';
+      const suiteId = '1';
+      const caseId = '1';
+      this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/new`]);
+    }
   }
 }

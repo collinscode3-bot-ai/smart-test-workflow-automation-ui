@@ -135,23 +135,7 @@
             <p class="text-muted small">Configure specific validation and generation rules for individual fields.</p>
           </div>
 
-          <!-- Dynamic Mandatory Inputs -->
-          <div class="row mb-4">
-            <div class="col-md-6 mb-4">
-              <label for="propertyName" class="form-label fw-bold" style="font-size: 14px; color: #344054;">Property Name <span class="text-danger">*</span></label>
-              <input type="text" id="propertyName" formControlName="propertyName" class="form-control" placeholder="Enter property name" style="height: 54px; border-radius: 8px;" [class.is-invalid]="contractForm.get('propertyName')?.invalid && (contractForm.get('propertyName')?.dirty || contractForm.get('propertyName')?.touched)">
-              <div *ngIf="contractForm.get('propertyName')?.invalid && (contractForm.get('propertyName')?.dirty || contractForm.get('propertyName')?.touched)" class="text-danger small mt-1">
-                {{ getError('PROPERTYNAME', 'REQUIRED') }}
-              </div>
-            </div>
-            <div class="col-md-6 mb-4">
-              <label for="propertyDescription" class="form-label fw-bold" style="font-size: 14px; color: #344054;">Property Description <span class="text-danger">*</span></label>
-              <input type="text" id="propertyDescription" formControlName="propertyDescription" class="form-control" placeholder="Enter property description" style="height: 54px; border-radius: 8px;" [class.is-invalid]="contractForm.get('propertyDescription')?.invalid && (contractForm.get('propertyDescription')?.dirty || contractForm.get('propertyDescription')?.touched)">
-              <div *ngIf="contractForm.get('propertyDescription')?.invalid && (contractForm.get('propertyDescription')?.dirty || contractForm.get('propertyDescription')?.touched)" class="text-danger small mt-1">
-                {{ getError('PROPERTYDESCRIPTION', 'REQUIRED') }}
-              </div>
-            </div>
-          </div>
+          
 
           <div class="mb-4">
             <div class="d-flex flex-wrap gap-3">

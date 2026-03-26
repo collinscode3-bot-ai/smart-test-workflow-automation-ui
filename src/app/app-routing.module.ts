@@ -11,6 +11,7 @@ import { VerificationDetailsComponent } from './components/verification-details/
 import { ValidationConfigurationComponent } from './components/validation-configuration/validation-configuration.component';
 import { TestDataManagementComponent } from './components/test-data-management/test-data-management.component';
 import { TestCaseConfigurationComponent } from './components/test-case-configuration/test-case-configuration.component';
+import { ContractManagementComponent } from './components/contract-management/contract-management.component';
 import { ModalGuard } from './guards/modal-guard.guard';
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'test-case-config/:id', component: TestCaseConfigurationComponent, data: { mode: 'edit' } },
   { path: 'test-cases/create', component: TestCaseDetailsComponent },
   { path: 'test-cases/edit/:id', component: TestCaseDetailsComponent, data: { mode: 'edit' } },
+  { path: 'contracts/manage', component: ContractManagementComponent },
   { path: 'contracts/create', component: ContractDetailsComponent },
   { path: 'contracts/edit/:id', component: ContractDetailsComponent, data: { mode: 'edit' } },
   { path: 'projects/:projectId/suites/:suiteId/testcases/:caseId/verifications/new', component: VerificationDetailsComponent, canDeactivate: [ModalGuard] },

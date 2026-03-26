@@ -27,6 +27,7 @@ import { ValidationParameterModalComponent } from './components/validation-param
 import { ErrorMessageModalComponent } from './components/error-message-modal/error-message-modal.component';
 import { TestDataManagementComponent } from './components/test-data-management/test-data-management.component';
 import { TestCaseConfigurationComponent } from './components/test-case-configuration/test-case-configuration.component';
+import { ContractManagementComponent } from './components/contract-management/contract-management.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { TestCaseConfigurationComponent } from './components/test-case-configura
     ValidationParameterModalComponent,
     ErrorMessageModalComponent,
     TestDataManagementComponent,
-    TestCaseConfigurationComponent
+    TestCaseConfigurationComponent,
+    ContractManagementComponent
   ],
   imports: [
     BrowserModule,

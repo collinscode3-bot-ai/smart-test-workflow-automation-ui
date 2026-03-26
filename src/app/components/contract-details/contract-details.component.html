@@ -22,27 +22,27 @@
       <!-- Primary Configuration -->
       <div class="row mb-4 mt-3">
         <div class="col-md-6 mb-4">
-          <label for="contractName" class="form-label">Contract Name <span class="text-danger">*</span></label>
-          <input type="text" id="contractName" formControlName="contractName" class="form-control" placeholder="Enter contract name" style="height: 54px;" [class.is-invalid]="contractForm.get('contractName')?.invalid && contractForm.get('contractName')?.dirty">
-          <div *ngIf="contractForm.get('contractName')?.invalid && contractForm.get('contractName')?.dirty" class="text-danger small mt-1">
+          <label for="contractName" class="form-label fw-bold" style="font-size: 14px; color: #333;">Contract Name <span class="text-danger">*</span></label>
+          <input type="text" id="contractName" formControlName="contractName" class="form-control" placeholder="Enter contract name" style="height: 54px; border-radius: 8px;" [class.is-invalid]="contractForm.get('contractName')?.invalid && (contractForm.get('contractName')?.dirty || contractForm.get('contractName')?.touched)">
+          <div *ngIf="contractForm.get('contractName')?.invalid && (contractForm.get('contractName')?.dirty || contractForm.get('contractName')?.touched)" class="text-danger small mt-1">
             {{ getError('NAME', 'REQUIRED') }}
           </div>
         </div>
         <div class="col-md-6 mb-4">
-          <label for="contractType" class="form-label">Contract Type <span class="text-danger">*</span></label>
-          <select id="contractType" formControlName="contractType" class="form-select" style="height: 54px;" [class.is-invalid]="contractForm.get('contractType')?.invalid && contractForm.get('contractType')?.dirty">
+          <label for="contractType" class="form-label fw-bold" style="font-size: 14px; color: #333;">Contract Type <span class="text-danger">*</span></label>
+          <select id="contractType" formControlName="contractType" class="form-select" style="height: 54px; border-radius: 8px;" [class.is-invalid]="contractForm.get('contractType')?.invalid && (contractForm.get('contractType')?.dirty || contractForm.get('contractType')?.touched)">
             <option value="" selected disabled>Select type</option>
-            <option value="TRIG_CONTRACT">Contract for triggering this Test Case</option>
-            <option value="NOT_A_TRIG_CONTRACT">Not a Contract for triggering this Test Case</option>
+            <option value="Consumer Contract">Consumer Contract</option>
+            <option value="Provider Contract">Provider Contract</option>
           </select>
-          <div *ngIf="contractForm.get('contractType')?.invalid && contractForm.get('contractType')?.dirty" class="text-danger small mt-1">
+          <div *ngIf="contractForm.get('contractType')?.invalid && (contractForm.get('contractType')?.dirty || contractForm.get('contractType')?.touched)" class="text-danger small mt-1">
             {{ getError('TYPE', 'REQUIRED') }}
           </div>
         </div>
         <div class="col-12 mb-4">
-          <label for="description" class="form-label">Contract Description <span class="text-danger">*</span></label>
-          <textarea id="description" formControlName="description" class="form-control" placeholder="Enter contract description" style="min-height: 120px;" [class.is-invalid]="contractForm.get('description')?.invalid && contractForm.get('description')?.dirty"></textarea>
-          <div *ngIf="contractForm.get('description')?.invalid && contractForm.get('description')?.dirty" class="text-danger small mt-1">
+          <label for="description" class="form-label fw-bold" style="font-size: 14px; color: #333;">Contract Description <span class="text-danger">*</span></label>
+          <textarea id="description" formControlName="description" class="form-control" placeholder="Enter contract description" style="min-height: 120px; border-radius: 8px;" [class.is-invalid]="contractForm.get('description')?.invalid && (contractForm.get('description')?.dirty || contractForm.get('description')?.touched)"></textarea>
+          <div *ngIf="contractForm.get('description')?.invalid && (contractForm.get('description')?.dirty || contractForm.get('description')?.touched)" class="text-danger small mt-1">
             {{ getError('DESCRIPTION', 'REQUIRED') }}
           </div>
         </div>
@@ -158,7 +158,7 @@
           {{ mode === 'edit' ? 'Update Contract' : 'Save and Proceed' }}
         </button>
         <button *ngIf="mode === 'view'" type="button" class="btn btn-theme-purple d-flex align-items-center justify-content-center px-4" (click)="onCancel()">
-          <i class="bi bi-arrow-left me-2"></i> Back to TestCase
+          Close
         </button>
       </div>
     </form>

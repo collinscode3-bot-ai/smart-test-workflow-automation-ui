@@ -71,7 +71,7 @@
               class="form-select"
               [ngClass]="{'is-invalid-custom': testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)}">
               <option value="" disabled>Select Action</option>
-              <option *ngFor="let act of actions" [value]="act">{{ act }}</option>
+              <option *ngFor="let act of actions" [value]="act.actionId">{{ act.actionName }}</option>
             </select>
             <div *ngIf="testCaseForm.get('action')?.invalid && (testCaseForm.get('action')?.dirty || testCaseForm.get('action')?.touched)" class="text-danger small mt-1">
               {{ getDynamicError('action', 'ACTION') }}
@@ -126,7 +126,7 @@
       <div class="row mb-5">
         <div class="col-12">
           <div class="form-group">
-            <label for="description" class="form-label">Description</label>
+            <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
             <textarea
               id="description"
               formControlName="description"
@@ -135,6 +135,9 @@
               placeholder="Describe the test case..."
               style="border-radius: 8px;"></textarea>
           </div>
+          <div *ngIf="testCaseForm.get('description')?.invalid && (testCaseForm.get('description')?.dirty || testCaseForm.get('description')?.touched)" class="text-danger small mt-1">
+              {{ getDynamicError('description', 'DESCRIPTION') }}
+            </div>
         </div>
       </div>
 

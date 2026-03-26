@@ -4,6 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
 import { ErrorMessageService } from '../../services/error-message.service';
 
+
+interface Action {
+  actionId: string;
+  actionName: string;
+}
+
 @Component({
   selector: 'app-test-case-configuration',
   templateUrl: './test-case-configuration.component.html',
@@ -16,8 +22,13 @@ export class TestCaseConfigurationComponent implements OnInit {
   successMessage: string | null = null;
   errorMessage: string | null = null;
 
-  payloadFormats: string[] = ['JSON', 'XML', 'Text'];
-  actions: string[] = ['GET', 'POST', 'PUT', 'DELETE'];
+  payloadFormats: string[] = ['JSON', 'XML'];
+  actions: Action[] = [
+    { actionId: 'TRIG_BY_PSTNG_TO_TPC', actionName: 'Trigger Test Case by Posting to Topic' },
+    { actionId: 'TRIG_BY_PSTNG_TO_QUE', actionName: 'Trigger Test Case by Posting to Queue' },
+    { actionId: 'TRIG_BY_PSTNG_TO_TPC_VRFY', actionName: 'Trigger Test Case by Posting to Topic & Verify' },
+    { actionId: 'TRIG_BY_PSTNG_TO_QUE_VRFY', actionName: 'Trigger Test Case by Posting to Queue & Verify' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +43,7 @@ export class TestCaseConfigurationComponent implements OnInit {
       action: ['', Validators.required],
       inputPayloadFormat: ['JSON', Validators.required],
       triggerUrl: ['', Validators.required],
-      description: ['']
+      description: ['', Validators.required]
     });
   }
 

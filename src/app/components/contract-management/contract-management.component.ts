@@ -10,7 +10,12 @@ export class ContractManagementComponent implements OnInit {
   mockContracts = [
     { id: 1, contractName: "Auth Response Schema", contractType: "Consumer Contract" },
     { id: 2, contractName: "User Profile Definition", contractType: "Provider Contract" },
-    { id: 3, contractName: "Payment Gateway API", contractType: "Consumer Contract" }
+    { id: 3, contractName: "Payment Gateway API", contractType: "Consumer Contract" },
+    { id: 4, contractName: "Customer Info Validator", contractType: "Provider Contract" },
+    { id: 5, contractName: "Order Processing Hook", contractType: "Consumer Contract" },
+    { id: 6, contractName: "Inventory Sync Service", contractType: "Provider Contract" },
+    { id: 7, contractName: "Billing Notification API", contractType: "Consumer Contract" },
+    { id: 8, contractName: "Shipping Label Generator", contractType: "Provider Contract" }
   ];
 
   isFormVisible = false;

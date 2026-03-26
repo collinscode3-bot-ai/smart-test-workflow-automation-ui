@@ -10,6 +10,7 @@ import { ContractDetailsComponent } from './components/contract-details/contract
 import { VerificationDetailsComponent } from './components/verification-details/verification-details.component';
 import { ValidationConfigurationComponent } from './components/validation-configuration/validation-configuration.component';
 import { TestDataManagementComponent } from './components/test-data-management/test-data-management.component';
+import { TestCaseConfigurationComponent } from './components/test-case-configuration/test-case-configuration.component';
 import { ModalGuard } from './guards/modal-guard.guard';
 
 const routes: Routes = [
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path: 'test-suites/edit/:id', component: TestSuiteFormComponent, data: { mode: 'edit' } },
   { path: 'test-suites/list', component: TestSuiteDashboardComponent },
   { path: 'test-suites/execution/:id', component: TestExecutionHomeComponent },
+  { path: 'test-case-config', component: TestCaseConfigurationComponent },
+  { path: 'test-case-config/:id', component: TestCaseConfigurationComponent, data: { mode: 'edit' } },
   { path: 'test-cases/create', component: TestCaseDetailsComponent },
   { path: 'test-cases/edit/:id', component: TestCaseDetailsComponent, data: { mode: 'edit' } },
   { path: 'contracts/create', component: ContractDetailsComponent },

@@ -30,6 +30,14 @@ export const SIDEBAR_ROUTES: SidebarSection[] = [
     ]
   },
   {
+    label: 'Automation Suite',
+    icon: 'bi-rocket-takeoff',
+    isExpanded: false,
+    subLinks: [
+      { label: 'Test Case Config', path: '/test-case-config' }
+    ]
+  },
+  {
     label: 'Contracts',
     icon: 'bi-file-earmark-text',
     isExpanded: false,

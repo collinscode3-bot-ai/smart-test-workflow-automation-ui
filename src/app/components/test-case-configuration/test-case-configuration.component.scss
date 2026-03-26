@@ -1,0 +1,130 @@
+.form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #4B0082;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.form-control, .form-select {
+  height: 54px;
+  border-radius: 8px;
+  border: 1px solid #D0D5DD;
+  font-size: 14px;
+  color: #333;
+
+  &:focus {
+    border-color: #4B0082;
+    box-shadow: 0 0 0 1px #4B0082;
+  }
+}
+
+.input-group {
+  .form-control {
+    border-left: 0;
+    &:focus {
+      border-color: #D0D5DD;
+      box-shadow: none;
+      & + .input-group-text {
+        border-color: #4B0082;
+      }
+    }
+  }
+
+  .input-group-text {
+    border-color: #D0D5DD;
+    color: #4B0082;
+  }
+}
+
+.is-invalid-custom {
+  border: 1px solid #DC3545 !important;
+  &:focus {
+    box-shadow: 0 0 0 1px #DC3545 !important;
+  }
+}
+
+.is-invalid-group-wrapper {
+  .input-group-text, .form-control {
+    border-color: #DC3545 !important;
+  }
+}
+
+.chip-button {
+  padding: 10px 24px;
+  border-radius: 24px;
+  border: 1px solid #D0D5DD;
+  background-color: #F9FAFB;
+  color: #667085;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #F3F4F6;
+  }
+
+  &.active {
+    background-color: #F3F0FF;
+    color: #4B0082;
+    border-color: #4B0082;
+  }
+}
+
+.btn-theme-orange {
+  background-color: #FF6200;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  height: 50px;
+  min-width: 160px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: darken(#FF6200, 10%);
+    color: white;
+  }
+}
+
+.btn-indigo-outline {
+  border-color: #4B0082;
+  color: #4B0082;
+  border-radius: 8px;
+  height: 50px;
+  min-width: 160px;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #F3F0FF;
+    color: #4B0082;
+    border-color: #4B0082;
+  }
+}
+
+.btn-management {
+  border-color: #4B0082;
+  color: #4B0082;
+  background-color: transparent;
+  font-weight: 600;
+  height: 44px;
+  font-size: 14px;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #F3F0FF;
+    color: #4B0082;
+    border-color: #4B0082;
+  }
+}
+
+.module-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+textarea.form-control {
+  height: auto;
+}

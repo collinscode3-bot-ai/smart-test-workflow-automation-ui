@@ -28,7 +28,7 @@
     </div>
 
     <!-- Empty State for Table -->
-    <div *ngIf="mockDatasets.length === 0"
+    <div *ngIf="datasets.length === 0"
       class="d-flex flex-column align-items-center justify-content-center py-5 mb-3"
       style="border: 2px dashed #E5E7EB; border-radius: 12px; background-color: #fcfcfc;">
       <div class="rounded-circle d-flex align-items-center justify-content-center mb-3"
@@ -39,7 +39,7 @@
       <p class="text-muted mb-0" style="font-size: 14px;">Upload an Excel template to see your data displayed here.</p>
     </div>
 
-    <div class="table-responsive" *ngIf="mockDatasets.length > 0">
+    <div class="table-responsive" *ngIf="datasets.length > 0">
       <table class="table table-borderless align-middle">
         <thead class="text-muted">
           <tr>

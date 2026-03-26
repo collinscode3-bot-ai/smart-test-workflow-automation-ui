@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 import { TestDataManagementComponent } from './test-data-management.component';
 
 describe('TestDataManagementComponent', () => {
@@ -9,7 +12,15 @@ describe('TestDataManagementComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ TestDataManagementComponent ],
-      imports: [ ReactiveFormsModule ]
+      imports: [ ReactiveFormsModule, HttpClientTestingModule ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({ get: () => '1' })
+          }
+        }
+      ]
     })
     .compileComponents();
 

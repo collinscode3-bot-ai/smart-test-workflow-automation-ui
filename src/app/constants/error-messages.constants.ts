@@ -43,5 +43,6 @@ export const ERROR_MESSAGES = {
   VALIDATION_PARAM_PARAMTYPE_REQUIRED: 'Parameter Type is Mandatory.',
   VALIDATION_PARAM_DATATYPE_REQUIRED: 'Data Type is Mandatory.',
   VALIDATION_PARAM_PARAMVALUE_REQUIRED: 'Parameter Value is Mandatory.',
-  TESTDATA_FILE_REQUIRED: 'File is Mandatory.'
+  TESTDATA_FILE_REQUIRED: 'File is Mandatory.',
+  TESTDATA_TEMPLATE_FAILED: 'Template Generation Failed: No fields or headers have been selected for this template.'
 };

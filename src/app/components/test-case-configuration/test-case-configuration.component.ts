@@ -120,7 +120,7 @@ export class TestCaseConfigurationComponent implements OnInit {
 
   onAction(module: string) {
     if (module === 'contract') {
-      this.router.navigate(['/contracts/create']);
+      this.router.navigate(['/contracts/manage']);
     } else if (module === 'testdata') {
       this.router.navigate(['/test-data/datasets']);
     } else if (module === 'verification') {

@@ -82,7 +82,6 @@ export class ContractDetailsComponent implements OnInit {
       if (this.editData) {
         this.contractForm.patchValue(this.editData);
         if (this.editData.id) this.contractId = this.editData.id.toString();
-        this.onContractTypeChange();
       }
     } else {
       // Mode Detection from Route
@@ -107,8 +106,6 @@ export class ContractDetailsComponent implements OnInit {
       });
     }
 
-    this.onContractTypeChange();
-
     if (this.mode === 'view') {
       this.contractForm.disable();
     }
@@ -132,30 +129,30 @@ export class ContractDetailsComponent implements OnInit {
       contractType: 'Consumer',
       description: 'Baseline schema for authentication response verification.',
       baseContract: JSON.stringify(this.sampleBaseContract, null, 2),
-      schemaContract: JSON.stringify(this.sampleSchema, null, 2),
-      propertyName: '',
-      propertyDescription: ''
+      schemaContract: JSON.stringify(this.sampleSchema, null, 2)
     };
     this.contractForm.patchValue(mockResponse);
-    this.onContractTypeChange();
   }
 
   onContractTypeChange() {
-    const isTriggerContract = this.contractForm.get('contractType')?.value === 'TRIGGER_CONTRACT';
-    const propertyName = this.contractForm.get('propertyName');
-    const propertyDescription = this.contractForm.get('propertyDescription');
+    const type = this.contractForm.get('contractType')?.value;
+    const propNameControl = this.contractForm.get('propertyName');
+    const propDescControl = this.contractForm.get('propertyDescription');
 
-    if (isTriggerContract) {
-      propertyName?.setValidators([Validators.required]);
-      propertyDescription?.setValidators([Validators.required]);
+    if (type === 'TRIGGER_CONTRACT') {
+      propNameControl?.setValidators([Validators.required]);
+      propDescControl?.setValidators([Validators.required]);
     } else {
-      propertyName?.clearValidators();
-      propertyDescription?.clearValidators();
-      propertyName?.setValue('');
-      propertyDescription?.setValue('');
+      propNameControl?.clearValidators();
+      propDescControl?.clearValidators();
+      if (this.mode !== 'view') {
+        propNameControl?.setValue('');
+        propDescControl?.setValue('');
+        this.configuredFieldProperties = [];
+      }
     }
-    propertyName?.updateValueAndValidity();
-    propertyDescription?.updateValueAndValidity();
+    propNameControl?.updateValueAndValidity();
+    propDescControl?.updateValueAndValidity();
   }
 
   getError(field: string, type: string): string {

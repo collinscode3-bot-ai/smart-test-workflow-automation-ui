@@ -45,6 +45,8 @@ export const ERROR_MESSAGES = {
   VALIDATION_PARAM_PARAMVALUE_REQUIRED: 'Parameter Value is Mandatory.',
   TESTDATA_FILE_REQUIRED: 'File is Mandatory.',
   TESTDATA_TEMPLATE_FAILED: 'Template Generation Failed: No fields or headers have been selected for this template.',
-  TESTDATA_HEADERKEY_REQUIRED: 'Header Key is Required.',
-  TESTDATA_HEADERVALUE_REQUIRED: 'Header Value is Required.'
+  TESTDATA_HEADERTYPE_REQUIRED: 'Header Type is Mandatory.',
+  TESTDATA_HEADERNAME_REQUIRED: 'Header Name is Mandatory.',
+  TESTDATA_HEADERVALUE_REQUIRED: 'Header Value is Mandatory.',
+  TESTDATA_DATATYPE_REQUIRED: 'Data Type is Mandatory.'
 };

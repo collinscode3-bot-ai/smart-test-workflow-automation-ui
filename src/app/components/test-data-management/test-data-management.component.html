@@ -37,16 +37,29 @@
             <label class="form-label" *ngIf="i === 0">Seq No</label>
             <input type="text" formControlName="seqNo" class="form-control" style="height: 54px; border-radius: 8px; background-color: #f9fafb;" readonly>
           </div>
-          <div class="col-md-3">
-            <label class="form-label" *ngIf="i === 0">Header Key <span class="text-danger">*</span></label>
-            <input type="text" formControlName="headerKey" class="form-control"
-                   [class.is-invalid]="header.get('headerKey')?.invalid && header.get('headerKey')?.touched"
-                   placeholder="e.g. Content-Type" style="height: 54px; border-radius: 8px;">
-            <div class="invalid-feedback" *ngIf="header.get('headerKey')?.invalid && header.get('headerKey')?.touched">
-              {{ getError('HEADERKEY', 'REQUIRED') }}
+          <div class="col-md-2">
+            <label class="form-label" *ngIf="i === 0">Header Type <span class="text-danger">*</span></label>
+            <select formControlName="headerType" class="form-select"
+                    [class.is-invalid]="header.get('headerType')?.invalid && header.get('headerType')?.touched"
+                    style="height: 54px; border-radius: 8px;">
+              <option value="" disabled selected>Select</option>
+              <option value="STATIC_VALUE">STATIC_VALUE</option>
+              <option value="AUTO_GENERATED_VALUE$NUMBER">AUTO_GENERATED_VALUE$NUMBER</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="header.get('headerType')?.invalid && header.get('headerType')?.touched">
+              {{ getError('HEADERTYPE', 'REQUIRED') }}
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-2">
+            <label class="form-label" *ngIf="i === 0">Header Name <span class="text-danger">*</span></label>
+            <input type="text" formControlName="headerName" class="form-control"
+                   [class.is-invalid]="header.get('headerName')?.invalid && header.get('headerName')?.touched"
+                   placeholder="Header Name" style="height: 54px; border-radius: 8px;">
+            <div class="invalid-feedback" *ngIf="header.get('headerName')?.invalid && header.get('headerName')?.touched">
+              {{ getError('HEADERNAME', 'REQUIRED') }}
+            </div>
+          </div>
+          <div class="col-md-3">
             <label class="form-label" *ngIf="i === 0">Header Value <span class="text-danger">*</span></label>
             <input type="text" formControlName="headerValue" class="form-control"
                    [class.is-invalid]="header.get('headerValue')?.invalid && header.get('headerValue')?.touched"
@@ -56,8 +69,13 @@
             </div>
           </div>
           <div class="col-md-3">
-            <label class="form-label" *ngIf="i === 0">Data Type</label>
-            <input type="text" formControlName="dataType" class="form-control" placeholder="String, Int, Bool" style="height: 54px; border-radius: 8px;">
+            <label class="form-label" *ngIf="i === 0">Datatype <span class="text-danger">*</span></label>
+            <input type="text" formControlName="dataType" class="form-control"
+                   [class.is-invalid]="header.get('dataType')?.invalid && header.get('dataType')?.touched"
+                   placeholder="String, Int, Bool" style="height: 54px; border-radius: 8px;">
+            <div class="invalid-feedback" *ngIf="header.get('dataType')?.invalid && header.get('dataType')?.touched">
+              {{ getError('DATATYPE', 'REQUIRED') }}
+            </div>
           </div>
           <div class="col-md-1 d-flex justify-content-center align-items-center" [style.margin-top]="i === 0 ? '30px' : '0'">
             <button type="button" class="btn btn-link text-danger p-0" (click)="removeHeader(i)">

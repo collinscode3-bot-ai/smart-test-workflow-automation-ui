@@ -78,12 +78,16 @@ describe('TestDataManagementComponent', () => {
   it('should validate mandatory fields in payload headers', () => {
     component.addHeader();
     const header = component.payloadHeaders.at(0);
-    header.get('headerKey')?.setValue('');
+    header.get('headerType')?.setValue('');
+    header.get('headerName')?.setValue('');
     header.get('headerValue')?.setValue('');
+    header.get('dataType')?.setValue('');
     expect(header.valid).toBeFalsy();
 
-    header.get('headerKey')?.setValue('Content-Type');
+    header.get('headerType')?.setValue('STATIC_VALUE');
+    header.get('headerName')?.setValue('Content-Type');
     header.get('headerValue')?.setValue('application/json');
+    header.get('dataType')?.setValue('String');
     expect(header.valid).toBeTruthy();
   });
 });

@@ -136,9 +136,10 @@ export class TestDataManagementComponent implements OnInit {
   addHeader() {
     const headerGroup = this.fb.group({
       seqNo: [{ value: this.payloadHeaders.length + 1, disabled: true }],
-      headerKey: ['', Validators.required],
+      headerType: ['', Validators.required],
+      headerName: ['', Validators.required],
       headerValue: ['', Validators.required],
-      dataType: ['']
+      dataType: ['', Validators.required]
     });
     this.payloadHeaders.push(headerGroup);
   }

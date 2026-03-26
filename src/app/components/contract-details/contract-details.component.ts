@@ -66,16 +66,23 @@ export class ContractDetailsComponent implements OnInit {
       contractType: ['', Validators.required],
       description: ['', Validators.required],
       baseContract: [JSON.stringify(this.sampleBaseContract, null, 2), Validators.required],
-      schemaContract: [JSON.stringify(this.sampleSchema, null, 2)]
+      schemaContract: [JSON.stringify(this.sampleSchema, null, 2)],
+      propertyName: [''],
+      propertyDescription: ['']
     });
   }
 
   ngOnInit(): void {
+    this.contractForm.get('contractType')?.valueChanges.subscribe(() => {
+      this.onContractTypeChange();
+    });
+
     if (this.forcedMode) {
       this.mode = this.forcedMode;
       if (this.editData) {
         this.contractForm.patchValue(this.editData);
         if (this.editData.id) this.contractId = this.editData.id.toString();
+        this.onContractTypeChange();
       }
     } else {
       // Mode Detection from Route
@@ -100,6 +107,8 @@ export class ContractDetailsComponent implements OnInit {
       });
     }
 
+    this.onContractTypeChange();
+
     if (this.mode === 'view') {
       this.contractForm.disable();
     }
@@ -123,9 +132,30 @@ export class ContractDetailsComponent implements OnInit {
       contractType: 'Consumer',
       description: 'Baseline schema for authentication response verification.',
       baseContract: JSON.stringify(this.sampleBaseContract, null, 2),
-      schemaContract: JSON.stringify(this.sampleSchema, null, 2)
+      schemaContract: JSON.stringify(this.sampleSchema, null, 2),
+      propertyName: '',
+      propertyDescription: ''
     };
     this.contractForm.patchValue(mockResponse);
+    this.onContractTypeChange();
+  }
+
+  onContractTypeChange() {
+    const isTriggerContract = this.contractForm.get('contractType')?.value === 'TRIGGER_CONTRACT';
+    const propertyName = this.contractForm.get('propertyName');
+    const propertyDescription = this.contractForm.get('propertyDescription');
+
+    if (isTriggerContract) {
+      propertyName?.setValidators([Validators.required]);
+      propertyDescription?.setValidators([Validators.required]);
+    } else {
+      propertyName?.clearValidators();
+      propertyDescription?.clearValidators();
+      propertyName?.setValue('');
+      propertyDescription?.setValue('');
+    }
+    propertyName?.updateValueAndValidity();
+    propertyDescription?.updateValueAndValidity();
   }
 
   getError(field: string, type: string): string {

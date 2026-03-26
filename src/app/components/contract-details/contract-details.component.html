@@ -125,31 +125,51 @@
         </div>
       </div>
 
-      <hr class="my-5" *ngIf="mode !== 'view'">
+      <ng-container *ngIf="mode !== 'view' && contractForm.get('contractType')?.value === 'TRIGGER_CONTRACT'">
+        <hr class="my-5">
 
-      <!-- Field Properties -->
-      <div class="mb-4" *ngIf="mode !== 'view' && contractForm.get('contractType')?.value !== 'NOT_A_TRIG_CONTRACT'">
+        <!-- Field Properties -->
         <div class="mb-4">
-          <h5 class="fw-bold mb-1" style="color: #4B0082; font-size: 18px;">FIELD PROPERTIES</h5>
-          <p class="text-muted small">Configure specific validation and generation rules for individual fields.</p>
-        </div>
+          <div class="mb-4">
+            <h5 class="fw-bold mb-1" style="color: #4B0082; font-size: 18px;">FIELD PROPERTIES</h5>
+            <p class="text-muted small">Configure specific validation and generation rules for individual fields.</p>
+          </div>
 
-        <div class="mb-4">
-          <div class="d-flex flex-wrap gap-3">
-            <span *ngFor="let prop of configuredFieldProperties; let i = index" class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center" style="cursor: pointer;" (click)="openEditPropertyModal(prop, i)">
-              <span class="me-2" [class.text-success]="prop.isMandatory" [class.text-muted]="!prop.isMandatory">●</span> {{ prop.key }} <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;" (click)="removeProperty(i); $event.stopPropagation()"></button>
-            </span>
-            <div *ngIf="configuredFieldProperties.length === 0" class="text-muted small italic">No field properties configured.</div>
+          <!-- Dynamic Mandatory Inputs -->
+          <div class="row mb-4">
+            <div class="col-md-6 mb-4">
+              <label for="propertyName" class="form-label fw-bold" style="font-size: 14px; color: #344054;">Property Name <span class="text-danger">*</span></label>
+              <input type="text" id="propertyName" formControlName="propertyName" class="form-control" placeholder="Enter property name" style="height: 54px; border-radius: 8px;" [class.is-invalid]="contractForm.get('propertyName')?.invalid && (contractForm.get('propertyName')?.dirty || contractForm.get('propertyName')?.touched)">
+              <div *ngIf="contractForm.get('propertyName')?.invalid && (contractForm.get('propertyName')?.dirty || contractForm.get('propertyName')?.touched)" class="text-danger small mt-1">
+                {{ getError('PROPERTYNAME', 'REQUIRED') }}
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <label for="propertyDescription" class="form-label fw-bold" style="font-size: 14px; color: #344054;">Property Description <span class="text-danger">*</span></label>
+              <input type="text" id="propertyDescription" formControlName="propertyDescription" class="form-control" placeholder="Enter property description" style="height: 54px; border-radius: 8px;" [class.is-invalid]="contractForm.get('propertyDescription')?.invalid && (contractForm.get('propertyDescription')?.dirty || contractForm.get('propertyDescription')?.touched)">
+              <div *ngIf="contractForm.get('propertyDescription')?.invalid && (contractForm.get('propertyDescription')?.dirty || contractForm.get('propertyDescription')?.touched)" class="text-danger small mt-1">
+                {{ getError('PROPERTYDESCRIPTION', 'REQUIRED') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div class="d-flex flex-wrap gap-3">
+              <span *ngFor="let prop of configuredFieldProperties; let i = index" class="badge rounded-pill bg-light text-dark border px-3 py-2 fw-normal d-flex align-items-center" style="cursor: pointer;" (click)="openEditPropertyModal(prop, i)">
+                <span class="me-2" [class.text-success]="prop.isMandatory" [class.text-muted]="!prop.isMandatory">●</span> {{ prop.key }} <button type="button" class="btn-close ms-2" style="font-size: 0.5rem;" (click)="removeProperty(i); $event.stopPropagation()"></button>
+              </span>
+              <div *ngIf="configuredFieldProperties.length === 0" class="text-muted small italic">No field properties configured.</div>
+            </div>
+          </div>
+
+          <div>
+            <button type="button" class="btn btn-theme-purple d-flex align-items-center justify-content-center" (click)="openAddPropertyModal()">
+              <i class="bi bi-plus-circle">&nbsp;</i>
+              <span>Add Field Properties</span>
+            </button>
           </div>
         </div>
-
-        <div>
-          <button type="button" class="btn btn-theme-purple d-flex align-items-center justify-content-center" (click)="openAddPropertyModal()">
-            <i class="bi bi-plus-circle">&nbsp;</i>
-            <span>Add Field Properties</span>
-          </button>
-        </div>
-      </div>
+      </ng-container>
 
       <!-- Footer Actions -->
       <div class="d-flex justify-content-end align-items-center gap-3 mt-5">

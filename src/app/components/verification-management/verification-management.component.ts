@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HeaderService } from '../../services/header.service';
 import { VerificationDetailsComponent } from '../verification-details/verification-details.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-verification-management',
@@ -13,7 +14,11 @@ export class VerificationManagementComponent implements OnInit {
   mockVerifications = [
     { id: 1, verificationName: "Status Code Check", verificationType: "HTTP_STATUS", status: "Active" },
     { id: 2, verificationName: "Validate User ID", verificationType: "JSON_BODY", status: "Active" },
-    { id: 3, verificationName: "Auth Token Presence", verificationType: "HEADER_CHECK", status: "Active" }
+    { id: 3, verificationName: "Auth Token Presence", verificationType: "HEADER_CHECK", status: "Active" },
+    { id: 4, verificationName: "Response Header Key", verificationType: "HEADER_CHECK", status: "Active" },
+    { id: 5, verificationName: "Payload Content Type", verificationType: "HTTP_STATUS", status: "Active" },
+    { id: 6, verificationName: "Database Consistency", verificationType: "DB_CHECK", status: "Active" },
+    { id: 7, verificationName: "Token Expiry Time", verificationType: "JSON_BODY", status: "Active" }
   ];
 
   isFormVisible = false;
@@ -27,9 +32,23 @@ export class VerificationManagementComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 5;
 
-  constructor(private headerService: HeaderService) {}
+  projectId: string = '1';
+  suiteId: string = '1';
+  caseId: string = '1';
+
+  constructor(
+    private headerService: HeaderService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.projectId = params.get('projectId') || '1';
+      this.suiteId = params.get('suiteId') || '1';
+      this.caseId = params.get('caseId') || '1';
+    });
+
     this.headerService.setHeaderData(
       'Verification Management',
       'Manage and configure detailed verification steps and parameters for your test case.'
@@ -56,12 +75,23 @@ export class VerificationManagementComponent implements OnInit {
   }
 
   toggleForm(mode: 'new' | 'edit' | 'view', data: any = null) {
+    if (mode === 'view') {
+      this.viewFullDetails(data.id);
+      return;
+    }
+
     this.formMode = mode;
     this.selectedVerification = data ? { ...data } : null;
     this.isFormVisible = true;
 
     setTimeout(() => {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+  }
+
+  viewFullDetails(verificationId: number) {
+    this.router.navigate([`/projects/${this.projectId}/suites/${this.suiteId}/testcases/${this.caseId}/verifications/edit/${verificationId}`], {
+      queryParams: { mode: 'view' }
     });
   }
 

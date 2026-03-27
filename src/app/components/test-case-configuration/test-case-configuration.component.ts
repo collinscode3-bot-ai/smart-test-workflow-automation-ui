@@ -138,7 +138,7 @@ export class TestCaseConfigurationComponent implements OnInit {
       const projectId = '1';
       const suiteId = '1';
       const caseId = '1';
-      this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/new`]);
+      this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/manage`]);
     }
   }
 }

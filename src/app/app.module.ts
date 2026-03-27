@@ -29,6 +29,7 @@ import { ErrorMessageModalComponent } from './components/error-message-modal/err
 import { TestDataManagementComponent } from './components/test-data-management/test-data-management.component';
 import { TestCaseConfigurationComponent } from './components/test-case-configuration/test-case-configuration.component';
 import { ContractManagementComponent } from './components/contract-management/contract-management.component';
+import { VerificationManagementComponent } from './components/verification-management/verification-management.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ContractManagementComponent } from './components/contract-management/co
     ErrorMessageModalComponent,
     TestDataManagementComponent,
     TestCaseConfigurationComponent,
-    ContractManagementComponent
+    ContractManagementComponent,
+    VerificationManagementComponent
   ],
   imports: [
     BrowserModule,

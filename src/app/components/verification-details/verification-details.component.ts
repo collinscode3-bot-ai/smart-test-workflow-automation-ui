@@ -126,6 +126,9 @@ export class VerificationDetailsComponent implements OnInit {
 
     if (this.mode === 'view') {
       this.verificationForm.disable();
+    } else {
+      this.verificationForm.enable();
+      this.verificationForm.get('sequenceNo')?.disable();
     }
 
     // Reset delimiter when isCompositeKey is false

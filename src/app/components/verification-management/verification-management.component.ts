@@ -12,13 +12,16 @@ export class VerificationManagementComponent implements OnInit {
   @ViewChild(VerificationDetailsComponent) verificationDetails?: VerificationDetailsComponent;
 
   mockVerifications = [
-    { id: 1, verificationName: "Status Code Check", verificationType: "HTTP_STATUS", status: "Active" },
-    { id: 2, verificationName: "Validate User ID", verificationType: "JSON_BODY", status: "Active" },
-    { id: 3, verificationName: "Auth Token Presence", verificationType: "HEADER_CHECK", status: "Active" },
-    { id: 4, verificationName: "Response Header Key", verificationType: "HEADER_CHECK", status: "Active" },
-    { id: 5, verificationName: "Payload Content Type", verificationType: "HTTP_STATUS", status: "Active" },
-    { id: 6, verificationName: "Database Consistency", verificationType: "DB_CHECK", status: "Active" },
-    { id: 7, verificationName: "Token Expiry Time", verificationType: "JSON_BODY", status: "Active" }
+    { id: 1, verificationName: "Status Code Check", verificationType: "HTTP_STATUS", application: "Auth Service", serviceName: "StatusCheck", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.auth.com", status: "Active" },
+    { id: 2, verificationName: "Validate User ID", verificationType: "JSON_BODY", application: "User Profile", serviceName: "UserValidator", verificationParamsType: "PATH_PARAMS", baseUrl: "https://api.users.com", status: "Active" },
+    { id: 3, verificationName: "Auth Token Presence", verificationType: "HEADER_CHECK", application: "Gateway", serviceName: "TokenCheck", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.gateway.com", status: "Active" },
+    { id: 4, verificationName: "Response Header Key", verificationType: "HEADER_CHECK", application: "Gateway", serviceName: "HeaderCheck", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.gateway.com", status: "Active" },
+    { id: 5, verificationName: "Payload Content Type", verificationType: "HTTP_STATUS", application: "File Server", serviceName: "ContentValidator", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.files.com", status: "Active" },
+    { id: 6, verificationName: "Database Consistency", verificationType: "DB_CHECK", application: "Inventory DB", serviceName: "ConsistencyCheck", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.db.com", status: "Active" },
+    { id: 7, verificationName: "Token Expiry Time", verificationType: "JSON_BODY", application: "IAM", serviceName: "ExpiryCheck", verificationParamsType: "PATH_PARAMS", baseUrl: "https://api.iam.com", status: "Active" },
+    { id: 8, verificationName: "XML Response Root", verificationType: "XML_VALIDATION", application: "Legacy API", serviceName: "RootValidator", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.legacy.com", status: "Active" },
+    { id: 9, verificationName: "API Latency Threshold", verificationType: "PERFORMANCE", application: "Public API", serviceName: "LatencyCheck", verificationParamsType: "QUERY_PARAMS", baseUrl: "https://api.public.com", status: "Active" },
+    { id: 10, verificationName: "User Role Authorization", verificationType: "JSON_BODY", application: "IAM", serviceName: "RoleCheck", verificationParamsType: "PATH_PARAMS", baseUrl: "https://api.iam.com", status: "Active" }
   ];
 
   isFormVisible = false;

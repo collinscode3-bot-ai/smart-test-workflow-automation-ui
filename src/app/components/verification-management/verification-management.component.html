@@ -21,7 +21,8 @@
     <!-- Verification Cards -->
     <div class="verification-list">
       <div *ngFor="let verification of paginatedVerifications"
-        class="card border-0 shadow-sm mb-3 px-4 py-3 d-flex flex-row align-items-center justify-content-between verification-card">
+        (click)="toggleForm('view', verification)"
+        class="card border-0 shadow-sm mb-3 px-4 py-3 d-flex flex-row align-items-center justify-content-between verification-card cursor-pointer">
 
         <div class="d-flex align-items-center">
           <div class="icon-wrapper me-3 d-flex align-items-center justify-content-center">
@@ -34,9 +35,9 @@
         </div>
 
         <div class="actions d-flex gap-4 align-items-center">
-          <i class="bi bi-eye text-muted cursor-pointer action-icon" (click)="toggleForm('view', verification)" title="View"></i>
-          <i class="bi bi-pencil text-primary cursor-pointer action-icon" (click)="toggleForm('edit', verification)" title="Edit"></i>
-          <i class="bi bi-trash text-danger cursor-pointer action-icon" (click)="deleteVerification(verification.id)" title="Delete"></i>
+          <i class="bi bi-eye cursor-pointer action-icon" (click)="toggleForm('view', verification); $event.stopPropagation()" title="View"></i>
+          <i class="bi bi-pencil cursor-pointer action-icon" (click)="toggleForm('edit', verification); $event.stopPropagation()" title="Edit"></i>
+          <i class="bi bi-trash text-danger cursor-pointer action-icon" (click)="deleteVerification(verification.id); $event.stopPropagation()" title="Delete"></i>
         </div>
       </div>
 

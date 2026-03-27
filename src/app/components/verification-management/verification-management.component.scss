@@ -1,0 +1,78 @@
+.verification-card {
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #E5E7EB !important;
+  border-radius: 8px !important;
+
+  &.cursor-pointer {
+    cursor: pointer;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .icon-wrapper {
+    width: 40px;
+    height: 40px;
+    background-color: #F3F0FF;
+    border-radius: 8px;
+
+    i {
+      color: #4B0082;
+      font-size: 1.2rem;
+    }
+  }
+
+  .action-icon {
+    font-size: 1.2rem;
+    transition: transform 0.1s ease;
+
+    &.bi-eye, &.bi-pencil {
+      color: #4B0082 !important;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.btn-indigo {
+  background-color: #4B0082;
+  color: white;
+  height: 54px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  min-width: 180px;
+
+  &:hover {
+    background-color: darken(#4B0082, 5%);
+    color: white;
+  }
+}
+
+.btn-pumpkin {
+  background-color: #FF6200;
+  color: white;
+  height: 54px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  min-width: 220px;
+
+  &:hover {
+    background-color: darken(#FF6200, 5%);
+    color: white;
+  }
+}
+
+.pagination {
+  .page-item {
+    .page-link {
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}

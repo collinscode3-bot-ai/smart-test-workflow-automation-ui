@@ -14,6 +14,8 @@ export class VerificationParameterModalComponent implements OnInit {
   @Output() cancel = new EventEmitter<void>();
 
   parameterForm: FormGroup;
+  showParamValuePath = false;
+  showParamValue = false;
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +24,7 @@ export class VerificationParameterModalComponent implements OnInit {
     this.parameterForm = this.fb.group({
       paramSequence: ['', Validators.required],
       paramKey: ['', Validators.required],
-      paramValuePath: ['', Validators.required],
+      paramValuePath: [''],
       paramValueSource: ['', Validators.required],
       valueDataType: ['', Validators.required],
       paramValue: ['']
@@ -37,6 +39,17 @@ export class VerificationParameterModalComponent implements OnInit {
 
     if (this.mode === 'view') {
       this.parameterForm.disable();
+    }
+
+    this.parameterForm.get('paramValueSource')?.valueChanges.subscribe((val: string) => {
+      this.applyVisibilityAndValidators(val);
+    });
+
+    const initialSource = this.parameterForm.get('paramValueSource')?.value;
+    if (initialSource) {
+      this.applyVisibilityAndValidators(initialSource);
+    } else {
+      this.applyVisibilityAndValidators('');
     }
   }
 
@@ -73,5 +86,27 @@ export class VerificationParameterModalComponent implements OnInit {
       return this.errorMessageService.getErrorMessage('VERIFY_PARAM', fieldName, dynamicKey);
     }
     return '';
+  }
+
+  private applyVisibilityAndValidators(source: string) {
+    const pathCtrl = this.parameterForm.get('paramValuePath');
+    const valueCtrl = this.parameterForm.get('paramValue');
+
+    this.showParamValuePath = source === 'TDV' || source === 'HEADER_KEY';
+    this.showParamValue = source === 'STATIC_VALUE';
+
+    if (this.showParamValuePath) {
+      pathCtrl?.setValidators([Validators.required]);
+    } else {
+      pathCtrl?.clearValidators();
+    }
+    pathCtrl?.updateValueAndValidity({ emitEvent: false });
+
+    if (this.showParamValue) {
+      valueCtrl?.setValidators([Validators.required]);
+    } else {
+      valueCtrl?.clearValidators();
+    }
+    valueCtrl?.updateValueAndValidity({ emitEvent: false });
   }
 }

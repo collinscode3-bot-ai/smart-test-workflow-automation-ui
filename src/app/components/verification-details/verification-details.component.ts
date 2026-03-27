@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeaderService } from '../../services/header.service';
@@ -28,7 +28,7 @@ interface Validation {
   templateUrl: './verification-details.component.html',
   styleUrls: ['./verification-details.component.scss']
 })
-export class VerificationDetailsComponent implements OnInit {
+export class VerificationDetailsComponent implements OnInit, AfterViewInit {
   @Input() editData: any = null;
   @Input() forcedMode: 'new' | 'edit' | 'view' | null = null;
   @Output() saveSuccess = new EventEmitter<any>();
@@ -67,6 +67,7 @@ export class VerificationDetailsComponent implements OnInit {
       serviceName: ['', Validators.required],
       sequenceNo: [10, Validators.required],
       verificationParamsType: ['', Validators.required],
+      outputPayloadFormatType: ['', Validators.required],
       baseUrl: ['', Validators.required],
       executeIfPreviousSuccessful: [true],
       isCompositeKey: [false],
@@ -137,6 +138,12 @@ export class VerificationDetailsComponent implements OnInit {
         this.verificationForm.get('verificationKeyTypeDelimiter')?.setValue('');
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }, 0);
   }
 
   getError(field: string, type: string): string {

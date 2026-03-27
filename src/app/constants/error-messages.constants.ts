@@ -24,6 +24,7 @@ export const ERROR_MESSAGES = {
   VERIFY_SERVICENAME_REQUIRED: 'Service Name is Mandatory.',
   VERIFY_SEQUENCENO_REQUIRED: 'Sequence Number is Mandatory.',
   VERIFY_VERIFICATIONPARAMSTYPE_REQUIRED: 'Params Type is Mandatory.',
+  VERIFY_OUTPUTPAYLOADFORMATTYPE_REQUIRED: 'Output Payload Format Type is Mandatory.',
   VERIFY_BASEURL_REQUIRED: 'Base URL is Mandatory.',
   VERIFY_PARAM_PARAMSEQUENCE_REQUIRED: 'Param Sequence is Mandatory.',
   VERIFY_PARAM_PARAMKEY_REQUIRED: 'Param Key is Mandatory.',

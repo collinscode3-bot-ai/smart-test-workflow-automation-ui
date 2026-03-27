@@ -19,33 +19,7 @@
     </div>
 
     <form [formGroup]="verificationForm" (ngSubmit)="onSave()">
-      <!-- Row 1: App Name and Service Name -->
-      <div class="row mb-4">
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="application" class="form-label">Application <span class="text-danger">*</span></label>
-            <input type="text" id="application" formControlName="application" class="form-control"
-                   [class.is-invalid]="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)"
-                   placeholder="e.g. Shipment Tracking">
-            <div class="invalid-feedback" *ngIf="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)">
-              {{ getError('APPLICATION', 'REQUIRED') }}
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="serviceName" class="form-label">Service Name <span class="text-danger">*</span></label>
-            <input type="text" id="serviceName" formControlName="serviceName" class="form-control"
-                   [class.is-invalid]="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)"
-                   placeholder="e.g. TrackServiceV1">
-            <div class="invalid-feedback" *ngIf="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)">
-              {{ getError('SERVICENAME', 'REQUIRED') }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row 2: Sequence No and VerificationParamType -->
+      <!-- Row 1: Sequence No and VerificationParamType -->
       <div class="row mb-4">
         <div class="col-md-6">
           <div class="form-group">
@@ -74,9 +48,35 @@
         </div>
       </div>
 
+      <!-- Row 2: App Name and Service Name -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="application" class="form-label">Application <span class="text-danger">*</span></label>
+            <input type="text" id="application" formControlName="application" class="form-control"
+                   [class.is-invalid]="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)"
+                   placeholder="e.g. CCTV">
+            <div class="invalid-feedback" *ngIf="verificationForm.get('application')?.invalid && (verificationForm.get('application')?.dirty || verificationForm.get('application')?.touched)">
+              {{ getError('APPLICATION', 'REQUIRED') }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="serviceName" class="form-label">Service Name <span class="text-danger">*</span></label>
+            <input type="text" id="serviceName" formControlName="serviceName" class="form-control"
+                   [class.is-invalid]="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)"
+                   placeholder="e.g. Collector Service">
+            <div class="invalid-feedback" *ngIf="verificationForm.get('serviceName')?.invalid && (verificationForm.get('serviceName')?.dirty || verificationForm.get('serviceName')?.touched)">
+              {{ getError('SERVICENAME', 'REQUIRED') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Row 3: Base URL -->
       <div class="row mb-4">
-        <div class="col-md-11">
+        <div class="col-md-6">
           <div class="form-group">
             <label for="baseUrl" class="form-label">Base URL <span class="text-danger">*</span></label>
             <input type="text" id="baseUrl" formControlName="baseUrl" class="form-control"
@@ -84,6 +84,20 @@
                    placeholder="https://api.fedex.com/track/v1">
             <div class="invalid-feedback" *ngIf="verificationForm.get('baseUrl')?.invalid && (verificationForm.get('baseUrl')?.dirty || verificationForm.get('baseUrl')?.touched)">
               {{ getError('BASEURL', 'REQUIRED') }}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="outputPayloadFormatType" class="form-label">Service Payload Output Format <span class="text-danger">*</span></label>
+            <select id="outputPayloadFormatType" formControlName="outputPayloadFormatType" class="form-select"
+                    [class.is-invalid]="verificationForm.get('outputPayloadFormatType')?.invalid && (verificationForm.get('verificationParamsType')?.dirty || verificationForm.get('outputPayloadFormatType')?.touched)">
+              <option value="" disabled>Select Type</option>
+              <option value="JSON">JSON</option>
+              <option value="XML">XML</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="verificationForm.get('outputPayloadFormatType')?.invalid && (verificationForm.get('outputPayloadFormatType')?.dirty || verificationForm.get('outputPayloadFormatType')?.touched)">
+              {{ getError('OUTPUTPAYLOADFORMATTYPE', 'REQUIRED') }}
             </div>
           </div>
         </div>
@@ -139,15 +153,17 @@
           <table class="table table-borderless align-middle">
             <thead class="text-muted">
               <tr>
-                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">PARAM SEQUENCE</th>
-                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">PARAM KEY</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase; text-align: center;">PARAM SEQUENCE</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase; text-align: center;">PARAM KEY</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase; text-align: center;">PARAM VALUE</th>
                 <th class="text-end" style="font-size: 12px; font-weight: bold; text-transform: uppercase;">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let param of verificationParams" class="border-top">
-                <td style="font-size: 14px;">{{ param.paramSequence }}</td>
-                <td style="font-size: 14px;">{{ param.paramKey }}</td>
+                <td style="font-size: 14px; text-align: center;">{{ param.paramSequence }}</td>
+                <td style="font-size: 14px; text-align: center;">{{ param.paramKey }}</td>
+                <td style="font-size: 14px; text-align: center;">{{ param.paramValue || param.paramValuePath }}</td>
                 <td class="text-end">
                   <div class="d-flex justify-content-end gap-3">
                     <button type="button" class="btn btn-link text-muted p-0" (click)="viewVerificationParam(param)">

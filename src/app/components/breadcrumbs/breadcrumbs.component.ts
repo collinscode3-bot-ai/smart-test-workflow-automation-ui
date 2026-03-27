@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { WorkflowStateService, LevelContext } from '../../services/workflow-state.service';
+import { combineLatest } from 'rxjs';
 
 interface Breadcrumb {
   label: string;
@@ -16,92 +16,71 @@ interface Breadcrumb {
 export class BreadcrumbsComponent implements OnInit {
   breadcrumbs: Breadcrumb[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private workflowService: WorkflowStateService) {}
 
   ngOnInit(): void {
-    this.updateBreadcrumbs(this.router.url);
-
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.updateBreadcrumbs(event.urlAfterRedirects);
+    combineLatest([
+      this.workflowService.currentProject$,
+      this.workflowService.currentSuite$,
+      this.workflowService.currentTestCase$,
+      this.workflowService.currentVerification$,
+      this.workflowService.currentValidation$
+    ]).subscribe(([proj, suite, testCase, verify, valid]) => {
+      this.updateBreadcrumbs(proj, suite, testCase, verify, valid);
     });
   }
 
-  private updateBreadcrumbs(url: string): void {
+  private updateBreadcrumbs(
+    proj: LevelContext,
+    suite: LevelContext,
+    testCase: LevelContext,
+    verify: LevelContext,
+    valid: LevelContext
+  ): void {
     const crumbs: Breadcrumb[] = [
       { label: 'Home', url: '/', active: false }
     ];
 
-    if (url.includes('/projects/dashboard') || url.includes('/projects/list')) {
-      crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
-      crumbs.push({ label: 'Dashboard', url: '', active: true });
-    } else if (url.includes('/test-suites/')) {
-      crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
+    if (proj.id) {
+      crumbs.push({
+        label: proj.name || `Project ${proj.id}`,
+        url: '/projects/dashboard',
+        active: !suite.id
+      });
+    }
 
-      const projectId = this.getQueryParam(url, 'projectId');
-      const projectName = this.getMockProjectName(projectId);
+    if (suite.id) {
+      crumbs.push({
+        label: suite.name || `Suite ${suite.id}`,
+        url: `/projects/${proj.id}/suites/list`,
+        active: !testCase.id
+      });
+    }
 
-      crumbs.push({ label: projectName, url: '/projects/dashboard', active: false });
+    if (testCase.id) {
+      crumbs.push({
+        label: testCase.name || `Test Case ${testCase.id}`,
+        url: `/projects/${proj.id}/suites/${suite.id}/test-cases/edit/${testCase.id}`,
+        active: !verify.id
+      });
+    }
 
-      if (url.includes('/list')) {
-        crumbs.push({ label: 'Test Suites', url: '', active: true });
-      } else if (url.includes('/execution')) {
-        crumbs.push({ label: 'Test Suites', url: `/test-suites/list?projectId=${projectId || ''}`, active: false });
-        crumbs.push({ label: 'Execution', url: '', active: true });
-      } else {
-        crumbs.push({ label: 'Test Suites', url: `/test-suites/list?projectId=${projectId || ''}`, active: false });
-        crumbs.push({ label: url.includes('/create') ? 'New' : 'Edit', url: '', active: true });
-      }
-    } else if (url.includes('/verifications/')) {
-      crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
+    if (verify.id) {
+      crumbs.push({
+        label: verify.name || `Verification ${verify.id}`,
+        url: `/projects/${proj.id}/suites/${suite.id}/test-cases/${testCase.id}/verifications/manage`,
+        active: !valid.id
+      });
+    }
 
-      const parts = url.split('/');
-      const projIdx = parts.indexOf('projects');
-      const projectId = projIdx !== -1 ? parts[projIdx + 1] : '1';
-      const caseIdx = parts.indexOf('testcases');
-      const caseId = caseIdx !== -1 ? parts[caseIdx + 1] : '1';
-
-      crumbs.push({ label: this.getMockProjectName(projectId), url: '/projects/dashboard', active: false });
-      crumbs.push({ label: 'Test Suite', url: `/test-suites/list?projectId=${projectId}`, active: false });
-      crumbs.push({ label: 'TestCase', url: `/test-cases/edit/${caseId}`, active: false });
-
-      if (url.includes('/validations/')) {
-        crumbs.push({ label: 'Validations', url: '', active: true });
-      } else {
-        crumbs.push({ label: 'Verification Details', url: '', active: true });
-      }
-    } else if (url === '/' || url.startsWith('/edit')) {
-      crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
-      crumbs.push({ label: url === '/' ? 'New Project' : 'Edit Project', url: '', active: true });
-    } else {
-      // Default fallback
-      crumbs.push({ label: 'Projects', url: '/projects/dashboard', active: false });
-      crumbs.push({ label: 'Dashboard', url: '', active: true });
+    if (valid.id) {
+      crumbs.push({
+        label: valid.name || `Validation ${valid.id}`,
+        url: '',
+        active: true
+      });
     }
 
     this.breadcrumbs = crumbs;
-  }
-
-  private getQueryParam(url: string, param: string): string | null {
-    if (url.includes('?')) {
-      const params = new URLSearchParams(url.split('?')[1]);
-      return params.get(param);
-    }
-    return null;
-  }
-
-  private getMockProjectName(id: string | null): string {
-    const projects: { [key: string]: string } = {
-      '1': 'Q3 Brand Audit',
-      '2': 'Website Redesign',
-      '3': 'App Launch 2024',
-      '4': 'API Integration',
-      '5': 'Market Research',
-      '6': 'Customer Support Bot',
-      '7': 'Data Migration',
-      '8': 'Security Patching'
-    };
-    return id && projects[id] ? projects[id] : 'Sample Project';
   }
 }

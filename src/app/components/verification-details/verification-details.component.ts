@@ -159,6 +159,12 @@ export class VerificationDetailsComponent implements OnInit {
       verificationKeyTypeDelimiter: ':'
     };
     this.verificationForm.patchValue(mockResponse);
+
+    // Mock Parameters
+    this.verificationParams = [
+      { id: 1, paramSequence: 1, paramKey: 'trackingNumber', paramValue: '1234567890' },
+      { id: 2, paramSequence: 2, paramKey: 'carrier', paramValue: 'FEDEX' }
+    ];
   }
 
   private triggerAlert(type: 'success' | 'error', message: string) {
@@ -216,6 +222,12 @@ export class VerificationDetailsComponent implements OnInit {
   loadValidations(id: string) {
     // API CALL: GET /api/verifications/{id}/validations
     console.log(`Fetching validations for verification with id: ${id}`);
+
+    // Mock Validations
+    this.validations = [
+      { id: 1, validationName: 'Check Status Code', payloadSource: 'Response', payloadId: 'StatusCode', validationType: 'Equals' },
+      { id: 2, validationName: 'Verify Tracking ID', payloadSource: 'Body', payloadId: 'trackingId', validationType: 'Equals' }
+    ];
   }
 
   addVerificationParam() {

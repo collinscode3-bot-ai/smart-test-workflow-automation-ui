@@ -120,7 +120,7 @@
       </div>
 
       <!-- Verification Parameters Section -->
-      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;" *ngIf="mode !== 'view'">
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-sliders2 me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
           <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px;">VERIFICATION PARAMETERS</h5>
@@ -153,10 +153,10 @@
                     <button type="button" class="btn btn-link text-muted p-0" (click)="viewVerificationParam(param)">
                       <i class="bi bi-eye" style="font-size: 1.1rem;"></i>
                     </button>
-                    <button type="button" class="btn btn-link text-muted p-0" (click)="editVerificationParam(param)">
+                    <button *ngIf="mode !== 'view'" type="button" class="btn btn-link text-muted p-0" (click)="editVerificationParam(param)">
                       <i class="bi bi-pencil" style="font-size: 1.1rem;"></i>
                     </button>
-                    <button type="button" class="btn btn-link text-danger p-0" (click)="deleteVerificationParam(param.id)">
+                    <button *ngIf="mode !== 'view'" type="button" class="btn btn-link text-danger p-0" (click)="deleteVerificationParam(param.id)">
                       <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
                     </button>
                   </div>
@@ -166,7 +166,7 @@
           </table>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3" *ngIf="mode !== 'view'">
           <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center gap-2" style="width: 280px; height: 50px;" (click)="addVerificationParam()">
             <i class="bi bi-plus-circle">&nbsp;</i>
             <span>Add Verification Param</span>
@@ -175,7 +175,7 @@
       </div>
 
       <!-- Validations Section -->
-      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;" *ngIf="mode !== 'view'">
+      <div class="card border-0 shadow-sm p-4 mb-5" style="background-color: #F8F9FA;">
         <div class="d-flex align-items-center mb-4">
           <i class="bi bi-check-circle me-2" style="color: #4B0082; font-size: 1.2rem;"></i>
           <h5 class="fw-bold mb-0" style="color: #4B0082; font-size: 14px; letter-spacing: 0.5px;">VALIDATIONS</h5>
@@ -212,10 +212,10 @@
                     <button type="button" class="btn btn-link text-muted p-0" (click)="viewValidation(val)">
                       <i class="bi bi-eye" style="font-size: 1.1rem;"></i>
                     </button>
-                    <button type="button" class="btn btn-link text-muted p-0" (click)="editValidation(val)">
+                    <button *ngIf="mode !== 'view'" type="button" class="btn btn-link text-muted p-0" (click)="editValidation(val)">
                       <i class="bi bi-pencil" style="font-size: 1.1rem;"></i>
                     </button>
-                    <button type="button" class="btn btn-link text-danger p-0" (click)="deleteValidation(val.id)">
+                    <button *ngIf="mode !== 'view'" type="button" class="btn btn-link text-danger p-0" (click)="deleteValidation(val.id)">
                       <i class="bi bi-trash" style="font-size: 1.1rem;"></i>
                     </button>
                   </div>
@@ -225,7 +225,7 @@
           </table>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3" *ngIf="mode !== 'view'">
           <button type="button" class="btn btn-indigo d-flex align-items-center justify-content-center gap-2" style="width: 280px; height: 50px;" (click)="addValidation()">
             <i class="bi bi-plus-circle">&nbsp;</i>
             <span>Add Validation</span>

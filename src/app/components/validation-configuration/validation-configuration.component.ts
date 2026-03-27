@@ -52,7 +52,7 @@ export class ValidationConfigurationComponent implements OnInit {
     private errorMessageService: ErrorMessageService
   ) {
     this.validationForm = this.fb.group({
-      seqNo: [{ value: '001', disabled: true }, Validators.required],
+      seqNo: [{ value: '1', disabled: true }, Validators.required],
       validationName: ['', Validators.required],
       expectedOutcome: ['Success', Validators.required],
       payloadId: ['REQ-2024-001', Validators.required],

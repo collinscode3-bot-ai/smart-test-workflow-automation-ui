@@ -28,7 +28,7 @@
             <label for="seqNo" class="form-label">Seq No <span class="text-danger">*</span></label>
             <input type="text" id="seqNo" formControlName="seqNo" class="form-control"
               [class.is-invalid]="validationForm.get('seqNo')?.invalid && (validationForm.get('seqNo')?.dirty || validationForm.get('seqNo')?.touched)"
-              placeholder="001">
+              placeholder="1">
             <div class="invalid-feedback"
               *ngIf="validationForm.get('seqNo')?.invalid && (validationForm.get('seqNo')?.dirty || validationForm.get('seqNo')?.touched)">
               {{ getDynamicError('seqNo', 'SEQNO') }}
@@ -277,6 +277,8 @@
 
 <!-- Validation Parameter Modal -->
 <app-validation-parameter-modal *ngIf="isModalOpen" [mode]="modalMode" [parameterData]="selectedParam"
+  [parentValidationType]="validationForm.get('validationType')?.value"
+  [parentValidationName]="validationForm.get('validationName')?.value"
   (save)="handleParamSave($event)" (cancel)="handleParamCancel()">
 </app-validation-parameter-modal>
 

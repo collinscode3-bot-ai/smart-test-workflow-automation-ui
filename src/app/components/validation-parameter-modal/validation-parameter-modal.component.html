@@ -43,6 +43,9 @@
               <select id="parameterType" formControlName="parameterType" class="form-select"
                 [class.is-invalid]="parameterForm.get('parameterType')?.invalid && parameterForm.get('parameterType')?.touched">
                <option value="" disabled>Select Param Type</option>
+               <!-- Options are driven by selected parent values (Validation Type + Validation Name). -->
+               <!-- Update the mapping in ValidationParameterModalComponent.buildParameterTypeOptions(...) -->
+               <option *ngFor="let option of parameterTypeOptions" [value]="option.value">{{ option.label }}</option>
               </select>
               <div class="invalid-feedback" *ngIf="parameterForm.get('parameterType')?.invalid && parameterForm.get('parameterType')?.touched">
                 {{ getDynamicError('parameterType', 'PARAMTYPE') }}

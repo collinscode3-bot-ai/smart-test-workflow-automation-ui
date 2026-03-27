@@ -84,6 +84,44 @@
           </div>
         </div>
       </form>
+
+      <!-- Test Data Verification Table -->
+      <div *ngIf="isTdvSelected" class="mt-4 tdv-table">
+        <div class="d-flex align-items-center mb-3">
+          <i class="bi bi-table me-2" style="color: #4B0082;"></i>
+          <h6 class="fw-bold mb-0" style="color: #4B0082; letter-spacing: 0.3px;">TEST DATA VERIFICATION</h6>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-borderless align-middle mb-0">
+            <thead class="text-muted">
+              <tr>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">TEST DATA VERIFICATION ID</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">TEST DATA ID</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">TEST DATA JSON</th>
+                <th style="font-size: 12px; font-weight: bold; text-transform: uppercase;">EXPECTED VALUE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of tdvRowsControls; let i = index" [formGroup]="row" class="border-top">
+                <td style="font-size: 14px;">{{ row.get('testDataVerificationId')?.value }}</td>
+                <td style="font-size: 14px;">{{ row.get('testDataId')?.value }}</td>
+                <td style="font-size: 13px;">
+                  <pre class="mb-0" style="white-space: pre-wrap;">{{ row.get('testDataJson')?.value }}</pre>
+                </td>
+                <td>
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    formControlName="expectedValue"
+                    [readonly]="mode === 'view'"
+                    placeholder="Enter expected value"></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- Footer Section -->

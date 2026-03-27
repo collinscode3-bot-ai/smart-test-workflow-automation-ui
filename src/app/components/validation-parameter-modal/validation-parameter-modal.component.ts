@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ErrorMessageService } from '../../services/error-message.service';
+import { LoadingService } from '../../services/loading.service';
 
 export interface ValidationParameter {
   parameterId: string;
@@ -24,15 +25,18 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
   @Output() cancel = new EventEmitter<void>();
 
   parameterForm: FormGroup;
+  tdvRows: FormArray;
   seqNumbers: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
   parameterTypeOptions: Array<{ value: string; label: string }> = [];
 
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  private isLoadingTdvData = false;
 
   constructor(
     private fb: FormBuilder,
-    private errorMessageService: ErrorMessageService
+    private errorMessageService: ErrorMessageService,
+    private loadingService: LoadingService
   ) {
     this.parameterForm = this.fb.group({
       parameterId: ['', Validators.required],
@@ -41,10 +45,12 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
       parameterSeqNo: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
       dataType: ['', Validators.required]
     });
+    this.tdvRows = this.fb.array([]);
   }
 
   ngOnInit(): void {
     this.refreshParameterTypeOptions();
+    this.setupTdvTableVisibility();
 
     if ((this.mode === 'edit' || this.mode === 'view') && this.parameterData) {
       // API CALL: GET /api/validations/parameters/{id} (to fetch data for Edit mode).
@@ -53,6 +59,7 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
 
     if (this.mode === 'view') {
       this.parameterForm.disable();
+      this.tdvRows.disable({ emitEvent: false });
     }
   }
 
@@ -100,6 +107,14 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
     this.cancel.emit();
   }
 
+  get isTdvSelected(): boolean {
+    return this.parameterForm.get('parameterType')?.value === 'TDV';
+  }
+
+  get tdvRowsControls(): FormGroup[] {
+    return this.tdvRows.controls as FormGroup[];
+  }
+
   getDynamicError(controlName: string, fieldName: string): string {
     const control = this.parameterForm.get(controlName);
     if (control && control.errors) {
@@ -108,6 +123,104 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
       return this.errorMessageService.getErrorMessage('VALIDATION_PARAM', fieldName, dynamicKey);
     }
     return '';
+  }
+
+  private setupTdvTableVisibility(): void {
+    this.parameterForm.get('parameterType')?.valueChanges.subscribe((paramType: string) => {
+      if (paramType === 'TDV') {
+        this.loadTdvTableData();
+      } else {
+        this.tdvRows.clear();
+      }
+    });
+
+    if (this.isTdvSelected) {
+      this.loadTdvTableData();
+    }
+  }
+
+  private loadTdvTableData(): void {
+    if (this.isLoadingTdvData) return;
+    if (this.tdvRows.length > 0) return;
+
+    this.isLoadingTdvData = true;
+    this.loadingService.show();
+
+    /*
+      Placeholder for API integration
+
+      When Param Type is TDV, the UI needs to show the "Test Data Verification" table below.
+      Replace the setTimeout/mock block with a real API call.
+
+      Suggested steps:
+      1) Collect context required by your backend:
+         - Selected parent Validation Type (this.parentValidationType)
+         - Selected parent Validation Name (this.parentValidationName)
+         - Current modal fields (this.parameterForm.get('parameterId')?.value, etc.)
+      2) Call a service method (create/inject a ValidationService or TestDataService):
+         - Example endpoint (placeholder):
+           GET /api/test-data/verifications?validationType={...}&validationName={...}&parameterId={...}
+      3) Map API response to rows with these fields:
+         - testDataVerificationId
+         - testDataId
+         - testDataJson
+         - expectedValue (editable by user)
+      4) Ensure the global "Please wait..." overlay is shown during the request:
+         - this.loadingService.show() before call
+         - this.loadingService.hide() in finalize() / finally
+
+      RxJS placeholder:
+        this.loadingService.show();
+        this.testDataService.getTdvRows(...).pipe(
+          finalize(() => {
+            this.loadingService.hide();
+            this.isLoadingTdvData = false;
+          })
+        ).subscribe({
+          next: rows => this.setTdvRows(rows),
+          error: () => { this.tdvRows.clear(); }
+        });
+    */
+
+    setTimeout(() => {
+      const mockRows = [
+        {
+          testDataVerificationId: 'TDV-VRFY-1001',
+          testDataId: 'TD-000045',
+          testDataJson: '{ "trackingId": "1234567890", "carrier": "FEDEX" }',
+          expectedValue: ''
+        },
+        {
+          testDataVerificationId: 'TDV-VRFY-1002',
+          testDataId: 'TD-000046',
+          testDataJson: '{ "status": "DELIVERED", "deliveryDate": "2026-03-27" }',
+          expectedValue: ''
+        }
+      ];
+
+      this.setTdvRows(mockRows);
+      this.loadingService.hide();
+      this.isLoadingTdvData = false;
+    }, 900);
+  }
+
+  private setTdvRows(rows: Array<{ testDataVerificationId: string; testDataId: string; testDataJson: string; expectedValue: string }>): void {
+    this.tdvRows.clear();
+
+    rows.forEach(row => {
+      const group = this.fb.group({
+        testDataVerificationId: [{ value: row.testDataVerificationId, disabled: true }],
+        testDataId: [{ value: row.testDataId, disabled: true }],
+        testDataJson: [{ value: row.testDataJson, disabled: true }],
+        expectedValue: [row.expectedValue]
+      });
+
+      if (this.mode === 'view') {
+        group.disable({ emitEvent: false });
+      }
+
+      this.tdvRows.push(group);
+    });
   }
 
   private refreshParameterTypeOptions(): void {

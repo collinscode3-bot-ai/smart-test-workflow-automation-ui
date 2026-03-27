@@ -19,8 +19,8 @@ interface ErrorMessage {
 export class ValidationConfigurationComponent implements OnInit {
   validationForm: FormGroup;
   parametersList: ValidationParameter[] = [
-    { parameterSeqNo: 1, parameterType: 'Header', parameterValue: 'application/json', parameterId: 'Content-Type', dataType: 'String' },
-    { parameterSeqNo: 2, parameterType: 'Body', parameterValue: 'Success', parameterId: 'message', dataType: 'String' }
+    // { parameterSeqNo: 1, parameterType: 'Header', parameterValue: 'application/json', parameterId: 'Content-Type', dataType: 'String' },
+    // { parameterSeqNo: 2, parameterType: 'Body', parameterValue: 'Success', parameterId: 'message', dataType: 'String' }
   ];
 
   // Modal State for Validation Parameters
@@ -36,8 +36,8 @@ export class ValidationConfigurationComponent implements OnInit {
   validationNameOptions: string[] = [];
 
   errorsList: ErrorMessage[] = [
-    { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
-    { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
+    // { errorCode: 'ERR_404_VAL', errorMessage: 'The requested data validation failed for missing resources.' },
+    // { errorCode: 'ERR_500_SCHEMA', errorMessage: 'Schema mismatch detected in response body.' }
   ];
 
   successMessage: string | null = null;

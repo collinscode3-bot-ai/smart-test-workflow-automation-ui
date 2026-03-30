@@ -276,9 +276,13 @@
 </div>
 
 <!-- Validation Parameter Modal -->
-<app-validation-parameter-modal *ngIf="isModalOpen" [mode]="modalMode" [parameterData]="selectedParam"
+<app-validation-parameter-modal *ngIf="isModalOpen"
+  [mode]="modalMode"
+  [parameterData]="selectedParam"
   [parentValidationType]="validationForm.get('validationType')?.value"
   [parentValidationName]="validationForm.get('validationName')?.value"
+  [parentPayloadId]="validationForm.get('payloadId')?.value"
+  [parentValidationSourceData]="validationForm.get('validationSourceData')?.value"
   (save)="handleParamSave($event)" (cancel)="handleParamCancel()">
 </app-validation-parameter-modal>
 

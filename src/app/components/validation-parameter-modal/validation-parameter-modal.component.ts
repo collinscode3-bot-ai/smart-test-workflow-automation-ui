@@ -21,6 +21,8 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
   @Input() parameterData: ValidationParameter | null = null;
   @Input() parentValidationName: string | null = null;
   @Input() parentValidationType: string | null = null;
+  @Input() parentPayloadId: string | null = null;
+  @Input() parentValidationSourceData: string | null = null;
   @Output() save = new EventEmitter<ValidationParameter>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -52,6 +54,11 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
     this.refreshParameterTypeOptions();
     this.setupTdvTableVisibility();
 
+    // Recompute parameterValue when parameterType changes (used for JSON_VALIDATION auto-value)
+    this.parameterForm.get('parameterType')?.valueChanges.subscribe(() => {
+      this.computeAndSetParameterValue();
+    });
+
     if ((this.mode === 'edit' || this.mode === 'view') && this.parameterData) {
       // API CALL: GET /api/validations/parameters/{id} (to fetch data for Edit mode).
       this.parameterForm.patchValue(this.parameterData);
@@ -64,8 +71,14 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['parentValidationName'] || changes['parentValidationType']) {
+    if (
+      changes['parentValidationName'] ||
+      changes['parentValidationType'] ||
+      changes['parentPayloadId'] ||
+      changes['parentValidationSourceData']
+    ) {
       this.refreshParameterTypeOptions();
+      this.computeAndSetParameterValue();
     }
   }
 
@@ -136,6 +149,29 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
 
     if (this.isTdvSelected) {
       this.loadTdvTableData();
+    }
+  }
+
+  // Compute and optionally disable the parameterValue control when parentValidationType === 'JSON_VALIDATION'
+  private computeAndSetParameterValue(): void {
+    const control = this.parameterForm.get('parameterValue');
+    const paramType = this.parameterForm.get('parameterType')?.value;
+    const payloadId = this.parentPayloadId || '';
+
+    if (this.parentValidationType === 'JSON_VALIDATION') {
+      // When JSON_VALIDATION, auto-compute parameterValue from paramType + '$' + payloadId
+      const computed = paramType ? `${paramType}$${payloadId}` : '';
+      if (control) {
+        control.setValue(computed, { emitEvent: false });
+        if (this.mode !== 'view') {
+          control.disable({ emitEvent: false });
+        }
+      }
+    } else {
+      // Re-enable manual editing when not JSON_VALIDATION
+      if (control && control.disabled && this.mode !== 'view') {
+        control.enable({ emitEvent: false });
+      }
     }
   }
 
@@ -224,7 +260,12 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
   }
 
   private refreshParameterTypeOptions(): void {
-    const options = this.buildParameterTypeOptions(this.parentValidationType, this.parentValidationName);
+    const options = this.buildParameterTypeOptions(
+      this.parentValidationType,
+      this.parentValidationName,
+      this.parentPayloadId,
+      this.parentValidationSourceData
+    );
     this.parameterTypeOptions = options;
 
     const current = this.parameterForm.get('parameterType')?.value;
@@ -234,65 +275,134 @@ export class ValidationParameterModalComponent implements OnInit, OnChanges {
     }
   }
 
-  private buildParameterTypeOptions(validationType: string | null, validationName: string | null) {
-    /*
-      Parent-driven Param Type options
-      Update this mapping as per your business rules:
-      - validationType comes from parent form control: validationType
-      - validationName comes from parent form control: validationName
-    */
-
+  private buildParameterTypeOptions(
+    validationType: string | null,
+    validationName: string | null,
+    payloadId: string | null,
+    sourceData: string | null
+  ) {
+    // Top-level router: delegate to specific builders based on validationType
+    // This keeps the mapping logic modular and easier to test.
     if (validationType === 'JSON_VALIDATION') {
-      switch (validationName) {
-        case 'Strict Equals':
-          return [
-            { value: 'TDV', label: 'Test Data Value' },
-            { value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' },
-            { value: 'JSON_EXIT_PAYLOAD', label: 'Service Exit Payload' }
-          ];
-          case 'Check If Upstream Output Matches Input':
-          return [
-            { value: 'PREVIOUS_SERVICE_OUTPUT', label: 'Previous Service Output' },
-            { value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' },
-            { value: 'JSON_EXIT_PAYLOAD', label: 'Service Exit Payload' }
-          ];
-        default:
-          return [];
-      }
-    }
-
-    if (validationType === 'DB_VALIDATION') {
-      return [
-        { value: 'JSON_PATH', label: 'Json Path' },
-        { value: 'STATIC_VALUE', label: 'Static Value' },
-        { value: 'TDV', label: 'Test Data Value' },
-        { value: 'QUERY', label: 'Query' },
-        { value: 'DB_VALIDATION_URL', label: 'Database Validation URL' },
-        { value: 'DB_VALIDATION_NAME', label: 'Database Validation Name' }
-      ];
-    }
-
-    if (validationType === 'CUSTOM_VALIDATION') {
-      return [
-        { value: 'CUSTOM_API_URL', label: 'Custom API URL' },
-        { value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' },
-        { value: 'JSON_EXIT_PAYLOAD', label: 'Service Exit Payload' }
-      ];
+      return this.buildJsonValidationOptions(validationName, sourceData);
     }
 
     if (validationType === 'JSON_FIELD_VALIDATION') {
-      return [
-        { value: 'JSON_PATH', label: 'Json Path' },
-        { value: 'STATIC_VALUE', label: 'Static Value' },
-        { value: 'TDV', label: 'Test Data Value' },
-        { value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' }
-      ];
+      return this.buildJsonFieldValidationOptions(validationName, payloadId);
     }
 
-    /*
-      Default fallback when parent values are not selected yet.
-      Keep this list minimal to avoid incorrect choices.
-    */
+    if (validationType === 'DB_VALIDATION') {
+      return this.buildDbValidationOptions(validationName);
+    }
+
+    if (validationType === 'CUSTOM_VALIDATION') {
+      return this.buildCustomValidationOptions(validationName, sourceData);
+    }
+
+    // Default fallback: empty options
     return [];
+  }
+
+  /**
+   * Build options for JSON_VALIDATION.
+   * - 'Strict Equals' exposes TDV and entry/exit payload options depending on sourceData.
+   * - 'Check If Upstream Output Matches Input' exposes upstream output and entry payload.
+   */
+  private buildJsonValidationOptions(validationName: string | null, sourceData: string | null) {
+    switch (validationName) {
+      case 'Strict Equals': {
+        const baseOpts: Array<{ value: string; label: string }> = [
+          { value: 'TDV', label: 'Test Data Value' }
+        ];
+        if (sourceData === 'ENTRY_PAYLOAD') {
+          baseOpts.push({ value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' });
+        }
+        if (sourceData === 'EXIT_PAYLOAD') {
+          baseOpts.push({ value: 'JSON_EXIT_PAYLOAD', label: 'Service Exit Payload' });
+        }
+        return baseOpts;
+      }
+      case 'Check If Upstream Output Matches Input':
+        return [
+          { value: 'PREVIOUS_SERVICE_OUTPUT', label: 'Upstream Output' },
+          { value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' }
+        ];
+      default:
+        return [];
+    }
+  }
+
+  /**
+   * Build options for JSON_FIELD_VALIDATION based on the validationName.
+   * Adds 'PAYLOAD_REF' when payloadId appears to reference a request payload.
+   */
+  private buildJsonFieldValidationOptions(validationName: string | null, payloadId: string | null) {
+    const opts: Array<{ value: string; label: string }> = [];
+    switch (validationName) {
+      case 'Null':
+      case 'Not Null':
+      case 'Empty':
+      case 'Not Empty':
+        opts.push({ value: 'JSON_PATH', label: 'Json Path' });
+        return opts;
+      case 'Equals':
+      case 'Equals Ignorecase':
+        opts.push({ value: 'JSON_PATH', label: 'Json Path' });
+        opts.push({ value: 'STATIC_VALUE', label: 'Static Value' });
+        opts.push({ value: 'TDV', label: 'Test Data Value' });
+        break;
+      case 'In':
+      case 'Not In':
+        opts.push({ value: 'JSON_PATH', label: 'Json Path' });
+        opts.push({ value: 'STATIC_VALUE', label: 'Static Value' });
+        opts.push({ value: 'CHECK_VALUE', label: 'Check Value' });
+        break;
+      default:
+        return opts;
+    }
+
+    if (payloadId && payloadId.startsWith('REQ-')) {
+      opts.push({ value: 'PAYLOAD_REF', label: 'Payload Reference' });
+    }
+    return opts;
+  }
+
+  /**
+   * Build options for DB_VALIDATION.
+   */
+  private buildDbValidationOptions(validationName: string | null) {
+    const opts: Array<{ value: string; label: string }> = [];
+    switch (validationName) {
+      case 'Record Check':
+        opts.push({ value: 'JSON_PATH', label: 'Json Path' });
+        opts.push({ value: 'STATIC_VALUE', label: 'Static Value' });
+        opts.push({ value: 'QUERY', label: 'Query' });
+        opts.push({ value: 'DB_VALIDATION_URL', label: 'Database Validation URL' });
+        opts.push({ value: 'DB_VALIDATION_NAME', label: 'Database Validation Name' });
+        return opts;
+      default:
+        return opts;
+    }
+  }
+
+  /**
+   * Build options for CUSTOM_VALIDATION.
+   * For 'HTTP POST API CALL' include payload entry/exit options depending on sourceData.
+   */
+  private buildCustomValidationOptions(validationName: string | null, sourceData: string | null) {
+    const opts: Array<{ value: string; label: string }> = [];
+    switch (validationName) {
+      case 'HTTP POST API CALL':
+        opts.push({ value: 'CUSTOM_API_URL', label: 'Custom API URL' });
+        if (sourceData === 'ENTRY_PAYLOAD') {
+          opts.push({ value: 'JSON_ENTRY_PAYLOAD', label: 'Service Entry Payload' });
+        }
+        if (sourceData === 'EXIT_PAYLOAD') {
+          opts.push({ value: 'JSON_EXIT_PAYLOAD', label: 'Service Exit Payload' });
+        }
+        return opts;
+      default:
+        return opts;
+    }
   }
 }

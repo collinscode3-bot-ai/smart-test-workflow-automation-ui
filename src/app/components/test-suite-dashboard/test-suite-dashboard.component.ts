@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
+import { WorkflowStateService } from '../../services/workflow-state.service';
 
 interface TestSuite {
   id: string;
@@ -38,6 +39,7 @@ export class TestSuiteDashboardComponent implements OnInit {
 
   constructor(
     private headerService: HeaderService,
+    private workflowService: WorkflowStateService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -45,10 +47,8 @@ export class TestSuiteDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.headerService.setHeaderData('Test Suite Dashboard', 'Manage and monitor your existing automated testing suites.');
 
-    this.route.queryParams.subscribe(params => {
-      this.projectId = params['projectId'] || null;
-      // In a real app, you would fetch project details here
-      // this.fetchProjectDetails(this.projectId);
+    this.route.paramMap.subscribe(params => {
+      this.projectId = params.get('projectId');
     });
 
     this.searchTestSuites();
@@ -94,14 +94,18 @@ export class TestSuiteDashboardComponent implements OnInit {
    */
   executeTestSuite(id: string): void {
     console.log(`Executing test suite ${id}...`);
-    this.router.navigate([`/test-suites/execution/${id}`], { queryParams: { projectId: this.projectId } });
+    const suite = this.allTestSuites.find(ts => ts.id === id);
+    this.workflowService.setSuite(id, suite ? suite.name : `Suite ${id}`);
+    this.router.navigate([`/projects/${this.projectId}/suites/execution/${id}`]);
   }
 
   /**
    * Router logic to navigate to the dual-purpose test suite form in 'edit' mode.
    */
   MapsToEdit(id: string): void {
-    this.router.navigate([`/test-suites/edit/${id}`], { queryParams: { projectId: this.projectId } });
+    const suite = this.allTestSuites.find(ts => ts.id === id);
+    this.workflowService.setSuite(id, suite ? suite.name : `Suite ${id}`);
+    this.router.navigate([`/projects/${this.projectId}/suites/edit/${id}`]);
   }
 
   updatePagination(): void {
@@ -125,6 +129,13 @@ export class TestSuiteDashboardComponent implements OnInit {
   }
 
   navigateToCreate(): void {
-    this.router.navigate(['/test-suites/create'], { queryParams: { projectId: this.projectId } });
+    this.workflowService.setSuite(null, null);
+    this.router.navigate([`/projects/${this.projectId}/suites/create`]);
+  }
+
+  goToTestCases(id: string): void {
+    const suite = this.allTestSuites.find(ts => ts.id === id);
+    this.workflowService.setSuite(id, suite ? suite.name : `Suite ${id}`);
+    this.router.navigate([`/projects/${this.projectId}/suites/${id}/test-cases/list`]);
   }
 }

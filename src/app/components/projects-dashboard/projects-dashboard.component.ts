@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HeaderService } from '../../services/header.service';
+import { WorkflowStateService } from '../../services/workflow-state.service';
 
 interface Project {
   id: string;
@@ -34,14 +35,25 @@ export class ProjectsDashboardComponent implements OnInit {
   filteredProjects: Project[] = [];
   paginatedProjects: Project[] = [];
 
+  errorMessage: string | null = null;
+
   constructor(
     private headerService: HeaderService,
-    private router: Router
+    private workflowService: WorkflowStateService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.headerService.setHeaderData('Project Details', 'Manage and monitor your existing projects.');
     this.searchProjects();
+
+    this.route.queryParams.subscribe(params => {
+      if (params['error'] === 'missing_parent') {
+        this.errorMessage = 'Missing parent context. Please select a project first.';
+        setTimeout(() => this.errorMessage = null, 5000);
+      }
+    });
   }
 
   /**
@@ -112,7 +124,9 @@ export class ProjectsDashboardComponent implements OnInit {
    * @param id The ID of the project.
    */
   goToTestSuites(id: string): void {
-    this.router.navigate(['/test-suites/list'], { queryParams: { projectId: id } });
+    const project = this.allProjects.find(p => p.id === id);
+    this.workflowService.setProject(id, project ? project.name : `Project ${id}`);
+    this.router.navigate([`/projects/${id}/suites/list`]);
   }
 
   updatePagination(): void {

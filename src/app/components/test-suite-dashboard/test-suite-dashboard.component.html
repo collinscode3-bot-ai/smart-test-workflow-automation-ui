@@ -44,6 +44,9 @@
             </div>
             <!-- Action Links -->
             <div class="col-auto text-end d-flex align-items-center gap-4 justify-content-end">
+              <a (click)="goToTestCases(testSuite.id)" class="text-decoration-none d-flex align-items-center" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
+                Test Cases <i class="bi bi-arrow-right-short ms-2" style="font-size: 18px;"></i>
+              </a>
               <a (click)="executeTestSuite(testSuite.id)" class="text-decoration-none d-flex align-items-center" style="color: #4B0082; cursor: pointer; font-size: 14px; font-weight: 500;">
                 <i class="bi bi-play-fill me-2" style="font-size: 18px;"></i> Execute
               </a>

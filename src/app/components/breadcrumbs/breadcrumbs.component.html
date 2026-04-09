@@ -1,11 +1,13 @@
-<nav aria-label="breadcrumb" class="mb-4">
-  <ol class="breadcrumb">
-    <li *ngFor="let crumb of breadcrumbs"
-        class="breadcrumb-item"
-        [class.active]="crumb.active"
-        [attr.aria-current]="crumb.active ? 'page' : null">
-      <a *ngIf="!crumb.active" [routerLink]="crumb.url" class="text-decoration-none" style="color: #6C757D;">{{ crumb.label }}</a>
-      <span *ngIf="crumb.active" style="color: #4B0082; font-weight: 500;">{{ crumb.label }}</span>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
+    <li *ngFor="let crumb of breadcrumbs; let last = last" class="breadcrumb-item d-flex align-items-center" [class.active]="crumb.active">
+      <a *ngIf="!crumb.active && crumb.url" [routerLink]="[crumb.url]" class="breadcrumb-link text-decoration-none">
+        {{ crumb.label }}
+      </a>
+      <span *ngIf="crumb.active" class="breadcrumb-active">
+        {{ crumb.label }}
+      </span>
+      <span *ngIf="!last" class="mx-2 separator">/</span>
     </li>
   </ol>
 </nav>

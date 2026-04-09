@@ -1,26 +1,32 @@
-@import "variables";
-
 .breadcrumb {
-    background: transparent;
-    padding: 0;
-}
+  background: transparent;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
 
-.breadcrumb-item {
-    a {
-        color: $accent-color;
-        text-decoration: none;
-        font-weight: 500;
+  .breadcrumb-item {
+    font-size: 14px;
+    color: #6C757D; // Default gray for inactive levels
 
-        &:hover {
-            text-decoration: underline;
-        }
+    .breadcrumb-link {
+      color: #6C757D;
+      cursor: pointer;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #4B0082; // Hover effect towards indigo
+      }
     }
 
-    &.active {
-        color: #6c757d;
+    .breadcrumb-active {
+      font-weight: 700; // Bold
+      color: #4B0082; // Indigo
     }
-}
 
-.breadcrumb-item + .breadcrumb-item::before {
-    color: $accent-color;
+    .separator {
+      color: #CED4DA;
+      font-weight: 400;
+    }
+  }
 }

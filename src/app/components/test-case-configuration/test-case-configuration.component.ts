@@ -130,15 +130,16 @@ export class TestCaseConfigurationComponent implements OnInit {
   }
 
   onAction(module: string) {
+    const projId = this.route.snapshot.paramMap.get('projectId');
+    const suiteId = this.route.snapshot.paramMap.get('suiteId');
+    const caseId = this.testCaseId || '1';
+
     if (module === 'contract') {
-      this.router.navigate(['/contracts/manage']);
+      this.router.navigate([`/projects/${projId}/suites/${suiteId}/test-cases/${caseId}/contracts/manage`]);
     } else if (module === 'testdata') {
-      this.router.navigate(['/test-data/datasets']);
+      this.router.navigate([`/projects/${projId}/suites/${suiteId}/test-cases/${caseId}/test-data/datasets`]);
     } else if (module === 'verification') {
-      const projectId = '1';
-      const suiteId = '1';
-      const caseId = '1';
-      this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/manage`]);
+      this.router.navigate([`/projects/${projId}/suites/${suiteId}/test-cases/${caseId}/verifications/manage`]);
     }
   }
 }

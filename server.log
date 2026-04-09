@@ -1,0 +1,66 @@
+
+> angular-app@0.0.0 start
+> ng serve
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files   | Names         |  Raw Size
+vendor.js             | vendor        |   3.43 MB |
+main.js               | main          | 822.08 kB |
+styles.css, styles.js | styles        | 516.07 kB |
+polyfills.js          | polyfills     | 234.35 kB |
+runtime.js            | runtime       |   6.50 kB |
+
+| Initial Total |   4.97 MB
+
+Build at: 2026-03-27T11:53:39.102Z - Hash: cae69fd5c43ce124 - Time: 18743ms
+
+** Angular Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200/ **
+
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 823.06 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-27T11:57:32.660Z - Hash: ec54365ce1a844a5 - Time: 7363ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 823.92 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-27T11:57:57.220Z - Hash: 40568a6f0b130274 - Time: 1954ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 824.32 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-27T11:58:09.589Z - Hash: 8d0aee90e4630364 - Time: 486ms
+
+✔ Compiled successfully.
+✔ Browser application bundle generation complete.
+
+Initial Chunk Files | Names   |  Raw Size
+main.js             | main    | 823.64 kB |
+runtime.js          | runtime |   6.50 kB |
+
+3 unchanged chunks
+
+Build at: 2026-03-27T11:59:41.661Z - Hash: cfe703462dc98fe9 - Time: 1195ms
+
+✔ Compiled successfully.

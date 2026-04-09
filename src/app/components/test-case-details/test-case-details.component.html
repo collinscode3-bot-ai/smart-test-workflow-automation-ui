@@ -304,91 +304,14 @@
       </div>
     </div>
 
-    <!-- Section 3: Test Data Management -->
-    <div class="mb-5">
-      <div class="d-flex justify-content-start align-items-center gap-4 mb-4">
-        <h5 class="fw-bold mb-0" style="font-size: 18px; color: #333;">TEST DATA MANAGEMENT</h5>
-        <button *ngIf="testData.length > 0" class="btn btn-theme-orange btn-add-custom" (click)="addTestData()">
-          <i class="bi bi-plus-lg me-2"></i> Add TestData
-        </button>
-      </div>
-
-      <!-- Empty State -->
-      <div *ngIf="testData.length === 0" class="text-center py-5 border rounded-3 mb-3" style="background-color: #fcfcfc; border-style: dashed !important;">
-        <div class="mb-3">
-          <i class="bi bi-database text-muted" style="font-size: 48px; opacity: 0.5;"></i>
-        </div>
-        <h6 class="fw-bold mb-2" style="font-size: 18px;">No Test Data Found</h6>
-        <p class="text-muted mb-4 mx-auto" style="font-size: 14px; max-width: 400px;">
-          Configure datasets to run this test case against multiple scenarios and configurations.
-        </p>
-        <div class="d-flex justify-content-center">
-          <button class="btn btn-theme-orange btn-add-custom" (click)="addTestData()">
-            <i class="bi bi-plus-lg me-2"></i> Add TestData
-          </button>
-        </div>
-      </div>
-
-      <!-- Datatable -->
-      <div *ngIf="testData.length > 0" class="col-md-11">
-        <div *ngFor="let data of testData | slice:(testDataPage-1)*pageSize:testDataPage*pageSize" class="card border-0 mb-3 p-3 list-item-card shadow-sm" style="background-color: #fcfcfc; border: 1px solid #E5E7EB !important;">
-          <div class="row align-items-center">
-            <div class="col-auto">
-              <div class="rounded-3 bg-light d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; color: #4B0082; font-weight: bold; font-size: 14px;">
-                {{ data.id }}
-              </div>
-            </div>
-            <div class="col">
-              <span class="fw-bold me-2" style="font-size: 14px; color: #333;">{{ data.name }}</span>
-              <span class="text-muted" style="border-left: 1px solid #dee2e6; padding-left: 10px; font-size: 13px;">{{ data.details }}</span>
-            </div>
-            <div class="col-auto d-flex gap-3">
-              <button class="btn btn-link text-muted p-0" (click)="onAction('view', 'testData', data)">
-                <i class="bi bi-eye" style="font-size: 18px;"></i>
-              </button>
-              <button class="btn btn-link text-primary p-0" (click)="onAction('edit', 'testData', data)">
-                <i class="bi bi-pencil" style="font-size: 18px;"></i>
-              </button>
-              <button class="btn btn-link text-danger p-0" (click)="onAction('delete', 'testData', data)">
-                <i class="bi bi-trash" style="font-size: 18px;"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Pagination for Test Data -->
-        <nav *ngIf="totalPages > 1" class="mt-4">
-          <ul class="pagination justify-content-center border-0 mb-0">
-            <li class="page-item" [class.disabled]="testDataPage === 1">
-              <a class="page-link border-0 bg-transparent text-muted" (click)="setPage('testData', testDataPage - 1)" style="cursor: pointer;">
-                <i class="bi bi-chevron-left"></i>
-              </a>
-            </li>
-            <li class="page-item mx-1" *ngFor="let page of pages">
-              <a
-                class="page-link border-0 d-flex align-items-center justify-content-center"
-                (click)="setPage('testData', page)"
-                [style.background-color]="testDataPage === page ? '#4B0082' : 'transparent'"
-                [style.color]="testDataPage === page ? 'white' : '#6C757D'"
-                style="width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 14px;"
-              >
-                {{ page }}
-              </a>
-            </li>
-            <li class="page-item" [class.disabled]="testDataPage === totalPages">
-              <a class="page-link border-0 bg-transparent text-muted" (click)="setPage('testData', testDataPage + 1)" style="cursor: pointer;">
-                <i class="bi bi-chevron-right"></i>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
 
     <!-- Footer Actions -->
     <div class="d-flex justify-content-end align-items-center gap-3 mt-5">
       <button type="button" class="btn btn-outline-secondary" (click)="onCancel()" style="min-width: 160px; height: 50px; border-radius: 8px;">
         Cancel
+      </button>
+      <button type="button" class="btn btn-outline-secondary" (click)="goToTestData()" style="min-width: 160px; height: 50px; border-radius: 8px;">
+        Add Test Data
       </button>
       <button type="button" class="btn btn-theme-orange" (click)="onSave()" style="height: 50px; min-width: 200px;">
         {{ mode === 'edit' ? 'Update Test Case' : 'Save Test Case' }}

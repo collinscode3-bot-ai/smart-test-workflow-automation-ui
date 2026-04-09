@@ -16,12 +16,6 @@ interface Verification {
   type: string;
 }
 
-interface TestData {
-  id: number;
-  name: string;
-  details: string;
-}
-
 @Component({
   selector: 'app-test-case-details',
   templateUrl: './test-case-details.component.html',
@@ -38,7 +32,6 @@ export class TestCaseDetailsComponent implements OnInit {
   // Pagination State
   contractsPage: number = 1;
   verificationsPage: number = 1;
-  testDataPage: number = 1;
   pageSize: number = 5;
 
   totalPages: number = 5; // Mocking total pages
@@ -53,11 +46,6 @@ export class TestCaseDetailsComponent implements OnInit {
   verifications: Verification[] = [
     { id: 1, step: 'Status Code is 200', type: 'Response' },
     { id: 2, step: 'Body contains success: true', type: 'Validation' }
-  ];
-
-  testData: TestData[] = [
-    { id: 1, name: 'Production Credentials Set', details: '(JSON, 4 fields)' },
-    { id: 2, name: 'QA Sandbox Environment', details: '(JSON, 4 fields)' }
   ];
 
   constructor(
@@ -104,7 +92,6 @@ export class TestCaseDetailsComponent implements OnInit {
 
     // API CALL: GET /api/testcases/{id}/contracts?page=1
     // API CALL: GET /api/testcases/{id}/verifications?page=1
-    // API CALL: GET /api/testcases/{id}/testdata?page=1
   }
 
   loadTestCase(id: string) {
@@ -199,10 +186,6 @@ export class TestCaseDetailsComponent implements OnInit {
     } else if (section === 'verification') {
       // API CALL: GET /api/testcases/{id}/verifications/{id}
       this.router.navigate([`/projects/${projectId}/suites/${suiteId}/testcases/${caseId}/verifications/edit/${item.id}`], { queryParams: { mode: mode } });
-    } else if (section === 'testData') {
-      // API CALL: GET /api/testcases/{id}/testdata/{id}
-      console.log(`${mode} test data with id: ${item.id}`);
-      // Logic for view/edit test data
     }
   }
 
@@ -216,8 +199,6 @@ export class TestCaseDetailsComponent implements OnInit {
       this.contracts = this.contracts.filter(c => c.id !== id);
     } else if (section === 'verification') {
       this.verifications = this.verifications.filter(v => v.id !== id);
-    } else if (section === 'testData') {
-      this.testData = this.testData.filter(d => d.id !== id);
     }
 
     this.triggerAlert('success', `${section.charAt(0).toUpperCase() + section.slice(1)} deleted successfully!`);
@@ -232,9 +213,6 @@ export class TestCaseDetailsComponent implements OnInit {
     } else if (type === 'verifications') {
       this.verificationsPage = page;
       // API CALL: GET /api/testcases/{id}/verifications?page={page}
-    } else if (type === 'testData') {
-      this.testDataPage = page;
-      // API CALL: GET /api/testcases/{id}/testdata?page={page}
     }
   }
 
@@ -270,21 +248,7 @@ export class TestCaseDetailsComponent implements OnInit {
     this.verifications = this.verifications.filter(v => v.id !== id);
   }
 
-  addTestData() {
-    const nextId = this.testData.length > 0 ? Math.max(...this.testData.map(d => d.id)) + 1 : 1;
-    this.testData.push({
-      id: nextId,
-      name: `New Test Dataset ${nextId}`,
-      details: '(JSON, 0 fields)'
-    });
-  }
-
-  editTestData(id: number) {
-    console.log(`Editing test data with id: ${id}`);
-    // Logic for editing test data
-  }
-
-  deleteTestData(id: number) {
-    this.testData = this.testData.filter(d => d.id !== id);
+  goToTestData() {
+    this.router.navigate(['/test-data/datasets']);
   }
 }
